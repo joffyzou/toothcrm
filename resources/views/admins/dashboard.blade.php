@@ -56,16 +56,6 @@
                                 <i class="iconfont">&#xe6a7;</i>
                                 <cite>角色管理</cite></a>
                         </li>
-                        <li>
-                            <a onclick="xadmin.add_tab('权限分类','admin-cate.html')">
-                                <i class="iconfont">&#xe6a7;</i>
-                                <cite>权限分类</cite></a>
-                        </li>
-                        <li>
-                            <a onclick="xadmin.add_tab('权限管理','admin-rule.html')">
-                                <i class="iconfont">&#xe6a7;</i>
-                                <cite>权限管理</cite></a>
-                        </li>
                     </ul>
                 </li>
             </ul>

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAdminsTable extends Migration
+class CreateRolesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,9 @@ class CreateAdminsTable extends Migration
      */
     public function up()
     {
-        Schema::create('admins', function (Blueprint $table) {
+        Schema::create('roles', function (Blueprint $table) {
             $table->id();
-            $table->string('username')->unique()->comment('登录名');
-            $table->unsignedInteger('role_id')->default(0)->comment('角色ID');
-            $table->string('password')->comment('登录密码');
-            $table->rememberToken();
+            $table->string('name')->comment('角色名称:职位');
             $table->timestamps();
         });
     }
@@ -30,6 +27,6 @@ class CreateAdminsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('admins');
+        Schema::dropIfExists('roles');
     }
 }

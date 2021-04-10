@@ -16,6 +16,7 @@ class AdminsSeeder extends Seeder
         \App\Models\Admin::factory(10)->create();
         $admin = \App\Models\Admin::find(1);
         $admin->username = 'admin';
+        $admin->role_id = 1;
         $admin->password = bcrypt('admin');
         $admin->save();
     }

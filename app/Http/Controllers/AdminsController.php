@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Admin;
 
 class AdminsController extends Controller
 {
@@ -16,9 +17,11 @@ class AdminsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Admin $admin)
     {
-        return view('admins.index');
+        $admins = $admin->all();
+
+        return view('admins.index', compact('admins'));
     }
 
     /**
@@ -28,7 +31,7 @@ class AdminsController extends Controller
      */
     public function create()
     {
-        //
+        return view('admins.add');
     }
 
     /**
@@ -39,7 +42,18 @@ class AdminsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'username' => 'required|unique:admins|max:50',
+            'password' => 'required|min:6'
+        ]);
+
+        $admin = Admin::create([
+            'username' => $request->username,
+            'role_id' =>  $request->role,
+            'password' => bcrypt($request->password)
+        ]);
+
+        return redirect()->route('admins.index');
     }
 
     /**

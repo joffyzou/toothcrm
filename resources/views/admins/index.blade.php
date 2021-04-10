@@ -23,7 +23,7 @@
                 </div>
                 <div class="layui-card-header">
                     <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
-                    <button class="layui-btn" onclick="xadmin.open('添加用户','./admin-add.html',600,400)"><i class="layui-icon"></i>添加</button>
+                    <button class="layui-btn" onclick="xadmin.open('添加用户','{{ route('admins.create') }}',452,286)"><i class="layui-icon"></i>添加</button>
                 </div>
                 <div class="layui-card-body ">
                     <table class="layui-table layui-form">
@@ -34,38 +34,38 @@
                         </th>
                         <th>ID</th>
                         <th>登录名</th>
-                        <th>手机</th>
-                        <th>邮箱</th>
-                        <th>角色</th>
-                        <th>加入时间</th>
+                        <th>岗位</th>
+                        <th>密码</th>
+                        <th>创建时间</th>
                         <th>状态</th>
                         <th>操作</th>
                     </thead>
                     <tbody>
-                        <tr>
-                        <td>
-                            <input type="checkbox" name=""  lay-skin="primary">
-                        </td>
-                        <td>1</td>
-                        <td>admin</td>
-                        <td>18925139194</td>
-                        <td>113664000@qq.com</td>
-                        <td>超级管理员</td>
-                        <td>2017-01-01 11:11:42</td>
-                        <td class="td-status">
-                            <span class="layui-btn layui-btn-normal layui-btn-mini">已启用</span></td>
-                        <td class="td-manage">
-                            <a onclick="member_stop(this,'10001')" href="javascript:;"  title="启用">
-                            <i class="layui-icon">&#xe601;</i>
-                            </a>
-                            <a title="编辑"  onclick="xadmin.open('编辑','admin-edit.html')" href="javascript:;">
-                            <i class="layui-icon">&#xe642;</i>
-                            </a>
-                            <a title="删除" onclick="member_del(this,'要删除的id')" href="javascript:;">
-                            <i class="layui-icon">&#xe640;</i>
-                            </a>
-                        </td>
-                        </tr>
+                        @foreach ($admins as $admin)
+                            <tr>
+                            <td>
+                                <input type="checkbox" name=""  lay-skin="primary">
+                            </td>
+                            <td>{{ $admin->id }}</td>
+                            <td>{{ $admin->username }}</td>
+                            <td>{{ $admin->role->name }}</td>
+                            <td>{{ $admin->password }}</td>
+                            <td>{{ $admin->created_at->diffForHumans() }}</td>
+                            <td class="td-status">
+                                <span class="layui-btn layui-btn-normal layui-btn-mini">已启用</span></td>
+                            <td class="td-manage">
+                                <a onclick="member_stop(this,'10001')" href="javascript:;"  title="启用">
+                                <i class="layui-icon">&#xe601;</i>
+                                </a>
+                                <a title="编辑"  onclick="xadmin.open('编辑','admin-edit.html')" href="javascript:;">
+                                <i class="layui-icon">&#xe642;</i>
+                                </a>
+                                <a title="删除" onclick="member_del(this,'要删除的id')" href="javascript:;">
+                                <i class="layui-icon">&#xe640;</i>
+                                </a>
+                            </td>
+                            </tr>
+                        @endforeach
                     </tbody>
                     </table>
                 </div>
