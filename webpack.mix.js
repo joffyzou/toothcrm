@@ -16,4 +16,5 @@ mix.js('resources/js/app.js', 'public/js')
         //
     ])
     .postCss('resources/css/login.css', 'public/css')
+    .copyDirectory('node_modules/layui/dist/css/modules', 'public/js/css/modules')
     .version();

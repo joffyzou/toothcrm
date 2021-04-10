@@ -21,8 +21,7 @@ class LoginController extends Controller
         ]);
 
         if (Auth::attempt($credentials)) {
-            return '登录成功';
-            $fallback = route('admins.index');
+            $fallback = route('admin.dashboard');
 
             return redirect()->intended($fallback);
         } else {
@@ -35,6 +34,6 @@ class LoginController extends Controller
     {
         Auth::logout();
 
-        return redirect()->route('login');
+        return redirect()->route('admin.login');
     }
 }
