@@ -10,4 +10,8 @@ class Role extends Model
     use HasFactory;
 
     protected $fillable = ['name'];
+
+    public function nodes(){
+        return $this->belongsToMany(Node::class, 'role_node', 'role_id', 'node_id');
+    }
 }

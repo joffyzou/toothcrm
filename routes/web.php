@@ -24,3 +24,6 @@ Route::post('admin/logout', 'LoginController@logout')->name('admin.logout');
 
 Route::resource('admins', 'AdminsController');
 
+// admins.create 新建员工 排除[3, 5]
+// admins.index role_id=1 pid=
+

@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Node extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'name',
+        'route_name',
+        'pid'
+    ];
 }
