@@ -21,7 +21,7 @@ class LoginController extends Controller
         ]);
 
         if (Auth::attempt($credentials)) {
-            $fallback = route('admin.dashboard');
+            $fallback = route('admins.index');
 
             return redirect()->intended($fallback);
         } else {

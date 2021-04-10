@@ -14,14 +14,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('admins.dashboard');
+    return view('admins.login2');
 });
 
 // 登录、退出
 Route::get('admin/login', 'LoginController@index')->name('admin.login');
 Route::post('admin/login', 'LoginController@login')->name('admin.login');
-Route::delete('admin/logout', 'LoginController@logout')->name('admin.logout');
+Route::post('admin/logout', 'LoginController@logout')->name('admin.logout');
 
 Route::resource('admins', 'AdminsController');
-Route::get('admin/dashboard', 'AdminsController@dashboard')->name('admin.dashboard');
 

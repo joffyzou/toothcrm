@@ -2,4 +2,4 @@ require('./bootstrap');
 
 require('layui');
 
-require('./xadmin.js')
+// require('./xadmin.js');

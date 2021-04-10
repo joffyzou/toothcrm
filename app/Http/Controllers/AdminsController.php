@@ -7,11 +7,6 @@ use App\Models\Admin;
 
 class AdminsController extends Controller
 {
-    public function dashboard()
-    {
-        return view('admins.dashboard');
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -31,7 +26,7 @@ class AdminsController extends Controller
      */
     public function create()
     {
-        return view('admins.add');
+        return view('admins.create');
     }
 
     /**
