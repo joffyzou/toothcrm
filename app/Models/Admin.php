@@ -36,4 +36,9 @@ class Admin extends Authenticatable
     {
         return $this->belongsTo(Role::class);
     }
+
+    public function patients()
+    {
+        return $this->hasMany(Patient::class, 'id', 'aid');
+    }
 }

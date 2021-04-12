@@ -8,7 +8,7 @@
                     <dd><a href="{{ route('admins.create') }}">添加员工</a></dd>
                 </dl>
             </li>
-            <li class="layui-nav-item"><a href="javascript:;">菜单Test1</a></li>
+            <li class="layui-nav-item"><a href="{{ route('patients.create') }}">添加患者</a></li>
             <li class="layui-nav-item"><a href="">菜单Test2</a></li>
         </ul>
     </div>
