@@ -11,7 +11,9 @@ class Role extends Model
 
     protected $fillable = ['name'];
 
-    public function nodes(){
+    public function nodes()
+    {
+        // $role->nodes 角色下的权限
         return $this->belongsToMany(Node::class, 'role_node', 'role_id', 'node_id');
     }
 }

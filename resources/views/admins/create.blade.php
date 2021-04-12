@@ -15,12 +15,11 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">岗位</label>
                 <div class="layui-input-inline">
-                    <select name="role">
+                    <select name="role_id">
                         <option value="">请选择岗位</option>
-                        <option value="2">客服主管</option>
-                        <option value="3">客服</option>
-                        <option value="4">运营主管</option>
-                        <option value="5">运营</option>
+                        @foreach ($roles as $role)
+                            <option value="{{ $role->id }}">{{ $role->name }}</option>
+                        @endforeach
                     </select>
                 </div>
             </div>

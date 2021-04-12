@@ -14,4 +14,11 @@ class Node extends Model
         'route_name',
         'pid'
     ];
+
+    public function getAllList()
+    {
+        $data = self::get()->toArray();
+
+        retrun $data;
+    }
 }
