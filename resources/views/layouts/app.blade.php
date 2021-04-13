@@ -19,11 +19,6 @@
     @include('layouts._footer')
 </div>
 <script src="{{ mix('js/app.js') }}"></script>
-<script>
-    layui.use('element', function(){
-    var element = layui.element;
-
-    });
-</script>
+@yield('scripts')
 </body>
 </html>

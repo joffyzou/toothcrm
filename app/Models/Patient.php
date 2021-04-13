@@ -13,11 +13,17 @@ class Patient extends Model
         'name',
         'pid',
         'phone',
-        'aid',
+        'admin_id',
         'is_appointment',
         'is_add_wechat',
         'project',
         'is_to_store',
-        'achievement'
+        'achievement',
+        'note'
     ];
+
+    public function admin()
+    {
+        return $this->belongsTo('App\Models\Admin');
+    }
 }

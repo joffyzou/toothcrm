@@ -1,7 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-<form class="layui-form" action="">
+<form class="layui-form" action="{{ route('patients.store') }}" method="POST">
+    @csrf
+    @method('delete')
     <div class="layui-form-item">
         <label class="layui-form-label">患者姓名</label>
         <div class="layui-input-inline">
