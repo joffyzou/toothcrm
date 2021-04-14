@@ -8,11 +8,7 @@ use Auth;
 
 class AdminsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    // 管理员列表页面
     public function index(Admin $admin)
     {
         $admins = $admin->all();
@@ -20,11 +16,7 @@ class AdminsController extends Controller
         return view('admins.index', compact('admins'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    // 新建员工
     public function create(Admin $admin)
     {
         $admin = Auth::user();
@@ -55,12 +47,7 @@ class AdminsController extends Controller
         return view('admins.create', compact('roles'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    // 保存新建员工
     public function store(Request $request, Admin $admin)
     {
         $data = $this->validate($request, [
@@ -124,5 +111,13 @@ class AdminsController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    // 个人患者列表页
+    public function patient(Admin $admin)
+    {
+        $patients = $admin->patients;
+
+        return view('admins.patients', compact('admin', 'patients'));
     }
 }

@@ -12,7 +12,7 @@
     @include('layouts._header')
     @include('layouts._side')
 
-    <div class="layui-body">
+    <div class="layui-body" style="padding: 30px;">
         @yield('content')
     </div>
 

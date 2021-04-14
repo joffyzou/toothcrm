@@ -11,7 +11,7 @@
         <li class="layui-nav-item">
             <form action="{{ route('admin.logout') }}" method="POST" onsubmit="return confirm('您确定要退出吗？');">
                 @csrf
-                <button type="submit" class="layui-btn layui-btn-primary layui-border-red">退出</button>
+                <a><button type="submit" style="border:none; outline: none; cursor: hand; cursor: pointer; background-color: transparent; color:#fff;color:rgba(255,255,255,.7);">退出</button></a>
             </form>
         </li>
     </ul>

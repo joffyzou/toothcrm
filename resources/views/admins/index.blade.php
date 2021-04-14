@@ -5,11 +5,6 @@
     <i class="layui-icon">&#xe654;</i> 添加员工
 </a>
 <table class="layui-table">
-<colgroup>
-    <col width="150">
-    <col width="200">
-    <col>
-</colgroup>
 <thead>
     <tr>
         <th>ID</th>

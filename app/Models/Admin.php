@@ -39,6 +39,6 @@ class Admin extends Authenticatable
 
     public function patients()
     {
-        return $this->hasMany(Patient::class, 'id', 'aid');
+        return $this->hasMany(Patient::class);
     }
 }

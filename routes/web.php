@@ -22,9 +22,13 @@ Route::get('admin/login', 'LoginController@index')->name('admin.login');
 Route::post('admin/login', 'LoginController@login');
 Route::post('admin/logout', 'LoginController@logout')->name('admin.logout');
 
+// 员工管理
 Route::resource('admins', 'AdminsController');
 
+// 患者管理
 Route::resource('patients', 'PatientsController');
+
+Route::get('admins/{admin}/patients', 'AdminsController@patient')->name('admins.patients');
 
 // admins.create 新建员工 排除[3, 5]
 // admins.index role_id=1 pid=
