@@ -10,23 +10,26 @@ class PatientsController extends Controller
 {
     public function index(Patient $patient)
     {
-
-
-        return response()->json($data);
-
-        // return view('patients.index', compact('patients'));
+        return view('patients.index');
     }
 
-    public function getAllPatients(){
-        $patients = $patient::all();
+    public function getAllPatients(Patient $patient){
+        $patients = $patient::paginate(19);
         $data = [
             'code' => 0,
             'data' => $patients
         ];
+
+        return response()->json($data);
     }
 
     public function create()
     {
         return view('patients.create');
+    }
+
+    public function show()
+    {
+
     }
 }

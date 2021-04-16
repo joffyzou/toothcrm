@@ -1,53 +1,85 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="demoTable" style="margin-top: 15px;">
-    搜索ID：
+<div class="demoTable">
+    搜索电话号码：
     <div class="layui-inline">
-        <input class="layui-input" name="id" id="demoReload" autocomplete="off">
+        <input class="layui-input" name="phone" id="demoReload" autocomplete="off">
     </div>
-    <button class="layui-btn" data-type="reload">搜索</button>
+    <div class="layui-btn" data-type="reload">搜索</div>
 </div>
-<table class="layui-table" lay-filter="demo">
-    <thead>
-        <tr>
-            <th lay-data="{field:'name', width:80, sort:true}">姓名</th>
-            <th lay-data="{field:'phone', width:120}">电话</th>
-            <th lay-data="{field:'pid'}">平台</th>
-            <th lay-data="{field:'is_appointment'}">是否预约</th>
-            <th lay-data="{field:'is_add_wechat'}">是否加微</th>
-            <th lay-data="{field:'project'}">咨询项目</th>
-            <th lay-data="{field:'is_to_store'}">是否到店</th>
-            <th lay-data="{field:'achievement'}">业绩</th>
-            <th lay-data="{field:'achievement'}">剩余时间</th>
-            <th lay-data="{field:'created_at'}">回访时间</th>
-            <th lay-data="{field:'is_appointment'}">到店剩余</th>
-            <th lay-data="{field:'note'}">特殊备注</th>
-            <th lay-data="{field:'is_add_wechat'}">来源</th>
-            <th lay-data="{field:'achievement'}">转介绍</th>
-            <th lay-data="{field:'achievement'}">介绍人</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach ($patients as $patient)
-            <tr>
-                <td>{{ $patient->name }}</td>
-                <td>{{ $patient->phone }}</td>
-                <td>大众</td>
-                <td>{{ $patient->aid }}</td>
-                <td>{{ $patient->is_appointment }}</td>
-                <td>{{ $patient->is_add_wechat }}</td>
-                <td>{{ $patient->project }}</td>
-                <td>{{ $patient->is_to_store }}</td>
-                <td>{{ $patient->achievement }}</td>
-                <td>{{ $patient->created_at->diffForHumans() }}</td>
-                <td>{{ $patient->is_appointment }}</td>
-                <td>{{ $patient->is_add_wechat }}</td>
-                <td>{{ $patient->project }}</td>
-                <td>{{ $patient->is_to_store }}</td>
-                <td>{{ $patient->achievement }}</td>
-            </tr>
-        @endforeach
-    </tbody>
-</table>
+<table class="layui-hide" id="LAY_table_user" lay-filter="user" lay-data="{id: 'idTest'}"></table>
+@endsection
+
+@section('scripts')
+<script>
+layui.use('table', function(){
+    var table = layui.table;
+    table.render({
+        elem: '#LAY_table_user',
+        height: 666,
+        url: "{{ route('admins.patientsdata', Auth::user()) }}",
+        page: {
+            layout: ['count', 'prev', 'page', 'next', 'skip'],
+            groups: 1,
+            first: false,
+            last: false,
+        },
+        limit: 18,
+        cols: [[
+            {field: 'name', title: '姓名'},
+            {field: 'phone', title: '电话'},
+            {field: 'platform', title: '平台'},
+            {field: 'is_appointment', title: '是否预约'},
+            {field: 'is_add_wechat', title: '是否加微'},
+            {field: 'project', title: '咨询项目'},
+            {field: 'is_to_store', title: '是否到店'},
+            {field: 'achievement', title: '业绩'},
+            {field: 'note', title: '特殊备注'},
+            {fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}
+        ]],
+        parseData: function(res){
+            return {
+                "code": res.code,
+                "count": res.data.total,
+                "data": res.data.data
+            }
+        },
+        id: 'testReload'
+    });
+
+    var $ = layui.$, active = {
+        reload: function(){
+            var demoReload = $('#demoReload');
+            table.reload('testReload', {
+                parseData: function(res) {
+                    return {
+                        'code': res.code,
+                        'data': res.data
+                    }
+                },
+                page: {
+                    curr: 1
+                },
+                where: {
+                    key: {
+                        phone: demoReload.val()
+                    }
+                }
+            });
+        }
+    };
+
+    $('.demoTable .layui-btn').on('click', function(){
+        var type = $(this).data('type');
+        active[type] ? active[type].call(this) : '';
+    });
+
+});
+</script>
+
+<script type="text/html" id="barDemo">
+    <a href="/patients/@{{d.id}}/edit" class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">添加回访</a>
+</script>
 @endsection

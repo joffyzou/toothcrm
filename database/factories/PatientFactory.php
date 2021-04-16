@@ -22,6 +22,7 @@ class PatientFactory extends Factory
     public function definition()
     {
         return [
+            'id' => $this->faker->id,
             'name' => $this->faker->name,
             'platform' => $this->faker->randomElement(['大众', '表单', 3]),
             'phone' => $this->faker->PhoneNumber,

@@ -120,4 +120,37 @@ class AdminsController extends Controller
 
         return view('admins.patients', compact('admin', 'patients'));
     }
+
+    public function patientdata(Admin $admin, Request $request)
+    {
+        if($request->key) {
+            $key = $request->key['phone'];
+            $patients = $admin->patients()->where('phone', $key)->get();
+            $data = [
+                'code' => 0,
+                'data' => $patients
+            ];
+            return response()->json($data);
+        }
+
+        $patients = $admin->patients()->paginate(18);
+        $data = [
+            'code' => 0,
+            'data' => $patients
+        ];
+
+        return response()->json($data);
+    }
+
+    public function patientsserch(Admin $admin, Request $request, $id=null)
+    {
+        $ids = $request->all()['key']['id'];
+        // dd($ids);
+        $patients = $admin->patients()->where('id', $ids)->get();
+        $data = [
+            'code' => 0,
+            'data' => $patients
+        ];
+        return response()->json($data);
+    }
 }
