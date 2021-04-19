@@ -15,15 +15,18 @@ class CreatePatientsTable extends Migration
     {
         Schema::create('patients', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->comment('姓名');
+            $table->string('name')->comment('患者姓名');
             $table->string('platform')->comment('平台名称');
-            $table->string('phone')->unique()->comment('电话');
-            $table->unsignedInteger('admin_id')->index()->comment('Admin ID');
-            $table->unsignedInteger('is_appointment')->default(0)->comment('0未预约，1已预约');
-            $table->unsignedInteger('is_add_wechat')->default(0)->comment('0未加，1加');
+            $table->string('phone')->unique()->index()->comment('患者电话');
+            $table->unsignedInteger('admin_id')->index()->comment('管理员ID');
+            $table->unsignedInteger('is_appointment')->default(0)->comment('预约(0=否)');
+            $table->unsignedInteger('is_add_wechat')->default(0)->comment('加微(0=否)');
             $table->string('project')->comment('咨询项目');
-            $table->unsignedInteger('is_to_store')->default(0)->comment('是否到店');
-            $table->string('achievement')->comment('业绩');
+            $table->unsignedInteger('is_to_store')->default(0)->comment('到店(0=否)');
+            $table->string('achievement')->nullable()->comment('业绩');
+            $table->string('repay')->nullable()->comment('添加回访');
+            // $table->dateTime('repay_time')->nullable()->comment('回访时间');
+            $table->dateTime('appointment_time')->nullable()->comment('预约时间');
             $table->string('note')->nullable()->comment('特殊备注');
             $table->index(['created_at']);
             $table->timestamps();

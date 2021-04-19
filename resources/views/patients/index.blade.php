@@ -8,17 +8,14 @@
 <script>
 layui.use('table', function(){
     var table = layui.table;
+    var $ = layui.$;
+    var csrf_token = $('meta[name="csrf-token"]').attr('content');
 
     table.render({
         elem: '#demo',
-        url: "{{ route('patients.getAllPatients') }}",
-        page: {
-            layout: ['count', 'prev', 'page', 'next', 'skip'],
-            groups: 1,
-            first: false,
-            last: false,
-        },
-        limit: 19,
+        url: "{{ route('patients.index') }}",
+        method: 'post',
+        headers: {'X-CSRF-TOKEN': csrf_token},
         cols: [[
             {field: 'name', title: '姓名', sort: true, fixed: 'left'},
             {field: 'phone', title: '电话'},
@@ -29,19 +26,15 @@ layui.use('table', function(){
             {field: 'score', title: '是否到店', sort: true},
             {field: 'classify', title: '业绩'},
             {field: 'wealth', title: '财富', sort: true},
-            {fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}
+            {title:'操作', align:'center', toolbar: '#barDemo', width:150}
         ]],
-        parseData: function(res){ //将原始数据解析成 table 组件所规定的数据
-            return {
-                "code": res.code, //解析接口状态
-                "count": res.data.total, //解析数据长度
-                "data": res.data.data //解析数据列表
-            }
+        page: {
+            layout: ['count', 'prev', 'page', 'next', 'skip'],
+            groups: 1,
+            first: false,
+            last: false,
         },
-        request: {
-            pageName: 'page' //页码的参数名称，默认：page
-            ,limitName: 'per_page' //每页数据量的参数名，默认：limit
-        }
+        limit: 10,
     });
 
 });

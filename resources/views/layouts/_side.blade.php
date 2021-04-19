@@ -14,7 +14,7 @@
             @endif
 
             <li class="layui-nav-item"><a href="{{ route('admins.patients', Auth::user()) }}">我的患者</a></li>
-            <li class="layui-nav-item"><a href="{{ route('patients.create') }}">添加患者</a></li>
+            <li class="layui-nav-item"><a href="#">添加患者</a></li>
             @if (Auth::user()->id == 1)
                 <li class="layui-nav-item"><a href="{{ route('patients.index') }}">患者公海</a></li>
             @endif

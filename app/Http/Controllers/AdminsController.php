@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Admin;
 use Auth;
+use App\Http\Traits\TraitResource;
 
 class AdminsController extends Controller
 {
+    use TraitResource;
+
     // 管理员列表页面
     public function index(Admin $admin)
     {
@@ -114,11 +118,24 @@ class AdminsController extends Controller
     }
 
     // 个人患者列表页
-    public function patient(Admin $admin)
+    public function patient(Admin $admin, Request $request)
     {
-        $patients = $admin->patients;
+        // $list = $admin->patients()->orderBy('created_at', 'desc')->get();
+        // dd($list);
 
-        return view('admins.patients', compact('admin', 'patients'));
+        if ($request->isMethod('post')) {
+            $page = $request->input('page', 1);
+            $limit = $request->input('limit', 10);
+            $list = $admin->patients()->orderBy('created_at', 'desc')->get();
+            $res = self::getPageData($list, $page, $limit);
+
+            return self::resJson(0, '获取成功', $res['data'], ['count' => $res['count']]);
+        }
+        return view('admins.patients');
+
+        // $patients = $admin->patients;
+
+        // return view('admins.patients', compact('admin', 'patients'));
     }
 
     public function patientdata(Admin $admin, Request $request)

@@ -1842,7 +1842,7 @@ module.exports = {
 
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
-__webpack_require__(/*! layui */ "./node_modules/layui/dist/layui.js"); // require('./xadmin.js');
+__webpack_require__(/*! layui */ "./node_modules/layui/dist/layui.js");
 
 /***/ }),
 
