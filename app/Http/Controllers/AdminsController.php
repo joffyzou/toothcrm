@@ -8,6 +8,7 @@ use App\Models\Admin;
 use Auth;
 use App\Http\Traits\TraitResource;
 use App\Models\Patient;
+use Carbon\Carbon;
 
 class AdminsController extends Controller
 {
@@ -121,46 +122,55 @@ class AdminsController extends Controller
     // 个人患者列表页
     public function patient(Admin $admin, Request $request, Patient $patient)
     {
-        $repays = [];
-        // dd($admin->patients);
-        $lists = $admin->patients;
-        // dd($patient::find(16)->repays()->get());
-        // dd($lists);
-        foreach ($lists as $list) {
-            $repays[$list->id] = $patient::find($list->id)->repays()->get()->toArray();
-        }
-        // dd($repays);
+        // $date = '2021-04-22 12:00:00';
+        // $carbon = Carbon::parse ($date);
+
+
+        // $int = (new Carbon)->diffInSeconds ($carbon, true);
+
+        // return Carbon::parse($int)->format('j天G小时i分s秒');
+
+
+
+
         if ($request->isMethod('post')) {
             $page = $request->input('page', 1);
             $limit = $request->input('limit', 10);
             $list = $admin->patients()->orderBy('created_at', 'desc')->get();
+            foreach ($list as $item) {
+                // $zuix = $item->repays()->orderBy('created_at', 'desc')->get()->toJson();
+
+                // $tet = Carbon::parse($zuix->created_at)->toDateTimeString();
+                // return $tet;
+                // $datt = $zuix->created_at->toDateTimeString()->toJson();
+                // $datt = (string)$zuix;
+                // return $datt;
+                // $te = Carbon::parse($zuix->created_at)->toJson();
+                // return $te;
+                // return $zuix;
+                // $datt = Carbon::parse('2016-10-15 00:10:25')->toDateTimeString();
+                // return $datt;
+                // $ditt = Carbon::parse($datt)->addDays(30);
+                // $int = (new Carbon)->diffInSeconds ($ditt, true);
+                // $tes = Carbon::parse($int)->format('j天G小时i分s秒');
+                // return $int;
+                // return $tes;
+                // $datt = Carbon::parse($zuix->created_at)->addDays(30);
+                // $int = (new Carbon)->diffInSeconds ($datt, true);
+
+                $item->rema_time = now()->toDateTimeString();
+                $item->repay_time = now();
+                $item->store_time = Carbon::now();
+                // return;
+            }
+
             $res = self::getPageData($list, $page, $limit);
+
 
             return self::resJson(0, '获取成功', $res['data'], ['count' => $res['count']]);
         }
 
-        return view('admins.patients', compact('repays'));
-    }
-
-    public function patientdata(Admin $admin, Request $request)
-    {
-        if($request->key) {
-            $key = $request->key['phone'];
-            $patients = $admin->patients()->where('phone', $key)->get();
-            $data = [
-                'code' => 0,
-                'data' => $patients
-            ];
-            return response()->json($data);
-        }
-
-        $patients = $admin->patients()->paginate(18);
-        $data = [
-            'code' => 0,
-            'data' => $patients
-        ];
-
-        return response()->json($data);
+        return view('admins.patients');
     }
 
     public function patientsserch(Admin $admin, Request $request, $id=null)

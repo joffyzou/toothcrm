@@ -25,7 +25,10 @@ class PatientsController extends Controller
         return view('patients.index');
     }
 
-
+    public function show(Patient $patient)
+    {
+        return view('patients.show', compact('patient'));
+    }
 
     public function update(Request $request, Patient $patient)
     {

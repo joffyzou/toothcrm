@@ -26,7 +26,7 @@ Route::post('admin/logout', 'LoginController@logout')->name('admin.logout');
 Route::resource('admins', 'AdminsController');
 
 // 患者管理
-// Route::resource('patients', 'PatientsController');
+Route::resource('patients', 'PatientsController');
 // 患者公海列表
 Route::any('patients', 'PatientsController@index')->name('patients.index');
 Route::post('patients/{patient}', 'PatientsController@update')->name('patients.update');

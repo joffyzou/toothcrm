@@ -17,10 +17,11 @@ class RepaysController extends Controller
         $repay->patient_id = $request->patient_id;
         $repay->repay = $request->repay;
         $res = $repay->save();
+        $repays = $repay::where('patient_id', $repay->patient_id)->orderBy('created_at', 'desc')->get();
         if ($res !== true) {
             return $this->resJson(1, $info->getError());
         } else {
-            return $this->resJson(0, '操作成功');
+            return $this->resJson(0, '操作成功', compact('repays'));
         }
     }
 
