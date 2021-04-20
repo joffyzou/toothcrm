@@ -138,6 +138,8 @@ class AdminsController extends Controller
             $limit = $request->input('limit', 10);
             $list = $admin->patients()->orderBy('created_at', 'desc')->get();
             foreach ($list as $item) {
+                $repay = $item->repays()->orderBy('created_at', 'desc')->first();
+                $repay_at = (string)$repay->created_at;
                 // $zuix = $item->repays()->orderBy('created_at', 'desc')->get()->toJson();
 
                 // $tet = Carbon::parse($zuix->created_at)->toDateTimeString();
@@ -158,7 +160,7 @@ class AdminsController extends Controller
                 // $datt = Carbon::parse($zuix->created_at)->addDays(30);
                 // $int = (new Carbon)->diffInSeconds ($datt, true);
 
-                $item->rema_time = now()->toDateTimeString();
+                $item->rema_time = $repay_at;
                 $item->repay_time = now();
                 $item->store_time = Carbon::now();
                 // return;
