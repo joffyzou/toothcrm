@@ -7,6 +7,7 @@
     </div>
     <button class="layui-btn" data-type="reload">搜索</button>
 </div>
+
 <table class="layui-hide" id="LAY_table_user" lay-filter="patients"></table>
 @endsection
 <script type="text/html" id="barDemo">
@@ -78,6 +79,17 @@ layui.config({
         var data = obj.data.repay;
         if(obj.event === 'repay'){
             var html = '<div style="margin:15px;" class="layui-form-item"><div class="layui-input-inline"><input type="text" name="repay" lay-verify="required" placeholder="请输入回访内容..." class="layui-input"></div></div>';
+            html += '<ul class="layui-timeline">';
+                @foreach ($repays[16] as $key => $val)
+            html += '<li class="layui-timeline-item">';
+            html += '<i class="layui-icon layui-timeline-axis">&#xe63f;</i>';
+            html += '<div class="layui-timeline-content layui-text">';
+            html += '<h3 class="layui-timeline-title">' + "{{ $val['created_at'] }}";
+            html += '</h3>';
+            html += '<p>'+ "{{ $val['repay'] }}";
+            html += '</p></div></li>';
+            @endforeach;
+            html += '</ul>';
             layer.open({
                 type: 1,
                 title: '添加回访',
@@ -93,10 +105,13 @@ layui.config({
                         return false;
                     }
                     var field = {
+                        admin_id: {{ Auth::user()->id }},
+                        patient_id: obj.data.id,
                         repay: repay
                     };
                     admin.req({
-                        url: '/patients/' + obj.data.id,
+                        // url: '/patients/' + obj.data.id,
+                        url: '/repays',
                         data: field,
                         method: 'post',
                         headers: {

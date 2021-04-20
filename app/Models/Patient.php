@@ -11,7 +11,8 @@ class Patient extends Model
 
     protected $fillable = [
         'name',
-        'pid',
+        'admin_id',
+        'platform',
         'phone',
         'admin_id',
         'is_appointment',
@@ -19,11 +20,18 @@ class Patient extends Model
         'project',
         'is_to_store',
         'achievement',
+        'repay',
+        'appointment_time',
         'note'
     ];
 
     public function admin()
     {
         return $this->belongsTo(Admin::class);
+    }
+
+    public function repays()
+    {
+        return $this->hasMany(repay::class, 'patient_id', 'id');
     }
 }

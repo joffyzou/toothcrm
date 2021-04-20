@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Admin;
 use Auth;
 use App\Http\Traits\TraitResource;
+use App\Models\Patient;
 
 class AdminsController extends Controller
 {
@@ -118,11 +119,17 @@ class AdminsController extends Controller
     }
 
     // 个人患者列表页
-    public function patient(Admin $admin, Request $request)
+    public function patient(Admin $admin, Request $request, Patient $patient)
     {
-        // $list = $admin->patients()->orderBy('created_at', 'desc')->get();
-        // dd($list);
-
+        $repays = [];
+        // dd($admin->patients);
+        $lists = $admin->patients;
+        // dd($patient::find(16)->repays()->get());
+        // dd($lists);
+        foreach ($lists as $list) {
+            $repays[$list->id] = $patient::find($list->id)->repays()->get()->toArray();
+        }
+        // dd($repays);
         if ($request->isMethod('post')) {
             $page = $request->input('page', 1);
             $limit = $request->input('limit', 10);
@@ -131,11 +138,8 @@ class AdminsController extends Controller
 
             return self::resJson(0, '获取成功', $res['data'], ['count' => $res['count']]);
         }
-        return view('admins.patients');
 
-        // $patients = $admin->patients;
-
-        // return view('admins.patients', compact('admin', 'patients'));
+        return view('admins.patients', compact('repays'));
     }
 
     public function patientdata(Admin $admin, Request $request)

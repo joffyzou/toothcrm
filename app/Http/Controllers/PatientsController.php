@@ -27,9 +27,17 @@ class PatientsController extends Controller
 
 
 
-    public function update(Request $request, $id)
+    public function update(Request $request, Patient $patient)
     {
-        return $request->all();
-        // return self::resJson(0, '获取成功', $res['data'], ['count' => $res['count']]);
+        $info = $patient::find($request->id);
+        if (empty($info)) {
+            return $this->resJson(1, '没有该条记录');
+        }
+        $res = $info->update($request->input());
+        if ($res !== true) {
+            return $this->resJson(1, $info->getError());
+        } else {
+            return $this->resJson(0, '操作成功');
+        }
     }
 }

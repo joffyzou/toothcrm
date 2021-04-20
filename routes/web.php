@@ -38,6 +38,9 @@ Route::post('patients/{patient}', 'PatientsController@update')->name('patients.u
 // 我的患者界面
 Route::any('admins/{admin}/patients', 'AdminsController@patient')->name('admins.patients');
 
+Route::resource('repays', 'RepaysController');
+// Route::any('repays', 'RepaysController@store');
+
 // 我的患者数据接口
 // Route::get('admins/{admin}/patientsdata', 'AdminsController@patientdata')->name('admins.patientsdata');
 // Route::get('admins/{admin}/patientsserch/', 'AdminsController@patientsserch')->name('admins.patientsserch');
