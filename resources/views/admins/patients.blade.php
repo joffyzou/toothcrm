@@ -105,7 +105,6 @@ layui.config({
                 content: '/patients/'+ obj.data.id,
                 btn: ['确定', '取消'],
                 btnAlign: 'c',
-                shade: 0,
                 yes: function (index, layero) {
                     var iframeWindow = window['layui-layer-iframe' + index],
                         submit = layero.find('iframe').contents().find("#layuiadmin-app-form-add");
@@ -148,6 +147,16 @@ layui.config({
                     });
                     submit.trigger('click');
                 }
+            })
+        } else if (obj.event === 'edit') {
+            layer.open({
+                type: 2,
+                title: '编辑',
+                offset: 'auto',
+                area: ['450px', '400px'],
+                content: '/patients/'+ obj.data.id + '/edit',
+                btn: ['确定', '取消'],
+                btnAlign: 'c',
             })
         }
     });

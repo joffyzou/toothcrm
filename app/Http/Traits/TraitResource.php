@@ -17,7 +17,7 @@ trait TraitResource
      * Date: 2019/5/26
      * Time: 15:45
      */
-    private static function getPageData($list, $page, $limit): array
+    private static function getPageData($list, $page, $limit)
     {
         if (is_object($list)) {
             $listArr = $list->toArray();

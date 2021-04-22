@@ -19,6 +19,6 @@ class Node extends Model
     {
         $data = self::get()->toArray();
 
-        retrun $data;
+        return $data;
     }
 }

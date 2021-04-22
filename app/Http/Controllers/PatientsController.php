@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Admin;
 use App\Models\Patient;
 use App\Http\Traits\TraitResource;
+use App\Models\Repay;
 
 class PatientsController extends Controller
 {
@@ -27,7 +28,8 @@ class PatientsController extends Controller
 
     public function show(Patient $patient)
     {
-        return view('patients.show', compact('patient'));
+        $repays = $patient->repays()->orderBy('created_at', 'desc')->get();
+        return view('patients.show', compact('patient', 'repays'));
     }
 
     public function update(Request $request, Patient $patient)
@@ -42,5 +44,11 @@ class PatientsController extends Controller
         } else {
             return $this->resJson(0, '操作成功');
         }
+    }
+
+    public function edit(Patient $patient)
+    {
+        $patients = $patient::all();
+        return view('patients.edit', compact('patients'));
     }
 }
