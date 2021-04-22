@@ -122,6 +122,10 @@ class AdminsController extends Controller
     // 个人患者列表页
     public function patient(Admin $admin, Request $request, Patient $patient)
     {
+        // $fptient = $admin->patients()->orderBy('created_at', 'desc')->first();
+
+        // return  $fptient->created_at->toDateTimeString();
+
         // $date = '2021-04-22 12:00:00';
         // $carbon = Carbon::parse ($date);
 
@@ -138,9 +142,16 @@ class AdminsController extends Controller
             $limit = $request->input('limit', 10);
             $list = $admin->patients()->orderBy('created_at', 'desc')->get();
             foreach ($list as $item) {
-                $repay = $item->repays()->orderBy('created_at', 'desc')->first();
-                $repay_at = (string)$repay->created_at;
-                // $zuix = $item->repays()->orderBy('created_at', 'desc')->get()->toJson();
+                if (count($item->repays) > 0) {
+                    $repay = $item->repays()->orderBy('created_at', 'desc')->first();
+                    $repay_at = $repay->created_at->toDateTimeString();
+                    $ditt = Carbon::parse($repay_at)->addDays(30);
+                    $int = (new Carbon)->diffInSeconds ($ditt, true);
+                    $tes = Carbon::parse($int)->format('j天G小时i分s秒');
+                    $item->rema_time = $tes;
+                } else {
+                    $item->rema_time = '0';
+                }
 
                 // $tet = Carbon::parse($zuix->created_at)->toDateTimeString();
                 // return $tet;
@@ -160,14 +171,11 @@ class AdminsController extends Controller
                 // $datt = Carbon::parse($zuix->created_at)->addDays(30);
                 // $int = (new Carbon)->diffInSeconds ($datt, true);
 
-                $item->rema_time = $repay_at;
                 $item->repay_time = now();
                 $item->store_time = Carbon::now();
-                // return;
             }
 
             $res = self::getPageData($list, $page, $limit);
-
 
             return self::resJson(0, '获取成功', $res['data'], ['count' => $res['count']]);
         }
