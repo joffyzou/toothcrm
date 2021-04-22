@@ -24,8 +24,6 @@ class CreatePatientsTable extends Migration
             $table->string('project')->comment('咨询项目');
             $table->unsignedInteger('is_to_store')->default(0)->comment('到店(0=否)');
             $table->string('achievement')->nullable()->comment('业绩');
-            $table->string('repay')->nullable()->comment('添加回访');
-            // $table->dateTime('repay_time')->nullable()->comment('回访时间');
             $table->dateTime('appointment_time')->nullable()->comment('预约时间');
             $table->string('note')->nullable()->comment('特殊备注');
             $table->index(['created_at']);

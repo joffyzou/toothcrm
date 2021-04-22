@@ -41,10 +41,6 @@ Route::any('admins/{admin}/patients', 'AdminsController@patient')->name('admins.
 Route::resource('repays', 'RepaysController');
 // Route::any('repays', 'RepaysController@store');
 
-// 我的患者数据接口
-// Route::get('admins/{admin}/patientsdata', 'AdminsController@patientdata')->name('admins.patientsdata');
-// Route::get('admins/{admin}/patientsserch/', 'AdminsController@patientsserch')->name('admins.patientsserch');
-
 // admins.create 新建员工 排除[3, 5]
 // admins.index role_id=1 pid=
 

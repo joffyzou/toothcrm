@@ -1,41 +1,38 @@
 @extends('layouts.app')
 
 @section('content')
-
-<div class="layui-form">
-    <div class="layui-form-item" style="margin-bottom: 0;">
-        <div class="layui-inline" style="margin-bottom: 0;">
-            <label class="layui-form-label">时间范围:</label>
-            <div class="layui-input-inline">
-                <input type="text" class="layui-input" id="test5" placeholder="yyyy-MM-dd HH:mm:ss">
-            </div>
+<div class="layui-form-item demoTable layui-form">
+    搜索：
+    <div class="layui-inline">
+        <input class="layui-input" name="key" id="demoReload" autocomplete="off" placeholder="请输入姓名/电话">
+    </div>
+    <div class="layui-inline">
+        <label class="layui-form-label">时间范围</label>
+        <div class="layui-input-inline">
+            <input type="text" id="test5" name="dateBetween" placeholder="开始 ~ 结束" autocomplete="off" class="layui-input">
         </div>
     </div>
-</div>
-{{-- <div class="demoTable">
     <div class="layui-inline">
-      <input class="layui-input" name="id" id="demoReload" autocomplete="off" placeholder="请输入电话">
+        <button class="layui-btn" data-type="reload" lay-submit lay-filter="LAY-app-search">搜索</button>
     </div>
-    <button class="layui-btn" data-type="reload">搜索</button>
-</div> --}}
-
-<script type="text/html" id="toolbarDemo">
+</div>
+<script type="text/html" id="toolbarTime">
     <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm" lay-event="getCheckData">今天</button>
-        <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">昨天</button>
-        <button class="layui-btn layui-btn-sm" lay-event="isAll">最近三天</button>
-        <button class="layui-btn layui-btn-sm" lay-event="isAll">最近一周</button>
-        <button class="layui-btn layui-btn-sm" lay-event="isAll">最近15天</button>
-        <button class="layui-btn layui-btn-sm" lay-event="isAll">最近一个月</button>
+        <input type="hidden" value="" id="created">
+        <button class="layui-btn layui-btn-sm" lay-event="today">今天</button>
+        <button class="layui-btn layui-btn-sm" lay-event="yesterday">昨天</button>
+        <button class="layui-btn layui-btn-sm" lay-event="threeDay">最近三天</button>
+        <button class="layui-btn layui-btn-sm" lay-event="sevenDay">最近一周</button>
+        <button class="layui-btn layui-btn-sm" lay-event="fifteenDay">最近15天</button>
+        <button class="layui-btn layui-btn-sm" lay-event="thirtyDay">最近一个月</button>
     </div>
 </script>
-
-<table class="layui-hide" id="LAY_table_user" lay-filter="patients"></table>
-@endsection
+<table class="layui-hide" id="admin_patients_table" lay-filter="admin_patients_table"></table>
 <script type="text/html" id="barDemo">
     <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
     <a class="layui-btn layui-btn-xs" lay-event="repay">添加回访</a>
 </script>
+@endsection
 
 @section('scripts')
 <script>
@@ -48,9 +45,9 @@ layui.config({
     var csrf_token = $('meta[name="csrf-token"]').attr('content');
 
     table.render({
-        elem: '#LAY_table_user',
+        elem: '#admin_patients_table',
         url: "{{ route('admins.patients', Auth::user()) }}",
-        toolbar: '#toolbarDemo',
+        toolbar: '#toolbarTime',
         defaultToolbar: false,
         method: 'post',
         headers: {'X-CSRF-TOKEN': csrf_token},
@@ -72,47 +69,34 @@ layui.config({
             {field: 'appointment_time', title: '预约时间'},
             {title:'操作', align:'center', toolbar: '#barDemo', width:150}
         ]],
-        page: {
-            layout: ['count', 'prev', 'page', 'next', 'skip'],
-            groups: 1,
-            first: false,
-            last: false,
-        },
+        page: true,
         limit: 10,
         id: 'testReload'
     });
 
     laydate.render({
         elem: '#test5',
-        type: 'datetime',
-        range: true
+        range: '~'
     });
 
-    var active = {
-        reload: function () {
-            var demoReload = $('#demoReload');
-            table.reload('testReload', {
-                page: {
-                    curr: 1
-                },
-                where: {
-                    key: {
-                        id: demoReload.val()
-                    }
-                }
-            });
-        }
-    };
-
-    $('.demoTable .layui-btn').on('click', function(){
-        var type = $(this).data('type');
-        active[type] ? active[type].call(this) : '';
+    form.on('submit(LAY-app-search)', function (data) {
+        var field = data.field;
+        table.reload('testReload', {
+            url: "{{ route('admins.patients', Auth::user()) }}" + '?form=form',
+            where: field
+        });
     });
 
-    table.on('tool(patients)', function(obj){
-        var data = obj.data.repay;
+    table.on('toolbar(admin_patients_table)', function (obj) {
+        $('#created').val(obj.event);
+        var created = $('#created').val();
+        table.reload('testReload', {
+            url: "{{ route('admins.patients', Auth::user()) }}" + '?created=' + created,
+        })
+    });
+
+    table.on('tool(admin_patients_table)', function(obj){
         if(obj.event === 'repay'){
-            var html = '<div style="margin:15px;" class="layui-form-item"><div class="layui-input-inline">'+ obj.data.id +'<input type="text" name="repay" lay-verify="required" placeholder="请输入回访内容..." class="layui-input"></div></div>';
             layer.open({
                 type: 2,
                 title: '添加回访',

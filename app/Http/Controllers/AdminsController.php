@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Admin;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Traits\TraitResource;
 use App\Models\Patient;
 use Carbon\Carbon;
@@ -122,25 +122,59 @@ class AdminsController extends Controller
     // 个人患者列表页
     public function patient(Admin $admin, Request $request, Patient $patient)
     {
-        // $fptient = $admin->patients()->orderBy('created_at', 'desc')->first();
-
-        // return  $fptient->created_at->toDateTimeString();
-
-        // $date = '2021-04-22 12:00:00';
-        // $carbon = Carbon::parse ($date);
-
-
-        // $int = (new Carbon)->diffInSeconds ($carbon, true);
-
-        // return Carbon::parse($int)->format('j天G小时i分s秒');
-
-
-
+        $now = Carbon::now();   // 现在
+        $today = Carbon::today();   // 今天
+        $yesterday = Carbon::yesterday();   // 昨天
+        $threeDay = Carbon::today()->modify('-3 days');  // 最近三天
+        $sevenDay = Carbon::today()->modify('-7 days'); // 最近一周
+        $fifteenDay = Carbon::today()->modify('-15 days');  // 最近15天
+        $thirtyDay = Carbon::today()->modify('-30 days');   // 最近一个月
 
         if ($request->isMethod('post')) {
             $page = $request->input('page', 1);
             $limit = $request->input('limit', 10);
+            $select_time = $request->input('created');
+            $search_form = $request->input('form');
             $list = $admin->patients()->orderBy('created_at', 'desc')->get();
+
+            if ($select_time) {
+                switch ($select_time) {
+                    case 'today':
+                        $list = $admin->patients()->whereDate('created_at', '>=', $now)->get();
+                        break;
+                    case 'yesterday':
+                        $list = $admin->patients()->whereBetween('created_at', [$yesterday, $today])->get();
+                        break;
+                    case 'threeDay':
+                        $list = $admin->patients()->whereBetween('created_at', [$threeDay, $now])->get();
+                        break;
+                    case 'sevenDay':
+                        $list = $admin->patients()->whereBetween('created_at', [$sevenDay, $now])->get();
+                        break;
+                    case 'fifteenDay':
+                        $list = $admin->patients()->whereBetween('created_at', [$fifteenDay, $now])->get();
+                        break;
+                    case 'thirtyDay':
+                        $list = $admin->patients()->whereBetween('created_at', [$thirtyDay, $now])->get();
+                        break;
+                }
+            }
+
+            if ($search_form == 'form') {
+                if ($request->input('key')) {
+                    $key = $request->input('key');
+                    $list = $admin->patients()->where('phone', $key)->orWhere('name', $key)->get();
+                } elseif ($request->input('dateBetween')) {
+                    $dateBetween = explode('~', $request->input('dateBetween'));
+                    $dateStart = Carbon::parse(trim($dateBetween[0]));   // 时间从小到大
+                    $dateEnd = Carbon::parse(trim($dateBetween[1]));
+                    $list = $admin->patients()->whereBetween('created_at', [$dateStart, $dateEnd])->get();
+                }
+            }
+
+
+
+
             foreach ($list as $item) {
                 if (count($item->repays) > 0) {
                     $repay = $item->repays()->orderBy('created_at', 'desc')->first();
@@ -152,25 +186,6 @@ class AdminsController extends Controller
                 } else {
                     $item->rema_time = '0';
                 }
-
-                // $tet = Carbon::parse($zuix->created_at)->toDateTimeString();
-                // return $tet;
-                // $datt = $zuix->created_at->toDateTimeString()->toJson();
-                // $datt = (string)$zuix;
-                // return $datt;
-                // $te = Carbon::parse($zuix->created_at)->toJson();
-                // return $te;
-                // return $zuix;
-                // $datt = Carbon::parse('2016-10-15 00:10:25')->toDateTimeString();
-                // return $datt;
-                // $ditt = Carbon::parse($datt)->addDays(30);
-                // $int = (new Carbon)->diffInSeconds ($ditt, true);
-                // $tes = Carbon::parse($int)->format('j天G小时i分s秒');
-                // return $int;
-                // return $tes;
-                // $datt = Carbon::parse($zuix->created_at)->addDays(30);
-                // $int = (new Carbon)->diffInSeconds ($datt, true);
-
                 $item->repay_time = now();
                 $item->store_time = Carbon::now();
             }

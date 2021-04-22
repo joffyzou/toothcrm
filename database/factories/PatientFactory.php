@@ -30,7 +30,9 @@ class PatientFactory extends Factory
             'is_add_wechat' => $this->faker->randomElement([0, 1]),
             'project' => $this->faker->randomElement([0, 1]),
             'is_to_store' => $this->faker->randomElement([0, 1]),
-            'achievement' => $this->faker->numberBetween($min = 1000, $max = 9000)
+            'achievement' => $this->faker->numberBetween($min = 1000, $max = 9000),
+            'note' => $this->faker->text(50),
+            'created_at' => $this->faker->dateTimeBetween('2021-03-17', 'now', 'Asia/Shanghai')
         ];
     }
 }
