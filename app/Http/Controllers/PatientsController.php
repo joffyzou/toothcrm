@@ -34,7 +34,7 @@ class PatientsController extends Controller
 
     public function update(Request $request, Patient $patient)
     {
-        $info = $patient::find($request->id);
+        $info = $patient::find($patient->id);
         if (empty($info)) {
             return $this->resJson(1, '没有该条记录');
         }
