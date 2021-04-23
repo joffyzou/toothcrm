@@ -13,7 +13,7 @@ layui.use('table', function(){
 
     table.render({
         elem: '#demo',
-        url: "{{ route('patients.index') }}",
+        url: "{{ route('admin.patients.index') }}",
         method: 'post',
         headers: {'X-CSRF-TOKEN': csrf_token},
         cols: [[

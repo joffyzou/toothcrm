@@ -18,7 +18,7 @@ class PatientsController extends Controller
         if ($request->isMethod('post')) {
             $page = $request->input('page', 1);
             $limit = $request->input('limit', 10);
-            $list = $patient->orderBy('created_at', 'desc')->get();
+            $list = $patient->where('admin_id', 0)->orderBy('created_at', 'desc')->get();
             $res = self::getPageData($list, $page, $limit);
 
             return self::resJson(0, '获取成功', $res['data'], ['count' => $res['count']]);

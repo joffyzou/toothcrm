@@ -13,36 +13,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('admins.login');
+Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
+    Route::get('login', 'LoginController@index')->name('login');    // 登录
+    Route::post('login', 'LoginController@login')->name('store');  // 保存登录状态
+    Route::post('logout', 'LoginController@logout')->name('logout');    // 退出
+
+    Route::resource('admins', 'AdminsController');  // 管理员管理
+
+    Route::resource('patients', 'PatientsController');  // 患者管理
+    Route::match(['get', 'post'],'admins/{admin}/patients', 'AdminsController@patient')->name('admins.patients'); // 我的患者
+    Route::post('patients','PatientsController@index')->name('patients.index'); // 患者公海
+
+    Route::resource('repays', 'RepaysController');  // 回访管理
 });
-
-// 登录、退出
-Route::get('admin/login', 'LoginController@index')->name('admin.login');
-Route::post('admin/login', 'LoginController@login');
-Route::post('admin/logout', 'LoginController@logout')->name('admin.logout');
-
-// 员工管理
-Route::resource('admins', 'AdminsController');
-
-// 患者管理
-Route::resource('patients', 'PatientsController');
-// 患者公海列表
-Route::any('patients', 'PatientsController@index')->name('patients.index');
-Route::post('patients/{patient}', 'PatientsController@update')->name('patients.update');
-// Route::get('patients/create', 'AdminsController@create')->name('patients.create');
-// Route::post('patients/store', 'AdminController@store');
-
-
-
-// 我的患者界面
-Route::any('admins/{admin}/patients', 'AdminsController@patient')->name('admins.patients');
-
-Route::resource('repays', 'RepaysController');
-// Route::any('repays', 'RepaysController@store');
-
-// admins.create 新建员工 排除[3, 5]
-// admins.index role_id=1 pid=
 
 // Route::group(['prefix' => '/admin', 'as' => 'admin.'], function () {
 //     // 角色列表

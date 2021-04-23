@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<a href="{{ route('admins.create') }}" class="layui-btn layui-btn-primary">
+<a href="{{ route('admin.admins.create') }}" class="layui-btn layui-btn-primary">
     <i class="layui-icon">&#xe654;</i> 添加员工
 </a>
 <table class="layui-table">

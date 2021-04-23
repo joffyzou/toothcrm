@@ -46,27 +46,26 @@ layui.config({
 
     table.render({
         elem: '#admin_patients_table',
-        url: "{{ route('admins.patients', Auth::user()) }}",
+        url: "{{ route('admin.admins.patients', Auth::user()) }}",
         toolbar: '#toolbarTime',
         defaultToolbar: false,
         method: 'post',
         headers: {'X-CSRF-TOKEN': csrf_token},
         cols: [[
-            {field: 'id', title: 'ID', sort: true, fixed: 'left'},
-            {field: 'name', title: '姓名'},
-            {field: 'phone', title: '电话'},
-            {field: 'platform', title: '平台'},
-            {field: 'is_appointment', title: '是否预约'},
-            {field: 'is_add_wechat', title: '是否加微'},
-            {field: 'project', title: '咨询项目'},
-            {field: 'is_to_store', title: '是否到店'},
-            {field: 'achievement', title: '业绩'},
-            {field: 'rema_time', title: '剩余时间'},
-            {field: 'repay_time', title: '回访剩余'},
-            {field: 'store_time', title: '到店剩余'},
+            {field: 'name', title: '姓名', width: 75},
+            {field: 'phone', title: '电话', width: 120},
+            {field: 'platform', title: '平台', width: 60},
+            {field: 'is_appointment', title: '是否预约', width: 86},
+            {field: 'is_add_wechat', title: '是否加微', width: 86},
+            {field: 'project', title: '咨询项目', width: 86},
+            {field: 'is_to_store', title: '是否到店', width: 86},
+            {field: 'achievement', title: '业绩', width: 86},
+            {field: 'rema_time', title: '剩余时间', sort: true, width: 102},
+            {field: 'repay_time', title: '回访剩余', sort: true},
+            {field: 'store_time', title: '到店剩余', sort: true},
             {field: 'note', title: '特殊备注'},
             {field: 'achievement', title: '来源'},
-            {field: 'appointment_time', title: '预约时间'},
+            {field: 'appointment_time', title: '预约时间', sort: true},
             {title:'操作', align:'center', toolbar: '#barDemo', width:150}
         ]],
         page: true,
@@ -82,7 +81,7 @@ layui.config({
     form.on('submit(LAY-app-search)', function (data) {
         var field = data.field;
         table.reload('testReload', {
-            url: "{{ route('admins.patients', Auth::user()) }}" + '?form=form',
+            url: "{{ route('admin.admins.patients', Auth::user()) }}" + '?form=form',
             where: field
         });
     });
@@ -91,7 +90,7 @@ layui.config({
         $('#created').val(obj.event);
         var created = $('#created').val();
         table.reload('testReload', {
-            url: "{{ route('admins.patients', Auth::user()) }}" + '?created=' + created,
+            url: "{{ route('admin.admins.patients', Auth::user()) }}" + '?created=' + created,
         })
     });
 
@@ -102,7 +101,7 @@ layui.config({
                 title: '添加回访',
                 offset: 'auto',
                 area: ['450px', '400px'],
-                content: '/patients/'+ obj.data.id,
+                content: '/admin/patients/'+ obj.data.id,
                 btn: ['确定', '取消'],
                 btnAlign: 'c',
                 yes: function (index, layero) {
@@ -154,7 +153,7 @@ layui.config({
                 title: '编辑',
                 offset: 'auto',
                 area: ['450px', '400px'],
-                content: '/patients/'+ obj.data.id + '/edit',
+                content: '/admin/patients/'+ obj.data.id + '/edit',
                 btn: ['确定', '取消'],
                 btnAlign: 'c',
             })

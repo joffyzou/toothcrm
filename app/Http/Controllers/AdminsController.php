@@ -180,9 +180,9 @@ class AdminsController extends Controller
                     $repay = $item->repays()->orderBy('created_at', 'desc')->first();
                     $repay_at = $repay->created_at->toDateTimeString();
                     $ditt = Carbon::parse($repay_at)->addDays(30);
-                    $int = (new Carbon)->diffInSeconds ($ditt, true);
-                    $tes = Carbon::parse($int)->format('j天G小时i分s秒');
-                    $item->rema_time = $tes;
+                    $int = (new Carbon)->diffInHours($ditt, true);
+//                    $tes = Carbon::parse($int)->format('j天G小时i分s秒');
+                    $item->rema_time = $int . '小时';
                 } else {
                     $item->rema_time = '0';
                 }

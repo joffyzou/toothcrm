@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
-class PatientsSeeder extends Seeder
+class RepaysSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -13,6 +13,6 @@ class PatientsSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\Patient::factory(100)->create();
+        \App\Models\Repay::factory(100)->create();
     }
 }
