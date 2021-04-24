@@ -26,6 +26,7 @@ class CreatePatientsTable extends Migration
             $table->string('achievement')->nullable()->comment('业绩');
             $table->dateTime('appointment_time')->nullable()->comment('预约时间');
             $table->string('note')->nullable()->comment('特殊备注');
+            $table->unsignedSmallInteger('origin')->comment('来源');
             $table->index(['created_at']);
             $table->timestamps();
         });

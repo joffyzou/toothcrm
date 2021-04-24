@@ -22,7 +22,8 @@ class Patient extends Model
         'achievement',
         'repay',
         'appointment_time',
-        'note'
+        'note',
+        'origin'
     ];
 
     public function admin()
@@ -33,5 +34,19 @@ class Patient extends Model
     public function repays()
     {
         return $this->hasMany(repay::class, 'patient_id', 'id');
+    }
+
+    public function origin()
+    {
+        return $this->belongsTo(Origin::class);
+    }
+
+    public function platform()
+    {
+        return $this->belongsTo(Platform::class);
+    }
+    public function project()
+    {
+        return $this->belongsTo(Project::class);
     }
 }

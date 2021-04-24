@@ -9,7 +9,7 @@
     <div class="layui-inline">
         <label class="layui-form-label">时间范围</label>
         <div class="layui-input-inline">
-            <input type="text" id="test5" name="dateBetween" placeholder="开始 ~ 结束" autocomplete="off" class="layui-input">
+            <input type="text" id="test5" name="dateBetween" placeholder="过去 ~ 现在" autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-inline">
@@ -75,17 +75,17 @@ layui.config({
         cols: [[
             {field: 'name', title: '姓名', width: 75},
             {field: 'phone', title: '电话', width: 120},
-            {field: 'platform', title: '平台', width: 60},
+            {field: 'platform', title: '平台', width: 80},
             // {field: 'is_appointment', title: '是否预约', width: 86, templet: '#switchAppointment', unresize: true},
             {field: 'is_add_wechat', title: '是否加微', width: 86, templet: '#switchWechat', unresize: true},
-            {field: 'project', title: '咨询项目', width: 86},
+            {field: 'project', align:'center', title: '咨询项目', width: 86},
             {field: 'is_to_store', title: '是否到店', width: 86, templet: '#switchStore', unresize: true},
             {field: 'achievement', title: '业绩', width: 86},
             {field: 'rema_time', title: '剩余时间', sort: true, width: 102},
             {field: 'repay_time', title: '回访剩余', sort: true},
             {field: 'store_time', title: '到店剩余', sort: true},
             {field: 'note', title: '特殊备注'},
-            {field: 'achievement', title: '来源'},
+            {field: 'origin', title: '来源', width: 60},
             {field: 'appointment_time', title: '预约时间', sort: true, align:'center', width: 160},
             {title:'操作', align:'center', toolbar: '#barDemo', width:140}
         ]],

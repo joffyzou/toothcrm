@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Traits\TraitResource;
 use App\Models\Patient;
 use Carbon\Carbon;
+use App\Models\Origin;
+use App\Models\Platform;
+use App\Models\Project;
 
 class AdminsController extends Controller
 {
@@ -120,7 +123,7 @@ class AdminsController extends Controller
     }
 
     // 个人患者列表页
-    public function patient(Admin $admin, Request $request, Patient $patient)
+    public function patient(Request $request, Admin $admin, Origin $origin, Project $project, Platform $platform)
     {
         $now = Carbon::now();   // 现在
         $today = Carbon::today();   // 今天
@@ -172,10 +175,10 @@ class AdminsController extends Controller
                 }
             }
 
-
-
-
             foreach ($list as $item) {
+                $item->origin = $origin::find($item->origin)->name;
+                $item->project = $project::find($item->project)->name;
+                $item->platform = $platform::find($item->platform)->name;
                 if (count($item->repays) > 0) {
                     $repay = $item->repays()->orderBy('created_at', 'desc')->first();
                     $repay_at = $repay->created_at->toDateTimeString();
@@ -188,6 +191,7 @@ class AdminsController extends Controller
                 $item->repay_time = now();
                 $item->store_time = Carbon::now();
             }
+
 
             $res = self::getPageData($list, $page, $limit);
 

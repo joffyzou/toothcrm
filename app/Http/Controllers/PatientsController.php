@@ -8,6 +8,9 @@ use App\Models\Admin;
 use App\Models\Patient;
 use App\Http\Traits\TraitResource;
 use App\Models\Repay;
+use App\Models\Origin;
+use App\Models\Platform;
+use App\Models\Project;
 
 class PatientsController extends Controller
 {
@@ -24,6 +27,19 @@ class PatientsController extends Controller
             return self::resJson(0, '获取成功', $res['data'], ['count' => $res['count']]);
         }
         return view('patients.index');
+    }
+
+    public function create(Origin $origin, Project $project, Platform $platform)
+    {
+        $origins = $origin::all();
+        $projects = $project::all();
+        $platforms = $platform::all();
+        return view('patients.create', compact('origins', 'projects', 'platforms'));
+    }
+
+    public function store()
+    {
+
     }
 
     public function show(Patient $patient)
@@ -46,8 +62,11 @@ class PatientsController extends Controller
         }
     }
 
-    public function edit(Patient $patient)
+    public function edit(Patient $patient, Origin $origin, Project $project, Platform $platform)
     {
-        return view('patients.edit', compact('patient'));
+        $origins = $origin::all();
+        $projects = $project::all();
+        $platforms = $platform::all();
+        return view('patients.edit', compact('patient', 'origins', 'projects', 'platforms'));
     }
 }

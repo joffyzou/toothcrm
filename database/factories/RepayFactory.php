@@ -25,7 +25,7 @@ class RepayFactory extends Factory
             'admin_id' => $this->faker->randomElement([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]),
             'patient_id' => $this->faker->numberBetween(1, 100),
             'repay' => $this->faker->sentence(5, true),
-            'created_at' => $this->faker->dateTimeBetween('2021-03-17', 'now', 'Asia/Shanghai')
+            'created_at' => $this->faker->dateTimeBetween('2021-03-01', 'now', 'Asia/Shanghai')
         ];
     }
 }

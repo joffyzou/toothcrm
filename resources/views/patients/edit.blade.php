@@ -1,7 +1,6 @@
 @extends('layouts.iframe')
 
 @section('content')
-
 <div class="layui-form" style="padding: 20px 70px 0 0;">
     <div class="layui-form-item">
         <label class="layui-form-label">姓名</label>
@@ -18,19 +17,20 @@
     <div class="layui-form-item">
         <label class="layui-form-label">平台</label>
         <div class="layui-input-inline">
-            <select name="platform" lay-filter="aihao">
-                <option value="大众">大众</option>
-                <option value="表单">表单</option>
+            <select name="platform" lay-filter="platform">
+                @foreach ($platforms as $platform)
+                    <option value="{{ $platform->id }}" @if ($platform->id == $patient->platform) selected @endif>{{ $platform->name }}</option>
+                @endforeach
             </select>
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">咨询项目</label>
         <div class="layui-input-inline">
-            <select name="project" lay-filter="aihao">
-                <option value="洁牙">洁牙</option>
-                <option value="种植">种植</option>
-                <option value="拔牙">拔牙</option>
+            <select name="project" lay-filter="project">
+                @foreach ($projects as $project)
+                    <option value="{{ $project->id }}" @if ($project->id == $patient->project) selected @endif>{{ $project->name }}</option>
+                @endforeach
             </select>
         </div>
     </div>
@@ -49,7 +49,11 @@
     <div class="layui-form-item">
         <label class="layui-form-label">来源</label>
         <div class="layui-input-inline">
-            <input type="tel" name="email" autocomplete="off" class="layui-input">
+            <select name="origin" lay-filter="origin">
+                @foreach ($origins as $origin)
+                <option value="{{ $origin->id }}" @if ($origin->id == $patient->origin) selected @endif>{{ $origin->name }}</option>
+                @endforeach
+            </select>
         </div>
     </div>
     <div class="layui-form-item layui-hide">
@@ -64,8 +68,10 @@
 layui.use('laydate', function(){
     var laydate = layui.laydate;
     laydate.render({
-        elem: '#appointment_time'
-        ,type: 'datetime'
+        elem: '#appointment_time',
+        type: 'datetime',
+        min: 0,
+        max: 30
     });
 })
 </script>

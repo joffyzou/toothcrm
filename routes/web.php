@@ -22,9 +22,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
 
     Route::resource('patients', 'PatientsController');  // 患者管理
     Route::match(['get', 'post'],'admins/{admin}/patients', 'AdminsController@patient')->name('admins.patients'); // 我的患者
-    Route::post('patients','PatientsController@index')->name('patients.index'); // 患者公海
+    Route::any('patients','PatientsController@index')->name('patients.index'); // 患者公海
 
     Route::resource('repays', 'RepaysController');  // 回访管理
+
+    Route::resource('platforms', 'PlatformsController')->only(['store']); // 平台管理
 });
 
 // Route::group(['prefix' => '/admin', 'as' => 'admin.'], function () {

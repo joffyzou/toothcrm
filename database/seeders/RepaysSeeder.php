@@ -13,6 +13,6 @@ class RepaysSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\Repay::factory(100)->create();
+        \App\Models\Repay::factory(300)->create();
     }
 }

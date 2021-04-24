@@ -7,6 +7,8 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 trait TraitResource
 {
+    protected $error = null;
+
     /**
      * @param object|array $list 获取的数据
      * @param int $page 当前页数
@@ -63,5 +65,10 @@ trait TraitResource
         $result['create_time'] = date('Y-m-d H:i:s', time());
 
         return response($result)->withHeaders($header);
+    }
+
+    public function getError()
+    {
+        return $this->error;
     }
 }
