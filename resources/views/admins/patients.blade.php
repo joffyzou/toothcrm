@@ -76,7 +76,7 @@ layui.config({
             {field: 'name', title: '姓名', width: 75},
             {field: 'phone', title: '电话', width: 120},
             {field: 'platform', title: '平台', width: 60},
-            {field: 'is_appointment', title: '是否预约', width: 86, templet: '#switchAppointment', unresize: true},
+            // {field: 'is_appointment', title: '是否预约', width: 86, templet: '#switchAppointment', unresize: true},
             {field: 'is_add_wechat', title: '是否加微', width: 86, templet: '#switchWechat', unresize: true},
             {field: 'project', title: '咨询项目', width: 86},
             {field: 'is_to_store', title: '是否到店', width: 86, templet: '#switchStore', unresize: true},
@@ -86,7 +86,7 @@ layui.config({
             {field: 'store_time', title: '到店剩余', sort: true},
             {field: 'note', title: '特殊备注'},
             {field: 'achievement', title: '来源'},
-            {field: 'appointment_time', title: '预约时间', sort: true},
+            {field: 'appointment_time', title: '预约时间', sort: true, align:'center', width: 160},
             {title:'操作', align:'center', toolbar: '#barDemo', width:140}
         ]],
         page: true,
@@ -328,6 +328,47 @@ layui.config({
                             content: '/admin/patients/'+ obj.data.id + '/edit',
                             btn: ['确定', '取消'],
                             btnAlign: 'c',
+                            yes: function (index, layero) {
+                                var iframeWindow = window['layui-layer-iframe' + index],
+                                    submit = layero.find('iframe').contents().find("#patient_edit");
+                                iframeWindow.layui.form.on('submit(patient_edit)', function (data) {
+                                    var field = data.field;
+                                    admin.req({
+                                        url: '/admin/patients/' + obj.data.id,
+                                        data: field,
+                                        method: 'PUT',
+                                        headers: {
+                                            'X-CSRF-TOKEN': csrf_token
+                                        },
+                                        beforeSend: function (XMLHttpRequest) {
+                                            layer.load();
+                                        },
+                                        done: function (res) {
+                                            layer.closeAll('loading');
+                                            if (res.code === 0) {
+                                                layer.msg(res.msg, {
+                                                    offset: '15px'
+                                                    , icon: 1
+                                                    , time: 1000
+                                                }, function () {
+                                                    obj.update({
+                                                        name: field.name,
+                                                        phone: field.phone,
+                                                        platform: field.platform,
+                                                        project: field.project,
+                                                        achievement: field.achievement
+                                                    });
+                                                    table.reload('testReload');
+                                                    layer.close(index); //关闭弹层
+                                                });
+                                            } else {
+                                                layer.msg(res.msg, {icon: 2});
+                                            }
+                                        }
+                                    });
+                                });
+                                submit.trigger('click');
+                            }
                         });
                     }
                 }

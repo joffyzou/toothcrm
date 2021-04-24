@@ -48,7 +48,6 @@ class PatientsController extends Controller
 
     public function edit(Patient $patient)
     {
-        $patients = $patient::all();
-        return view('patients.edit', compact('patients'));
+        return view('patients.edit', compact('patient'));
     }
 }

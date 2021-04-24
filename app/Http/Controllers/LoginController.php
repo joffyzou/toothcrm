@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -21,7 +21,7 @@ class LoginController extends Controller
         ]);
 
         if (Auth::attempt($credentials)) {
-            $fallback = route('admins.index');
+            $fallback = route('admin.admins.index');
 
             return redirect()->intended($fallback);
         } else {
