@@ -11,6 +11,7 @@ use App\Models\Repay;
 use App\Models\Origin;
 use App\Models\Platform;
 use App\Models\Project;
+use Illuminate\Support\Facades\Auth;
 
 class PatientsController extends Controller
 {
@@ -18,7 +19,7 @@ class PatientsController extends Controller
 
     public function index(Patient $patient, Request $request)
     {
-        if ($request->isMethod('post')) {
+        if ($request->isMethod('put')) {
             $page = $request->input('page', 1);
             $limit = $request->input('limit', 10);
             $list = $patient->where('admin_id', 0)->orderBy('created_at', 'desc')->get();
@@ -27,6 +28,7 @@ class PatientsController extends Controller
             return self::resJson(0, '获取成功', $res['data'], ['count' => $res['count']]);
         }
         return view('patients.index');
+
     }
 
     public function create(Origin $origin, Project $project, Platform $platform)
@@ -37,9 +39,21 @@ class PatientsController extends Controller
         return view('patients.create', compact('origins', 'projects', 'platforms'));
     }
 
-    public function store()
+    public function store(Request $request, Patient $patient)
     {
-
+        $patient->admin_id = Auth::user()->id;
+        $patient->name = $request->name;
+        $patient->phone = $request->phone;
+        $patient->project = $request->project;
+        $patient->platform = $request->platform;
+        $patient->origin = $request->origin;
+        $patient->appointment_time = $request->appointment_time;
+        $patient->is_add_wechat = $request->is_add_wechat;
+        $patient->achievement = $request->achievement;
+        $patient->note = $request->note;
+        if ($patient->save()) {
+            return redirect()->route('admin.admins.patients', Auth::user()->id);
+        }
     }
 
     public function show(Patient $patient)

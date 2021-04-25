@@ -75,7 +75,7 @@ layui.config({
         cols: [[
             {field: 'name', title: '姓名', width: 75},
             {field: 'phone', title: '电话', width: 120},
-            {field: 'platform', title: '平台', width: 80},
+            {field: 'platform', title: '平台', align:'center', width: 80},
             // {field: 'is_appointment', title: '是否预约', width: 86, templet: '#switchAppointment', unresize: true},
             {field: 'is_add_wechat', title: '是否加微', width: 86, templet: '#switchWechat', unresize: true},
             {field: 'project', align:'center', title: '咨询项目', width: 86},

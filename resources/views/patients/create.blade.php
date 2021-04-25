@@ -1,17 +1,18 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="layui-form" lay-filter="test2" action="{{ route('admin.patients.store') }}" method="POST">
+<form class="layui-form" action="{{ route('admin.patients.store') }}" method="POST">
+    @csrf
     <div class="layui-form-item">
         <label class="layui-form-label">患者姓名</label>
         <div class="layui-input-inline">
-            <input type="text" name="name" required  lay-verify="required" placeholder="请输入患者姓名" autocomplete="off" class="layui-input">
+            <input type="text" name="name" required  lay-verify="required" value="{{ old('name') }}" placeholder="请输入患者姓名" autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">患者电话</label>
         <div class="layui-input-inline">
-            <input type="tel" name="phone" required  lay-verify="required" placeholder="请输入患者电话" autocomplete="off" class="layui-input">
+            <input type="tel" name="phone" required  lay-verify="required|phone|number" value="{{ old('phone') }}" placeholder="请输入患者电话" autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
@@ -35,7 +36,7 @@
                 @endforeach
             </select>
         </div>
-        <button class="layui-btn" id="addPlatform">添加新平台</button>
+        <a class="layui-btn" id="addPlatform">添加新平台</a>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">来源</label>
@@ -70,15 +71,15 @@
     <div class="layui-form-item layui-form-text">
         <label class="layui-form-label">特殊备注</label>
         <div class="layui-input-inline">
-            <textarea name="note" placeholder="请输入内容" class="layui-textarea" cols="21"></textarea>
+            <textarea name="note" placeholder="请输入内容" class="layui-textarea" cols="21">{{ old('note') }}</textarea>
         </div>
     </div>
     <div class="layui-form-item">
         <div class="layui-input-block">
-            <button class="layui-btn" lay-submit lay-filter="formDemo">录入</button>
+            <button type="submit" class="layui-btn" lay-submit lay-filter="formDemo">录入</button>
         </div>
     </div>
-</div>
+</form>
 @endsection
 
 @section('scripts')

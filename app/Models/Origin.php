@@ -12,4 +12,6 @@ class Origin extends Model
     protected $fillable = [
         'name'
     ];
+
+    public $timestamps = false;
 }
