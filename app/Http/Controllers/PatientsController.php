@@ -17,6 +17,11 @@ class PatientsController extends Controller
 {
     use TraitResource;
 
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index(Patient $patient, Request $request)
     {
         if ($request->isMethod('put')) {

@@ -10,6 +10,11 @@ class PlatformsController extends Controller
 {
     use TraitResource;
 
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function store(Request $request, Platform $platform)
     {
         $platform->name = $request->platform;

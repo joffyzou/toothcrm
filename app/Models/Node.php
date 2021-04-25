@@ -19,6 +19,12 @@ class Node extends Model
     {
         $data = self::get()->toArray();
 
-        return $data;
+        return $this->treelevel($data);
+    }
+
+    public function getList(){
+        $data = Node::select(['id','name','pid'])->get();
+        $data = $data->toArray();
+        return $this->treeLevel($data);
     }
 }

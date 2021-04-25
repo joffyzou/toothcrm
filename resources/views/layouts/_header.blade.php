@@ -3,16 +3,23 @@
     <ul class="layui-nav layui-layout-right">
         <li class="layui-nav-item">
             <a href="javascript:;">{{ Auth::user()->username }}</a>
-            <dl class="layui-nav-child">
-                <dd><a href="">set 1</a></dd>
-                <dd><a href="">set 2</a></dd>
-            </dl>
+{{--            <dl class="layui-nav-child">--}}
+{{--                <dd>--}}
+{{--                    <form action="{{ route('admin.logout') }}" method="POST" id="logout">--}}
+{{--                        @csrf--}}
+{{--                        @method('DELETE')--}}
+{{--                        <a href="javascript:void(0)" onclick="document.getElementById('logout').submit();return false;">退出</a>--}}
+{{--                    </form>--}}
+{{--                </dd>--}}
+{{--            </dl>--}}
         </li>
         <li class="layui-nav-item">
-            <form action="{{ route('admin.logout') }}" method="POST" onsubmit="return confirm('您确定要退出吗？');">
+            <form action="{{ route('admin.logout') }}" method="POST" id="logout">
                 @csrf
-                <a><button type="submit" style="border:none; outline: none; cursor: hand; cursor: pointer; background-color: transparent; color:#fff;color:rgba(255,255,255,.7);">退出</button></a>
+                @method('DELETE')
+                <a href="javascript:void(0)" onclick="document.getElementById('logout').submit();return false;">退出</a>
             </form>
         </li>
     </ul>
 </div>
+

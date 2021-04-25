@@ -11,6 +11,11 @@ class RepaysController extends Controller
 {
     use TraitResource;
 
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function store(Request $request, Repay $repay)
     {
         $repay->admin_id = $request->admin_id;

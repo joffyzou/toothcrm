@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Admin;
 use Illuminate\Support\Facades\Auth;
@@ -16,6 +15,11 @@ use App\Models\Project;
 class AdminsController extends Controller
 {
     use TraitResource;
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
 
     // 管理员列表页面
     public function index(Admin $admin)
@@ -74,7 +78,7 @@ class AdminsController extends Controller
         }
         $admin->save();
 
-        return redirect()->route('admins.index');
+        return redirect()->route('admin.admins.index');
     }
 
     /**

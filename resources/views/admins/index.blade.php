@@ -12,6 +12,7 @@
         <th>岗位</th>
         <th>密码</th>
         <th>创建时间</th>
+        <th>操作</th>
     </tr>
 </thead>
 <tbody>
@@ -22,8 +23,15 @@
             <td>{{ $admin->role->name }}</td>
             <td>{{ $admin->password }}</td>
             <td>{{ $admin->created_at->diffForHumans() }}</td>
+            <td></td>
         </tr>
     @endforeach
 </tbody>
 </table>
+@endsection
+
+@section('script')
+<script>
+
+</script>
 @endsection
