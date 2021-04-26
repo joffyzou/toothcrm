@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Role;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -20,51 +21,52 @@ class UsersController extends Controller
         $this->middleware('auth');
     }
 
-    // 管理员列表页面
-    public function index(User $user)
+    public function index(Request $request, User $user, Role $role)
     {
-        $users = $user->all();
+        $roleId = Auth::user()->role_id;
+        if ($request->isMethod('PUT')) {
+            if ($roleId > 0) {
+                $users = $user->where('p_id', $roleId)->get();
+            } else {
+                $users = $user->where('role_id', '>', 0)->get();
+            }
+            foreach ($users as $user) {
+                $user->role = $role->find($user->role_id)->name;
+                $user->joinTime = $user->created_at->diffForHumans();
+            }
+            $page = $request->input('page', 1);
+            $limit = $request->input('limit', 30);
+            $res = self::getPageData($users, $page, $limit);
 
-        return view('users.index', compact('users'));
+            return self::resJson(0, '获取成功', $res['data'], ['count' => $res['count']]);
+        }
+
+        return view('users.index');
     }
 
-    // 新建员工
-    public function create(User $user)
+    public function create(Role $role)
     {
-        $user = Auth::user();
-        switch ($user->role->id) {
+        $roleId = Auth::user()->role_id;
+        switch ($roleId) {
             case 1:
-                $roles = $user->role::where([['id', '<>', '1']])->get();
+                $roles = $role->where('id', 2)->get();
                 break;
-            case 2:
-                $roles = $user->role::where([
-                    ['id', '<>', '1'],
-                    ['id', '<>', '2'],
-                    ['id', '<>', '4'],
-                    ['id', '<>', '5']
-                ])->get();
-                break;
-            case 4:
-                $roles = $user->role::where([
-                    ['id', '<>', '1'],
-                    ['id', '<>', '2'],
-                    ['id', '<>', '3'],
-                    ['id', '<>', '4']
-                ])->get();
+            case 3:
+                $roles = $role->where('id', 4)->get();
                 break;
             default:
-                $roles = null;
+                $roles = $role->all();
         }
 
         return view('users.create', compact('roles'));
     }
 
-    // 保存新建员工
     public function store(Request $request, User $user)
     {
         $data = $this->validate($request, [
             'username' => 'required|unique:users|max:50',
             'role_id' => 'required',
+            'p_id' => 'required',
             'password' => 'required|min:6'
         ]);
         foreach ($data as $key => $value) {
@@ -109,9 +111,21 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, User $user)
     {
-        //
+        $info = $user->find($request->id);
+        if (empty($info)) {
+            return $this->resJson(1, '没有该条记录');
+        }
+        $res = $info->update([
+            'username' => $request->input('username'),
+            'password' => bcrypt($request->input('password'))
+        ]);
+        if ($res !== true) {
+            return $this->resJson(1, $info->getError());
+        } else {
+            return $this->resJson(0, '操作成功');
+        }
     }
 
     /**

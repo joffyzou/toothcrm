@@ -18,8 +18,9 @@ class UsersSeeder extends Seeder
         $user = User::find(1);
         $user->username = 'admin';
         $user->password = bcrypt('admin');
-        $user->role_id = 1;
         $user->is_admin = 1;
+        $user->role_id = 0;
+        $user->p_id = 0;
         $user->save();
     }
 }

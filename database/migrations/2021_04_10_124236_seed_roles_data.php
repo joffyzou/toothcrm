@@ -14,7 +14,6 @@ class SeedRolesData extends Migration
     public function up()
     {
         $roles = [
-            ['name' => 'administrator'],
             ['name' => '客服主管'],
             ['name' => '客服'],
             ['name' => '运营主管'],

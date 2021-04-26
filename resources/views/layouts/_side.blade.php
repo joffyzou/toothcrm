@@ -8,12 +8,12 @@
                     <dd><a href="{{ route('admins.create') }}">添加员工</a></dd>
                 </dl>
             </li> --}}
-            @if (Auth::user()->role_id == 1 || Auth::user()->role_id == 2 || Auth::user()->role_id == 4)
-                <li class="layui-nav-item"><a href="{{ route('admin.users.index') }}">员工列表</a></li>
+            @if (Auth::user()->role_id == 0 || Auth::user()->role_id == 1 || Auth::user()->role_id == 3)
+                <li class="layui-nav-item"><a href="{{ route('admin.users.index') }}">我的员工</a></li>
             @endif
             <li class="layui-nav-item"><a href="{{ route('admin.users.patients', Auth::user()) }}">我的患者</a></li>
             <li class="layui-nav-item"><a href="{{ route('admin.patients.create') }}">添加患者</a></li>
-            @if (Auth::user()->id == 1)
+            @if (Auth::id() === 1)
                 <li class="layui-nav-item"><a href="{{ route('admin.patients.index') }}">患者公海</a></li>
             @endif
         </ul>
