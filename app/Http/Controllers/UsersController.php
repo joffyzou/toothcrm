@@ -3,16 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Admin;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Traits\TraitResource;
-use App\Models\Patient;
 use Carbon\Carbon;
 use App\Models\Origin;
 use App\Models\Platform;
 use App\Models\Project;
 
-class AdminsController extends Controller
+class UsersController extends Controller
 {
     use TraitResource;
 
@@ -22,23 +21,23 @@ class AdminsController extends Controller
     }
 
     // 管理员列表页面
-    public function index(Admin $admin)
+    public function index(User $user)
     {
-        $admins = $admin->all();
+        $users = $user->all();
 
-        return view('admins.index', compact('admins'));
+        return view('users.index', compact('users'));
     }
 
     // 新建员工
-    public function create(Admin $admin)
+    public function create(User $user)
     {
-        $admin = Auth::user();
-        switch ($admin->role->id) {
+        $user = Auth::user();
+        switch ($user->role->id) {
             case 1:
-                $roles = $admin->role::where([['id', '<>', '1']])->get();
+                $roles = $user->role::where([['id', '<>', '1']])->get();
                 break;
             case 2:
-                $roles = $admin->role::where([
+                $roles = $user->role::where([
                     ['id', '<>', '1'],
                     ['id', '<>', '2'],
                     ['id', '<>', '4'],
@@ -46,7 +45,7 @@ class AdminsController extends Controller
                 ])->get();
                 break;
             case 4:
-                $roles = $admin->role::where([
+                $roles = $user->role::where([
                     ['id', '<>', '1'],
                     ['id', '<>', '2'],
                     ['id', '<>', '3'],
@@ -57,28 +56,28 @@ class AdminsController extends Controller
                 $roles = null;
         }
 
-        return view('admins.create', compact('roles'));
+        return view('users.create', compact('roles'));
     }
 
     // 保存新建员工
-    public function store(Request $request, Admin $admin)
+    public function store(Request $request, User $user)
     {
         $data = $this->validate($request, [
-            'username' => 'required|unique:admins|max:50',
+            'username' => 'required|unique:users|max:50',
             'role_id' => 'required',
             'password' => 'required|min:6'
         ]);
         foreach ($data as $key => $value) {
             if (is_null($value)) continue;
             if ($key == 'password') {
-                $admin->$key = bcrypt($value);
+                $user->$key = bcrypt($value);
                 continue;
             }
-            $admin->$key = $value;
+            $user->$key = $value;
         }
-        $admin->save();
+        $user->save();
 
-        return redirect()->route('admin.admins.index');
+        return redirect()->route('admin.users.index');
     }
 
     /**
@@ -127,7 +126,7 @@ class AdminsController extends Controller
     }
 
     // 个人患者列表页
-    public function patient(Request $request, Admin $admin, Origin $origin, Project $project, Platform $platform)
+    public function patient(Request $request, User $user, Origin $origin, Project $project, Platform $platform)
     {
         $now = Carbon::now();   // 现在
         $today = Carbon::today();   // 今天
@@ -142,27 +141,27 @@ class AdminsController extends Controller
             $limit = $request->input('limit', 10);
             $select_time = $request->input('created');
             $search_form = $request->input('form');
-            $list = $admin->patients()->orderBy('created_at', 'desc')->get();
+            $list = $user->patients()->orderBy('created_at', 'desc')->get();
 
             if ($select_time) {
                 switch ($select_time) {
                     case 'today':
-                        $list = $admin->patients()->whereDate('created_at', '>=', $now)->get();
+                        $list = $user->patients()->whereDate('created_at', '>=', $now)->get();
                         break;
                     case 'yesterday':
-                        $list = $admin->patients()->whereBetween('created_at', [$yesterday, $today])->get();
+                        $list = $user->patients()->whereBetween('created_at', [$yesterday, $today])->get();
                         break;
                     case 'threeDay':
-                        $list = $admin->patients()->whereBetween('created_at', [$threeDay, $now])->get();
+                        $list = $user->patients()->whereBetween('created_at', [$threeDay, $now])->get();
                         break;
                     case 'sevenDay':
-                        $list = $admin->patients()->whereBetween('created_at', [$sevenDay, $now])->get();
+                        $list = $user->patients()->whereBetween('created_at', [$sevenDay, $now])->get();
                         break;
                     case 'fifteenDay':
-                        $list = $admin->patients()->whereBetween('created_at', [$fifteenDay, $now])->get();
+                        $list = $user->patients()->whereBetween('created_at', [$fifteenDay, $now])->get();
                         break;
                     case 'thirtyDay':
-                        $list = $admin->patients()->whereBetween('created_at', [$thirtyDay, $now])->get();
+                        $list = $user->patients()->whereBetween('created_at', [$thirtyDay, $now])->get();
                         break;
                 }
             }
@@ -170,19 +169,19 @@ class AdminsController extends Controller
             if ($search_form == 'form') {
                 if ($request->input('key')) {
                     $key = $request->input('key');
-                    $list = $admin->patients()->where('phone', $key)->orWhere('name', $key)->get();
+                    $list = $user->patients()->where('phone', $key)->orWhere('name', $key)->get();
                 } elseif ($request->input('dateBetween')) {
                     $dateBetween = explode('~', $request->input('dateBetween'));
                     $dateStart = Carbon::parse(trim($dateBetween[0]));   // 时间从小到大
                     $dateEnd = Carbon::parse(trim($dateBetween[1]));
-                    $list = $admin->patients()->whereBetween('created_at', [$dateStart, $dateEnd])->get();
+                    $list = $user->patients()->whereBetween('created_at', [$dateStart, $dateEnd])->get();
                 }
             }
 
             foreach ($list as $item) {
-                $item->origin = $origin::find($item->origin)->name;
-                $item->project = $project::find($item->project)->name;
-                $item->platform = $platform::find($item->platform)->name;
+                $item->origin = $origin::find($item->origin_id)->name;
+                $item->project = $project::find($item->project_id)->name;
+                $item->platform = $platform::find($item->platform_id)->name;
                 if (count($item->repays) > 0) {
                     $repay = $item->repays()->orderBy('created_at', 'desc')->first();
                     $repay_at = $repay->created_at->toDateTimeString();
@@ -202,14 +201,14 @@ class AdminsController extends Controller
             return self::resJson(0, '获取成功', $res['data'], ['count' => $res['count']]);
         }
 
-        return view('admins.patients');
+        return view('users.patients');
     }
 
-    public function patientsserch(Admin $admin, Request $request, $id=null)
+    public function patientsserch(User $user, Request $request, $id=null)
     {
         $ids = $request->all()['key']['id'];
         // dd($ids);
-        $patients = $admin->patients()->where('id', $ids)->get();
+        $patients = $user->patients()->where('id', $ids)->get();
         $data = [
             'code' => 0,
             'data' => $patients

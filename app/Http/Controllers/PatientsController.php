@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Admin;
+use App\Models\User;
 use App\Models\Patient;
 use App\Http\Traits\TraitResource;
 use App\Models\Repay;
@@ -27,7 +27,7 @@ class PatientsController extends Controller
         if ($request->isMethod('put')) {
             $page = $request->input('page', 1);
             $limit = $request->input('limit', 10);
-            $list = $patient->where('admin_id', 0)->orderBy('created_at', 'desc')->get();
+            $list = $patient->where('user_id', 0)->orderBy('created_at', 'desc')->get();
             $res = self::getPageData($list, $page, $limit);
 
             return self::resJson(0, '获取成功', $res['data'], ['count' => $res['count']]);
@@ -46,7 +46,7 @@ class PatientsController extends Controller
 
     public function store(Request $request, Patient $patient)
     {
-        $patient->admin_id = Auth::user()->id;
+        $patient->user_id = Auth::id();
         $patient->name = $request->name;
         $patient->phone = $request->phone;
         $patient->project = $request->project;
@@ -57,7 +57,7 @@ class PatientsController extends Controller
         $patient->achievement = $request->achievement;
         $patient->note = $request->note;
         if ($patient->save()) {
-            return redirect()->route('admin.admins.patients', Auth::user()->id);
+            return redirect()->route('admin.users.patients', Auth::user()->id);
         }
     }
 

@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use App\Models\Repay;
 
 class RepaysSeeder extends Seeder
 {
@@ -13,6 +14,6 @@ class RepaysSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\Repay::factory(300)->create();
+        Repay::factory(300)->create();
     }
 }

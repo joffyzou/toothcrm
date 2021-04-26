@@ -18,7 +18,7 @@ class RepaysController extends Controller
 
     public function store(Request $request, Repay $repay)
     {
-        $repay->admin_id = $request->admin_id;
+        $repay->user_id = $request->user_id;
         $repay->patient_id = $request->patient_id;
         $repay->repay = $request->repay;
         $res = $repay->save();

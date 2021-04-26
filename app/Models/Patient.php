@@ -26,9 +26,9 @@ class Patient extends Model
         'origin'
     ];
 
-    public function admin()
+    public function user()
     {
-        return $this->belongsTo(Admin::class);
+        return $this->belongsTo(User::class);
     }
 
     public function repays()

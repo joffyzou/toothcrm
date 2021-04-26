@@ -5,7 +5,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">添加回访</label>
         <div class="layui-input-inline">
-            <input type="hidden" name="admin_id" value="{{ $patient->admin_id }}">
+            <input type="hidden" name="user_id" value="{{ $patient->user_id }}">
             <input type="hidden" name="patient_id" value="{{ $patient->id }}">
             <input type="text" name="repay" value="" lay-verify="required" placeholder="请输入回访内容" autocomplete="off" class="layui-input">
         </div>

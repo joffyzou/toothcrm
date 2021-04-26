@@ -14,7 +14,7 @@ class CreateRepaysTable extends Migration
     public function up()
     {
         Schema::create('repays', function (Blueprint $table) {
-            $table->unsignedInteger('admin_id')->comment('患者ID');
+            $table->unsignedInteger('user_id')->comment('员工ID');
             $table->unsignedInteger('patient_id')->comment('患者ID');
             $table->string('repay')->comment('回访详情');
             $table->timestamps();

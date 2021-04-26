@@ -9,7 +9,7 @@ class LoginController extends Controller
 {
     public function index()
     {
-        return view('admins.login');
+        return view('users.login');
     }
 
     // 登录验证并保存登录状态
@@ -21,7 +21,7 @@ class LoginController extends Controller
         ]);
 
         if (Auth::attempt($credentials)) {
-            $fallback = route('admin.admins.index');
+            $fallback = route('admin.users.index');
 
             return redirect()->intended($fallback);
         } else {

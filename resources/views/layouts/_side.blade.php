@@ -9,9 +9,9 @@
                 </dl>
             </li> --}}
             @if (Auth::user()->role_id == 1 || Auth::user()->role_id == 2 || Auth::user()->role_id == 4)
-                <li class="layui-nav-item"><a href="{{ route('admin.admins.index') }}">员工列表</a></li>
+                <li class="layui-nav-item"><a href="{{ route('admin.users.index') }}">员工列表</a></li>
             @endif
-            <li class="layui-nav-item"><a href="{{ route('admin.admins.patients', Auth::user()) }}">我的患者</a></li>
+            <li class="layui-nav-item"><a href="{{ route('admin.users.patients', Auth::user()) }}">我的患者</a></li>
             <li class="layui-nav-item"><a href="{{ route('admin.patients.create') }}">添加患者</a></li>
             @if (Auth::user()->id == 1)
                 <li class="layui-nav-item"><a href="{{ route('admin.patients.index') }}">患者公海</a></li>

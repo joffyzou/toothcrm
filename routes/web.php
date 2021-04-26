@@ -19,10 +19,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::delete('logout', 'LoginController@logout')->name('logout');    // 退出
 
 
-    Route::resource('admins', 'AdminsController');  // 管理员管理
+    Route::resource('users', 'UsersController');  // 管理员管理
 
     Route::resource('patients', 'PatientsController');  // 患者管理
-    Route::match(['get', 'post'],'admins/{admin}/patients', 'AdminsController@patient')->name('admins.patients'); // 我的患者
+    Route::match(['get', 'post'],'users/{user}/patients', 'UsersController@patient')->name('users.patients'); // 我的患者
     Route::match(['get', 'put'], 'patients','PatientsController@index')->name('patients.index'); // 患者公海
 
     Route::resource('repays', 'RepaysController');  // 回访管理

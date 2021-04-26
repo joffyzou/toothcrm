@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<a href="{{ route('admin.admins.create') }}" class="layui-btn layui-btn-primary">
+<a href="{{ route('admin.users.create') }}" class="layui-btn layui-btn-primary">
     <i class="layui-icon">&#xe654;</i> 添加员工
 </a>
 <table class="layui-table">
@@ -16,13 +16,13 @@
     </tr>
 </thead>
 <tbody>
-    @foreach ($admins as $admin)
+    @foreach ($users as $user)
         <tr>
-            <td>{{ $admin->id }}</td>
-            <td>{{ $admin->username }}</td>
-            <td>{{ $admin->role->name }}</td>
-            <td>{{ $admin->password }}</td>
-            <td>{{ $admin->created_at->diffForHumans() }}</td>
+            <td>{{ $user->id }}</td>
+            <td>{{ $user->username }}</td>
+            <td>{{ $user->role->name }}</td>
+            <td>{{ $user->password }}</td>
+            <td>{{ $user->created_at->diffForHumans() }}</td>
             <td></td>
         </tr>
     @endforeach

@@ -67,7 +67,7 @@ layui.config({
 
     table.render({
         elem: '#admin_patients_table',
-        url: "{{ route('admin.admins.patients', Auth::user()) }}",
+        url: "{{ route('admin.users.patients', Auth::id()) }}",
         toolbar: '#toolbarTime',
         defaultToolbar: false,
         method: 'post',
@@ -198,7 +198,7 @@ layui.config({
     form.on('submit(LAY-app-search)', function (data) {
         var field = data.field;
         table.reload('testReload', {
-            url: "{{ route('admin.admins.patients', Auth::user()) }}" + '?form=form',
+            url: "{{ route('admin.users.patients', Auth::user()) }}" + '?form=form',
             where: field
         });
     });
@@ -207,7 +207,7 @@ layui.config({
         $('#created').val(obj.event);
         var created = $('#created').val();
         table.reload('testReload', {
-            url: "{{ route('admin.admins.patients', Auth::user()) }}" + '?created=' + created,
+            url: "{{ route('admin.users.patients', Auth::user()) }}" + '?created=' + created,
         })
     });
 

@@ -3,7 +3,7 @@
 @section('content')
 <div class="layui-col-md6">
     <div class="layui-panel">
-        <form action="{{ route('admin.admins.store') }}" method="POST" class="layui-form">
+        <form action="{{ route('admin.users.store') }}" method="POST" class="layui-form">
             {{ csrf_field() }}
             <div class="layui-form-item">
                 <label class="layui-form-label">登录名</label>
