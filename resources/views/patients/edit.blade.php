@@ -19,7 +19,7 @@
         <div class="layui-input-inline">
             <select name="platform" lay-filter="platform">
                 @foreach ($platforms as $platform)
-                    <option value="{{ $platform->id }}" @if ($platform->id == $patient->platform) selected @endif>{{ $platform->name }}</option>
+                    <option value="{{ $platform->id }}" @if ($platform->id == $patient->platform_id) selected @endif>{{ $platform->name }}</option>
                 @endforeach
             </select>
         </div>
@@ -29,7 +29,7 @@
         <div class="layui-input-inline">
             <select name="project" lay-filter="project">
                 @foreach ($projects as $project)
-                    <option value="{{ $project->id }}" @if ($project->id == $patient->project) selected @endif>{{ $project->name }}</option>
+                    <option value="{{ $project->id }}" @if ($project->id == $patient->project_id) selected @endif>{{ $project->name }}</option>
                 @endforeach
             </select>
         </div>
@@ -51,7 +51,7 @@
         <div class="layui-input-inline">
             <select name="origin" lay-filter="origin">
                 @foreach ($origins as $origin)
-                <option value="{{ $origin->id }}" @if ($origin->id == $patient->origin) selected @endif>{{ $origin->name }}</option>
+                <option value="{{ $origin->id }}" @if ($origin->id == $patient->origin_id) selected @endif>{{ $origin->name }}</option>
                 @endforeach
             </select>
         </div>

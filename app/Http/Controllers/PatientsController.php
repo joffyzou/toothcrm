@@ -2,12 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\User;
 use App\Models\Patient;
 use App\Http\Traits\TraitResource;
-use App\Models\Repay;
 use App\Models\Origin;
 use App\Models\Platform;
 use App\Models\Project;
@@ -49,9 +46,9 @@ class PatientsController extends Controller
         $patient->user_id = Auth::id();
         $patient->name = $request->name;
         $patient->phone = $request->phone;
-        $patient->project = $request->project;
-        $patient->platform = $request->platform;
-        $patient->origin = $request->origin;
+        $patient->project_id = $request->project;
+        $patient->platform_id = $request->platform;
+        $patient->origin_id = $request->origin;
         $patient->appointment_time = $request->appointment_time;
         $patient->is_add_wechat = $request->is_add_wechat;
         $patient->achievement = $request->achievement;
