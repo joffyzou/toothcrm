@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\Patient;
 use App\Http\Traits\TraitResource;
@@ -19,17 +20,28 @@ class PatientsController extends Controller
         $this->middleware('auth');
     }
 
-    public function index(Patient $patient, Request $request)
+    public function index(Request $request, User $user, Patient $patient, Origin $origin, Platform $platform, Project $project)
     {
-        if ($request->isMethod('put')) {
+        $users = $user->where('p_id', 1)->get();
+        if ($request->isMethod('PUT')) {
             $page = $request->input('page', 1);
             $limit = $request->input('limit', 10);
-            $list = $patient->where('user_id', 0)->orderBy('created_at', 'desc')->get();
-            $res = self::getPageData($list, $page, $limit);
+            $patients = $patient->where('user_id', 0)->orderBy('created_at', 'desc')->get();
+
+
+
+
+            foreach ($patients as $item) {
+                $item->origin = $origin::find($item->origin_id)->name;
+                $item->project = $project::find($item->project_id)->name;
+                $item->platform = $platform::find($item->platform_id)->name;
+            }
+
+            $res = self::getPageData($patients, $page, $limit);
 
             return self::resJson(0, '获取成功', $res['data'], ['count' => $res['count']]);
         }
-        return view('patients.index');
+        return view('patients.index', compact('users'));
 
     }
 

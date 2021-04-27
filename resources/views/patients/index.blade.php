@@ -16,6 +16,12 @@
             <button class="layui-btn" data-type="reload" lay-submit lay-filter="LAY-app-search">搜索</button>
         </div>
     </div>
+
+
+
+
+
+
     <script type="text/html" id="toolbarTime">
         <div class="layui-btn-container">
             <input type="hidden" value="" id="created">
@@ -31,17 +37,23 @@
 
     {{--是否预约--}}
     <script type="text/html" id="switchAppointment">
-        <input type="checkbox" name="is_appointment" lay-skin="switch" lay-filter="Appointment" data-id="@{{ d.id }}" lay-text="是|否" @{{ d.is_appointment ? 'checked':'' }}>
+        <span class="layui-badge @{{ d.is_appointment ? 'layui-bg-green':'layui-bg-gray' }}">
+            @{{ d.is_appointment ? '是':'否' }}
+        </span>
     </script>
 
     {{--是否加微--}}
     <script type="text/html" id="switchWechat">
-        <input type="checkbox" name="is_add_wechat" lay-skin="switch" lay-filter="addWechat" data-id="@{{ d.id }}" lay-text="是|否" @{{ d.is_add_wechat ? 'checked':'' }}>
+        <span class="layui-badge @{{ d.is_add_wechat ? 'layui-bg-green':'layui-bg-gray' }}">
+            @{{ d.is_add_wechat ? '是':'否' }}
+        </span>
     </script>
 
     {{--是否到店--}}
     <script type="text/html" id="switchStore">
-        <input type="checkbox" name="is_to_store" lay-skin="switch" lay-filter="toStore" data-id="@{{ d.id }}" lay-text="是|否" @{{ d.is_to_store ? 'checked':'' }}>
+        <span class="layui-badge @{{ d.is_to_store ? 'layui-bg-green':'layui-bg-gray' }}">
+            @{{ d.is_to_store ? '是':'否' }}
+        </span>
     </script>
 
     <script type="text/html" id="barDemo">
@@ -69,24 +81,25 @@
                 elem: '#admin_patients_table',
                 url: "{{ route('admin.patients.index') }}",
                 toolbar: '#toolbarTime',
-                defaultToolbar: false,
+                defaultToolbar: [{
+                    title: '指派',
+                    layEvent: 'TABLE_ASSIGN',
+                    icon: 'layui-icon-service'
+                }],
                 method: 'PUT',
                 headers: {'X-CSRF-TOKEN': csrf_token},
                 cols: [[
+                    {type: 'checkbox'},
                     {field: 'name', title: '姓名', width: 75},
                     {field: 'phone', title: '电话', width: 120},
+                    {field: 'is_appointment', title: '是否预约', width: 86, templet: '#switchAppointment', unresize: true, align:'center'},
                     {field: 'platform', title: '平台', align:'center', width: 80},
-                    // {field: 'is_appointment', title: '是否预约', width: 86, templet: '#switchAppointment', unresize: true},
-                    {field: 'is_add_wechat', title: '是否加微', width: 86, templet: '#switchWechat', unresize: true},
+                    {field: 'is_add_wechat', title: '是否加微', width: 86, templet: '#switchWechat', unresize: true, align:'center'},
                     {field: 'project', align:'center', title: '咨询项目', width: 86},
-                    {field: 'is_to_store', title: '是否到店', width: 86, templet: '#switchStore', unresize: true},
+                    {field: 'is_to_store', title: '是否到店', width: 86, templet: '#switchStore', unresize: true, align:'center'},
                     {field: 'achievement', title: '业绩', width: 86},
-                    {field: 'rema_time', title: '剩余时间', sort: true, width: 102},
-                    {field: 'repay_time', title: '回访剩余', sort: true},
-                    {field: 'store_time', title: '到店剩余', sort: true},
                     {field: 'note', title: '特殊备注'},
                     {field: 'origin', title: '来源', width: 60},
-                    {field: 'appointment_time', title: '预约时间', sort: true, align:'center', width: 160},
                     {title:'操作', align:'center', toolbar: '#barDemo', width:140}
                 ]],
                 page: true,
@@ -204,11 +217,73 @@
             });
 
             table.on('toolbar(admin_patients_table)', function (obj) {
-                $('#created').val(obj.event);
-                var created = $('#created').val();
-                table.reload('testReload', {
-                    url: "{{ route('admin.users.patients', Auth::user()) }}" + '?created=' + created,
-                })
+                if (obj.event === 'TABLE_ASSIGN') {
+                    //  var html = "<div class='layui-form'><select name='users' lay-filter='users'>@foreach ($users as $user)<option value=" + {{ $user->id }} + ">{{ $user->username }}</option>@endforeach</select></div>";
+                    layer.open({
+                        type: 1
+                        , title: '指派给'
+                        , offset: 'auto'
+                        , id: 'layerDemo'
+                        , content: $('#usersSelect')
+                        , btn: ['确定', '取消']
+                        , btnAlign: 'c'
+                        , yes: function (index, layero) {
+                            var password = $("input[name='password']").val();
+                            var username = $("input[name='username']").val();
+                            if (password == '') {
+                                layer.msg('密码不能为空', {icon: 2});
+                                return false;
+                            }
+                            if (username == '') {
+                                layer.msg('账号不能为空', {icon: 2});
+                                return false;
+                            }
+                            var field = {
+                                id: obj.data.id,
+                                password: password,
+                                username: username
+                            };
+                            admin.req({
+                                url: '/admin/users/' + obj.data.id
+                                , data: field
+                                , method: 'PUT'
+                                , headers: {
+                                    'X-CSRF-TOKEN': csrf_token
+                                }
+                                , beforeSend: function (XMLHttpRequest) {
+                                    layer.load();
+                                }
+                                , done: function (res) {
+                                    layer.closeAll('loading');
+                                    if (res.code === 0) {
+                                        layer.msg(res.msg, {
+                                            offset: '15px'
+                                            , icon: 1
+                                            , time: 1000
+                                        }, function () {
+                                            obj.update({
+                                                username: field.username
+                                            }); //数据更新
+                                            layer.close(index); //关闭弹层
+                                        });
+                                    } else {
+                                        layer.msg(res.msg, {icon: 2});
+                                    }
+                                }
+                            });
+                        }
+                        , btn2: function (index, layero) {
+                            layer.closeAll();
+                        }
+                    });
+                } else {
+                    $('#created').val(obj.event);
+                    var created = $('#created').val();;
+                    table.reload('testReload', {
+                        url: "{{ route('admin.patients.index') }}" + '?created=' + created,
+                        method: 'PUT'
+                    })
+                }
             });
 
             table.on('tool(admin_patients_table)', function(obj){
@@ -378,4 +453,18 @@
             });
         });
     </script>
+@endsection
+
+
+@section('bottom')
+    <div class="layui-form" id="usersSelect">
+        <label for="">指派给：</label>
+        <div class="layui-input-inline">
+            <select name="platform" lay-filter="platform">
+                @foreach ($users as $user)
+                    <option value="{{ $user->id }}">{{ $user->username }}</option>
+                @endforeach
+            </select>
+        </div>
+    </div>
 @endsection

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -11,20 +12,23 @@ class Patient extends Model
 
     protected $fillable = [
         'name',
-        'admin_id',
-        'platform',
         'phone',
-        'admin_id',
+        'platform_id',
+        'project_id',
+        'origin_id',
+        'user_id',
         'is_appointment',
         'is_add_wechat',
-        'project',
         'is_to_store',
         'achievement',
-        'repay',
         'appointment_time',
-        'note',
-        'origin'
+        'note'
     ];
+
+    protected function serializeDate(DateTimeInterface $date)
+    {
+        return $date->format($this->dateFormat ?: 'Y-m-d H:i:s');
+    }
 
     public function user()
     {
