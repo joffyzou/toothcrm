@@ -10,8 +10,13 @@ class Repay extends Model
     use HasFactory;
 
     protected $fillable = [
-        'admin_id',
+        'user_id',
         'patient_id',
         'repay'
     ];
+
+    public function patient()
+    {
+        return $this->belongsTo(Patient::class);
+    }
 }

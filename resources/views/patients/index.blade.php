@@ -17,10 +17,17 @@
         </div>
     </div>
 
-
-
-
-
+    <div class="layui-form-item layui-form">
+        指派给：
+        <div class="layui-inline">
+            <select id="users" lay-filter="users">
+                <option value="">请选择客服</option>
+                @foreach ($users as $user)
+                    <option value="{{ $user->id }}">{{ $user->username }}</option>
+                @endforeach
+            </select>
+        </div>
+    </div>
 
     <script type="text/html" id="toolbarTime">
         <div class="layui-btn-container">
@@ -57,7 +64,7 @@
     </script>
 
     <script type="text/html" id="barDemo">
-        <a class="layui-btn layui-btn-xs layui-btn-primary" lay-event="repay">添加回访</a>
+{{--        <a class="layui-btn layui-btn-xs layui-btn-primary" lay-event="repay">添加回访</a>--}}
         <a class="layui-btn layui-btn-xs" lay-event="more">更多</a>
     </script>
 @endsection
@@ -81,15 +88,12 @@
                 elem: '#admin_patients_table',
                 url: "{{ route('admin.patients.index') }}",
                 toolbar: '#toolbarTime',
-                defaultToolbar: [{
-                    title: '指派',
-                    layEvent: 'TABLE_ASSIGN',
-                    icon: 'layui-icon-service'
-                }],
+                defaultToolbar: false,
                 method: 'PUT',
                 headers: {'X-CSRF-TOKEN': csrf_token},
                 cols: [[
                     {type: 'checkbox'},
+                    {field:'id', title:'ID', width:80, unresize: true, sort: true},
                     {field: 'name', title: '姓名', width: 75},
                     {field: 'phone', title: '电话', width: 120},
                     {field: 'is_appointment', title: '是否预约', width: 86, templet: '#switchAppointment', unresize: true, align:'center'},
@@ -97,7 +101,6 @@
                     {field: 'is_add_wechat', title: '是否加微', width: 86, templet: '#switchWechat', unresize: true, align:'center'},
                     {field: 'project', align:'center', title: '咨询项目', width: 86},
                     {field: 'is_to_store', title: '是否到店', width: 86, templet: '#switchStore', unresize: true, align:'center'},
-                    {field: 'achievement', title: '业绩', width: 86},
                     {field: 'note', title: '特殊备注'},
                     {field: 'origin', title: '来源', width: 60},
                     {title:'操作', align:'center', toolbar: '#barDemo', width:140}
@@ -217,131 +220,17 @@
             });
 
             table.on('toolbar(admin_patients_table)', function (obj) {
-                if (obj.event === 'TABLE_ASSIGN') {
-                    //  var html = "<div class='layui-form'><select name='users' lay-filter='users'>@foreach ($users as $user)<option value=" + {{ $user->id }} + ">{{ $user->username }}</option>@endforeach</select></div>";
-                    layer.open({
-                        type: 1
-                        , title: '指派给'
-                        , offset: 'auto'
-                        , id: 'layerDemo'
-                        , content: $('#usersSelect')
-                        , btn: ['确定', '取消']
-                        , btnAlign: 'c'
-                        , yes: function (index, layero) {
-                            var password = $("input[name='password']").val();
-                            var username = $("input[name='username']").val();
-                            if (password == '') {
-                                layer.msg('密码不能为空', {icon: 2});
-                                return false;
-                            }
-                            if (username == '') {
-                                layer.msg('账号不能为空', {icon: 2});
-                                return false;
-                            }
-                            var field = {
-                                id: obj.data.id,
-                                password: password,
-                                username: username
-                            };
-                            admin.req({
-                                url: '/admin/users/' + obj.data.id
-                                , data: field
-                                , method: 'PUT'
-                                , headers: {
-                                    'X-CSRF-TOKEN': csrf_token
-                                }
-                                , beforeSend: function (XMLHttpRequest) {
-                                    layer.load();
-                                }
-                                , done: function (res) {
-                                    layer.closeAll('loading');
-                                    if (res.code === 0) {
-                                        layer.msg(res.msg, {
-                                            offset: '15px'
-                                            , icon: 1
-                                            , time: 1000
-                                        }, function () {
-                                            obj.update({
-                                                username: field.username
-                                            }); //数据更新
-                                            layer.close(index); //关闭弹层
-                                        });
-                                    } else {
-                                        layer.msg(res.msg, {icon: 2});
-                                    }
-                                }
-                            });
-                        }
-                        , btn2: function (index, layero) {
-                            layer.closeAll();
-                        }
-                    });
-                } else {
-                    $('#created').val(obj.event);
-                    var created = $('#created').val();;
-                    table.reload('testReload', {
-                        url: "{{ route('admin.patients.index') }}" + '?created=' + created,
-                        method: 'PUT'
-                    })
-                }
+                $('#created').val(obj.event);
+                var created = $('#created').val();
+                table.reload('testReload', {
+                    url: "{{ route('admin.patients.index') }}" + '?created=' + created,
+                    method: 'PUT'
+                })
             });
 
             table.on('tool(admin_patients_table)', function(obj){
                 var data = obj.data, layEvent = obj.event;
-                if(layEvent === 'repay'){
-                    layer.open({
-                        type: 2,
-                        title: '添加回访',
-                        offset: 'auto',
-                        area: ['450px', '400px'],
-                        content: '/admin/patients/'+ obj.data.id,
-                        btn: ['确定', '取消'],
-                        btnAlign: 'c',
-                        yes: function (index, layero) {
-                            var iframeWindow = window['layui-layer-iframe' + index],
-                                submit = layero.find('iframe').contents().find("#layuiadmin-app-form-add");
-                            iframeWindow.layui.form.on('submit(layuiadmin-app-form-add)', function (data) {
-                                var field = data.field;
-                                admin.req({
-                                    url: '/admin/repays',
-                                    data: field,
-                                    method: 'POST',
-                                    headers: {
-                                        'X-CSRF-TOKEN': csrf_token
-                                    },
-                                    beforeSend: function (XMLHttpRequest) {
-                                        layer.load();
-                                    },
-                                    done: function (res) {
-                                        layer.closeAll('loading');
-                                        if (res.code === 0) {
-                                            layer.msg(res.msg, {
-                                                offset: '15px'
-                                                , icon: 1
-                                                , time: 1000
-                                            }, function () {
-                                                obj.update({
-                                                    account: field.account
-                                                    , username: field.username
-                                                    , role_names: field.role_names
-                                                    , tel: field.tel
-                                                    , sex: field.sex
-                                                    , status: field.status
-                                                });
-                                                table.reload('testReload');
-                                                layer.close(index); //关闭弹层
-                                            });
-                                        } else {
-                                            layer.msg(res.msg, {icon: 2});
-                                        }
-                                    },
-                                });
-                            });
-                            submit.trigger('click');
-                        }
-                    })
-                } else if(layEvent === 'more') {
-                    //下拉菜单
+                if(layEvent === 'more') {
                     dropdown.render({
                         elem: this,
                         show: true,
@@ -451,20 +340,55 @@
                     })
                 }
             });
+
+            form.on('select(users)', function (obj) {
+                var checkStatus = table.checkStatus('testReload'),
+                    data = checkStatus.data,
+                    ids = new Array(),
+                    selectval = $('#users').val()
+                if (selectval && data.length > 0) {
+                    for (i=0; i<data.length; i++) {
+                        ids[i] = data[i].id;
+                    }
+                    admin.req({
+                        url: "{{ route('admin.patients.updates') }}",
+                        data: {
+                            id: JSON.stringify(ids),
+                            zid: $('#users').val()
+                        },
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': csrf_token
+                        },
+                        beforeSend: function (XMLHttpRequest) {
+                            layer.load();
+                        },
+                        done: function (res) {
+                            layer.closeAll('loading');
+                            if (res.code === 0) {
+                                layer.msg(res.msg, {
+                                    offset: '15px'
+                                    , icon: 1
+                                    , time: 1000
+                                }, function () {
+                                    table.reload('testReload');
+                                });
+                            } else {
+                                layer.msg(res.msg, {icon: 2});
+                            }
+                        }
+                    });
+                } else if (data.length <= 1) {
+                    layer.alert('请至少勾选一位患者！');
+                } else {
+                    layer.alert('请选择一位客服！');
+                }
+            })
         });
     </script>
 @endsection
 
 
-@section('bottom')
-    <div class="layui-form" id="usersSelect">
-        <label for="">指派给：</label>
-        <div class="layui-input-inline">
-            <select name="platform" lay-filter="platform">
-                @foreach ($users as $user)
-                    <option value="{{ $user->id }}">{{ $user->username }}</option>
-                @endforeach
-            </select>
-        </div>
-    </div>
-@endsection
+
+
+

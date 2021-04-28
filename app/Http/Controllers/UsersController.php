@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Patient;
 use App\Models\Role;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -140,9 +141,8 @@ class UsersController extends Controller
     }
 
     // 个人患者列表页
-    public function patient(Request $request, User $user, Origin $origin, Project $project, Platform $platform)
+    public function patient(Request $request, User $user, Patient $patient, Origin $origin, Project $project, Platform $platform)
     {
-        $now = Carbon::now();   // 现在
         $today = Carbon::today();   // 今天
         $yesterday = Carbon::yesterday();   // 昨天
         $threeDay = Carbon::today()->modify('-3 days');  // 最近三天
@@ -160,22 +160,22 @@ class UsersController extends Controller
             if ($select_time) {
                 switch ($select_time) {
                     case 'today':
-                        $list = $user->patients()->whereDate('created_at', '>=', $now)->get();
+                        $list = $user->patients()->whereDate('created_at', '>=', now())->get();
                         break;
                     case 'yesterday':
                         $list = $user->patients()->whereBetween('created_at', [$yesterday, $today])->get();
                         break;
                     case 'threeDay':
-                        $list = $user->patients()->whereBetween('created_at', [$threeDay, $now])->get();
+                        $list = $user->patients()->whereBetween('created_at', [$threeDay, now()])->get();
                         break;
                     case 'sevenDay':
-                        $list = $user->patients()->whereBetween('created_at', [$sevenDay, $now])->get();
+                        $list = $user->patients()->whereBetween('created_at', [$sevenDay, now()])->get();
                         break;
                     case 'fifteenDay':
-                        $list = $user->patients()->whereBetween('created_at', [$fifteenDay, $now])->get();
+                        $list = $user->patients()->whereBetween('created_at', [$fifteenDay, now()])->get();
                         break;
                     case 'thirtyDay':
-                        $list = $user->patients()->whereBetween('created_at', [$thirtyDay, $now])->get();
+                        $list = $user->patients()->whereBetween('created_at', [$thirtyDay, now()])->get();
                         break;
                 }
             }
@@ -196,19 +196,55 @@ class UsersController extends Controller
                 $item->origin = $origin::find($item->origin_id)->name;
                 $item->project = $project::find($item->project_id)->name;
                 $item->platform = $platform::find($item->platform_id)->name;
-                if (count($item->repays) > 0) {
-                    $repay = $item->repays()->orderBy('created_at', 'desc')->first();
-                    $repay_at = $repay->created_at->toDateTimeString();
-                    $ditt = Carbon::parse($repay_at)->addDays(30);
-                    $int = (new Carbon)->diffInHours($ditt, true);
-                    $item->rema_time = $int . '小时';
-                } else {
-                    $item->rema_time = '0';
-                }
-                $item->repay_time = now();
-                $item->store_time = Carbon::now();
-            }
 
+                $currUserRepays = $item->repays()->where('user_id', Auth::id())->count();   // 当前客服回访数
+                if ($currUserRepays == 0) {
+                    // 当没有回访时，剩余时间=录入时间+30天
+                    $currRemaAdd = $item->created_at->addDays(30);
+                    $remaTime = (new Carbon)->diffInHours($currRemaAdd, true) . '小时';
+                    $item->rema_time = $remaTime;
+
+                    // 当没有回访时，回访剩余=录入时间+15天
+                    $currRepayAdd = $item->created_at->addDays(15);
+                    $remaRepayTime = (new Carbon)->diffInHours($currRepayAdd, true) . '小时';
+                    $item->repay_time = $remaRepayTime;
+
+                    // 剩余时间小于当前时间、没有特殊备注 流入公海
+                    if ($currRemaAdd < now() && $item->note != null) {
+                        $item->user_id = 0;
+                    }
+
+                } else if ($currUserRepays < 5 && $currUserRepays > 0) {
+                    // 客服A回访次数少于5时，每次回访重置剩余时间=最后回访时间+30天
+                    $currRepayLast = $item->repays()->where('user_id', Auth::id())->orderBy('created_at', 'desc')->first();
+                    $currRemaAdd = $currRepayLast->created_at->addDays(30);
+                    $remaTime = (new Carbon)->diffInHours($currRemaAdd, true) . '小时';
+                    $item->rema_time = $remaTime;
+
+                    // 当客服A回访次数少于5时，每次回访重置回访剩余=最后回访时间+15天
+                    $currRepayAdd = $currRepayLast->created_at->addDays(15);
+                    $remaRepayTime = (new Carbon)->diffInHours($currRepayAdd, true) . '小时';
+                    $item->repay_time = $remaRepayTime;
+
+                    // 剩余时间小于当前时间、没有特殊备注 流入公海
+                    if ($currRemaAdd < now() && $item->note != null) {
+                        $item->user_id = 0;
+                    }
+                } else {
+                    $item->rema_time = '0' . '小时';
+                    $item->repay_time = '0' . '小时';
+                }
+
+                // 当有预约时间，再计算 到店剩余
+                if ($item->appointment_time) {
+                    $appointment_time = Carbon::parse($item->appointment_time);
+                    $remaAppointmentTime = (new Carbon)->diffInHours($appointment_time, true) . '小时';
+                    $item->store_time = $remaAppointmentTime;
+                } else {
+                    // 当30天没有预约
+                    $item->store_time = '0' . '小时';
+                }
+            }
 
             $res = self::getPageData($list, $page, $limit);
 

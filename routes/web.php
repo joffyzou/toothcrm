@@ -27,7 +27,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::resource('patients', 'PatientsController');  // 患者管理
     Route::match(['get', 'put'], 'patients','PatientsController@index')->name('patients.index'); // 患者公海
     Route::match(['get', 'post'],'users/{user}/patients', 'UsersController@patient')->name('users.patients'); // 我的患者
-
+    Route::post('patients/updates', 'PatientsController@updates')->name('patients.updates');
 
     Route::resource('repays', 'RepaysController');  // 回访管理
 

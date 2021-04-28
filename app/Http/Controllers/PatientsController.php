@@ -90,6 +90,19 @@ class PatientsController extends Controller
         }
     }
 
+    public function updates(Request $request, Patient $patient)
+    {
+        $ids = json_decode($request->input('id'));
+        $zid = $request->input('zid');
+        foreach ($ids as $id) {
+            $patient->find($id)->update([
+                'user_id' => $zid,
+                'created_at' => now()
+            ]);
+        }
+        return $this->resJson(0, '操作成功');
+    }
+
     public function edit(Patient $patient, Origin $origin, Project $project, Platform $platform)
     {
         $origins = $origin::all();
