@@ -20,9 +20,10 @@
     @include('layouts._footer')
 </div>
 <script src="{{ mix('js/app.js') }}"></script>
-@yield('scripts')
-@yield('bottom')
-</body>
+<script>
 
+</script>
+@yield('scripts')
+</body>
 </html>
 

@@ -45,19 +45,19 @@ class IndexsController extends Controller
         $to_storeJy = $patients->where('project_id', 5)->where('is_to_store', 1)->count();  // 到店总数
         $to_storeJc = $patients->where('project_id', 4)->where('is_to_store', 1)->count();  // 到店总数
 
-        $appointmentRate = round($appointment / $patientsCount * 100, 2) . '%';
-        $appointmentRateJz = round($appointmentJz / $patientsJz * 100, 2) . '%';
-        $appointmentRateZh = round($appointmentZh / $patientsZh * 100, 2) . '%';
-        $appointmentRateQk = round($appointmentQk / $patientsQk * 100, 2) . '%';
-        $appointmentRateJy = round($appointmentJy / $patientsJy * 100, 2) . '%';
-        $appointmentRateJc = round($appointmentJc / $patientsJc * 100, 2) . '%';
+        $appointmentRate = $this->chance($appointment, $patientsCount);
+        $appointmentRateJz = $this->chance($appointmentJz, $patientsJz);
+        $appointmentRateZh = $this->chance($appointmentZh, $patientsZh);
+        $appointmentRateQk = $this->chance($appointmentQk, $patientsQk);
+        $appointmentRateJy = $this->chance($appointmentJy, $patientsJy);
+        $appointmentRateJc = $this->chance($appointmentJc, $patientsJc);
 
-        $to_store_rate = round($to_store / $patientsCount * 100, 2) . '%';
-        $to_store_rateJz = round($to_storeJz / $patientsJz * 100, 2) . '%';
-        $to_store_rateZh = round($to_storeZh / $patientsZh * 100, 2) . '%';
-        $to_store_rateQk = round($to_storeQk / $patientsQk * 100, 2) . '%';
-        $to_store_rateJy = round($to_storeJy / $patientsJy * 100, 2) . '%';
-        $to_store_rateJc = round($to_storeJc / $patientsJc * 100, 2) . '%';
+        $to_store_rate = $this->chance($to_store, $patientsCount);
+        $to_store_rateJz = $this->chance($to_storeJz, $patientsJz);
+        $to_store_rateZh = $this->chance($to_storeZh, $patientsZh);
+        $to_store_rateQk = $this->chance($to_storeQk, $patientsQk);
+        $to_store_rateJy = $this->chance($to_storeJy, $patientsJy);
+        $to_store_rateJc = $this->chance($to_storeJc, $patientsJc);
 
 
         $repays = $repay::all();
@@ -106,6 +106,11 @@ class IndexsController extends Controller
                 'to_store_rateJc',
                 'repaysCount'
             ));
+    }
+
+    private function chance($a, $b)
+    {
+        return round($a / $b * 100, 2) . '%';
     }
 
     //分配角色和处理
