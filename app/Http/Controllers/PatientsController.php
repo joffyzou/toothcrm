@@ -20,21 +20,21 @@ class PatientsController extends Controller
         $this->middleware('auth');
     }
 
-    public function index(Request $request, User $user, Patient $patient, Origin $origin, Platform $platform, Project $project)
+    public function index(Request $request, User $user, Patient $patient)
     {
         $users = $user->where('p_id', 1)->get();
         if ($request->isMethod('PUT')) {
             $page = $request->input('page', 1);
             $limit = $request->input('limit', 10);
-            $patients = $patient->where('user_id', 0)->orderBy('created_at', 'desc')->get();
+            $patients = $patient->with(['origin', 'platform', 'project'])
+                ->where('user_id', 0)
+                ->orderBy('created_at', 'desc')
+                ->get();
 
-
-
-
-            foreach ($patients as $item) {
-                $item->origin = $origin::find($item->origin_id)->name;
-                $item->project = $project::find($item->project_id)->name;
-                $item->platform = $platform::find($item->platform_id)->name;
+            foreach ($patients as $patient) {
+                $patient->origin_name = $patient->origin->name;
+                $patient->project_name = $patient->project->name;
+                $patient->platform_name = $patient->platform->name;
             }
 
             $res = self::getPageData($patients, $page, $limit);
@@ -42,7 +42,6 @@ class PatientsController extends Controller
             return self::resJson(0, '获取成功', $res['data'], ['count' => $res['count']]);
         }
         return view('patients.index', compact('users'));
-
     }
 
     public function create(Origin $origin, Project $project, Platform $platform)

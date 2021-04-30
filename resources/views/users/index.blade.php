@@ -37,7 +37,7 @@ layui.config({
         headers: {'X-CSRF-TOKEN': csrf_token},
         cols: [[
             {field: 'username', title: '登录名', align:'center'},
-            {field: 'role', title: '岗位', align:'center'},
+            {field: 'role_name', title: '岗位', align:'center'},
             {field: 'joinTime', title: '加入时间', align:'center'},
             {title:'操作', align:'center', toolbar: '#account-list'}
         ]],
