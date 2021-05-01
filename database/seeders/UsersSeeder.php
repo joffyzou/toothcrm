@@ -14,7 +14,7 @@ class UsersSeeder extends Seeder
      */
     public function run()
     {
-        User::factory(10)->create();
+        User::factory(1)->create();
         $user = User::find(1);
         $user->username = 'admin';
         $user->password = bcrypt('admin');
