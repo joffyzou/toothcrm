@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ config('app.locale') }}" style="height: 100%;">
+<html lang="{{ config('app.locale') }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -7,36 +7,30 @@
     <title>{{ config('app.name') }}</title>
 </head>
 
-<body style="height: 100%;">
-<div class="layui-bg-gray" style="padding: 30px; height: 100%;">
-    <div class="layui-row layui-col-space15">
-        <div class="layui-col-md6">
-            <div class="layui-panel">
-                <form action="{{ route('admin.login') }}" method="POST" class="layui-form">
-                    {{ csrf_field() }}
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">用户名</label>
-                        <div class="layui-input-inline">
-                            <input type="text" name="username" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
-                        </div>
-                    </div>
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">密码</label>
-                        <div class="layui-input-inline">
-                            <input type="password" name="password" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
-                        </div>
-                    </div>
-                    <div class="layui-form-item">
-                        <div class="layui-input-block">
-                            <button class="layui-btn" lay-submit lay-filter="login">登入</button>
-                        </div>
-                      </div>
-                </form>
-            </div>
+<body>
+<div class="layadmin-user-login layadmin-user-display-show" id="LAY-user-login">
+    <div class="layadmin-user-login-main">
+        <div class="layadmin-user-login-box layadmin-user-login-header" style="padding-bottom: 0;">
+            <h1>Toothcrm Admin</h1>
         </div>
+        <form action="{{ route('admin.login') }}" method="POST" class="layui-form">
+            @csrf
+            <div class="layadmin-user-login-box layadmin-user-login-body layui-form">
+                <div class="layui-form-item">
+                    <label class="layadmin-user-login-icon layui-icon layui-icon-username" for="LAY-user-login-username"></label>
+                    <input type="text" name="username" id="LAY-user-login-username" lay-verify="required" placeholder="用户名" class="layui-input">
+                </div>
+                <div class="layui-form-item">
+                    <label class="layadmin-user-login-icon layui-icon layui-icon-password" for="LAY-user-login-password"></label>
+                    <input type="password" name="password" id="LAY-user-login-password" lay-verify="required" placeholder="密码" class="layui-input">
+                </div>
+                <div class="layui-form-item">
+                    <button class="layui-btn layui-btn-fluid" lay-submit="" lay-filter="LAY-user-login-submit">登 入</button>
+                </div>
+            </div>
+        </form>
     </div>
 </div>
-
 <script src="{{ mix('js/app.js') }}"></script>
 </body>
 </html>

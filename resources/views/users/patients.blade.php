@@ -16,6 +16,8 @@
         <button class="layui-btn" data-type="reload" lay-submit lay-filter="LAY-app-search">搜索</button>
     </div>
 </div>
+<table class="layui-hide" id="admin_patients_table" lay-filter="admin_patients_table"></table>
+
 <script type="text/html" id="toolbarTime">
     <div class="layui-btn-container">
         <input type="hidden" value="" id="created">
@@ -27,7 +29,8 @@
         <button class="layui-btn layui-btn-sm" lay-event="thirtyDay">最近一个月</button>
     </div>
 </script>
-<table class="layui-hide" id="admin_patients_table" lay-filter="admin_patients_table"></table>
+
+
 
 {{--是否预约--}}
 <script type="text/html" id="switchAppointment">

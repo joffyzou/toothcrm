@@ -12,17 +12,22 @@
 <div class="layui-layout layui-layout-admin">
     @include('layouts._header')
     @include('layouts._side')
-
-    <div class="layui-body" style="padding:30px;">
-        <div style="padding-bottom: 66px;">@yield('content')</div>
+    <div class="layui-body">
+        <div class="layui-fluid">
+            <div class="layui-row layui-col-space15">
+                <div class="layui-col-md12">
+                    <div class="layui-card">
+                        <div class="layui-card-body">
+                            @yield('content')
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-
     @include('layouts._footer')
 </div>
 <script src="{{ mix('js/app.js') }}"></script>
-<script>
-
-</script>
 @yield('scripts')
 </body>
 </html>
