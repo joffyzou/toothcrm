@@ -110,6 +110,9 @@ class IndexsController extends Controller
 
     private function chance($a, $b)
     {
+        if ($a === 0) {
+            return '暂无数据';
+        }
         return round($a / $b * 100, 2) . '%';
     }
 
