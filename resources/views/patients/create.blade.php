@@ -68,6 +68,17 @@
             <input type="text" name="achievement" placeholder="请输入业绩" autocomplete="off" class="layui-input">
         </div>
     </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">指派客服</label>
+        <div class="layui-input-inline">
+            <select name="users">
+                <option value="">请选择来源</option>
+                @foreach ($users as $user)
+                    <option value="{{ $user->id }}">{{ $user->username }}</option>
+                @endforeach
+            </select>
+        </div>
+    </div>
     <div class="layui-form-item layui-form-text">
         <label class="layui-form-label">特殊备注</label>
         <div class="layui-input-inline">

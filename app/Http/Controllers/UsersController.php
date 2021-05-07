@@ -2,17 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Patient;
-use App\Models\Role;
-use DebugBar\DebugBar;
 use Illuminate\Http\Request;
-use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Traits\TraitResource;
 use Carbon\Carbon;
-use App\Models\Origin;
-use App\Models\Platform;
-use App\Models\Project;
+use App\Models\User;
+use App\Models\Role;
 
 class UsersController extends Controller
 {

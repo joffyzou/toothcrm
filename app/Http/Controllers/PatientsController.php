@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use Illuminate\Http\Request;
-use App\Models\Patient;
 use App\Http\Traits\TraitResource;
+use App\Models\Patient;
 use App\Models\Origin;
 use App\Models\Platform;
 use App\Models\Project;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Debugbar;
 
 class PatientsController extends Controller
 {
@@ -44,17 +45,24 @@ class PatientsController extends Controller
         return view('patients.index', compact('users'));
     }
 
-    public function create(Origin $origin, Project $project, Platform $platform)
+    public function create(Origin $origin, Project $project, Platform $platform, User $user)
     {
         $origins = $origin::all();
         $projects = $project::all();
         $platforms = $platform::all();
-        return view('patients.create', compact('origins', 'projects', 'platforms'));
+        $users = $user->where('p_id', 1)->get();
+
+        return view('patients.create', compact('origins', 'projects', 'platforms', 'users'));
     }
 
     public function store(Request $request, Patient $patient)
     {
-        $patient->user_id = Auth::id();
+        if ($request->users) {
+            $patient->user_id = $request->users;
+        } else {
+            $patient->user_id = Auth::id();
+        }
+
         $patient->name = $request->name;
         $patient->phone = $request->phone;
         $patient->project_id = $request->project;
@@ -65,13 +73,14 @@ class PatientsController extends Controller
         $patient->achievement = $request->achievement;
         $patient->note = $request->note;
         if ($patient->save()) {
-            return redirect()->route('admin.users.patients', Auth::user()->id);
+            return redirect()->route('admin.users.patients', Auth::id());
         }
     }
 
     public function show(Patient $patient)
     {
         $repays = $patient->repays()->orderBy('created_at', 'desc')->get();
+
         return view('patients.show', compact('patient', 'repays'));
     }
 
