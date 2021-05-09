@@ -38,7 +38,7 @@ class Patient extends Model
 
     public function repays()
     {
-        return $this->hasMany(repay::class, 'patient_id', 'id');
+        return $this->hasMany(Repay::class, 'patient_id', 'id');
     }
 
     public function origin()
