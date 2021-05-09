@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Traits\TraitResource;
 use App\Models\Patient;
@@ -47,6 +48,7 @@ class PatientsController extends Controller
 
     public function create(Origin $origin, Project $project, Platform $platform, User $user)
     {
+        Debugbar::info(time());
         $origins = $origin::all();
         $projects = $project::all();
         $platforms = $platform::all();
@@ -62,7 +64,6 @@ class PatientsController extends Controller
         } else {
             $patient->user_id = Auth::id();
         }
-
         $patient->name = $request->name;
         $patient->phone = $request->phone;
         $patient->project_id = $request->project;
@@ -72,6 +73,7 @@ class PatientsController extends Controller
         $patient->is_add_wechat = $request->is_add_wechat;
         $patient->achievement = $request->achievement;
         $patient->note = $request->note;
+        $patient->state = $request->state;
         if ($patient->save()) {
             return redirect()->route('admin.users.patients', Auth::id());
         }

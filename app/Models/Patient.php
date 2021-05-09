@@ -22,7 +22,8 @@ class Patient extends Model
         'is_to_store',
         'achievement',
         'appointment_time',
-        'note'
+        'note',
+        'state'
     ];
 
     protected function serializeDate(DateTimeInterface $date)

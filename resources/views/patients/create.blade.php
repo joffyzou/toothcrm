@@ -10,6 +10,13 @@
         </div>
     </div>
     <div class="layui-form-item">
+        <label class="layui-form-label">是否有效</label>
+        <div class="layui-input-block">
+            <input type="radio" name="state" lay-filter="state" value="1" title="是" checked>
+            <input type="radio" name="state" lay-filter="state" value="0" title="否">
+        </div>
+    </div>
+    <div class="layui-form-item">
         <label class="layui-form-label">患者电话</label>
         <div class="layui-input-inline">
             <input type="tel" name="phone" required  lay-verify="required|phone|number" value="{{ old('phone') }}" placeholder="请输入患者电话" autocomplete="off" class="layui-input">
@@ -147,11 +154,18 @@ layui.config({
                 }
             });
         });
-    })
+    });
 
     form.on('submit(addPlatform)', function (data) {
         console.log(data);
-    })
+    });
+
+    form.on('radio(state)', function (data) {
+        let time = '1' + Date.now().toString().substring(3);
+        if (data.value === '0') {
+            $('input[type=tel][name=phone]').val(time);
+        }
+    });
 });
 </script>
 @endsection
