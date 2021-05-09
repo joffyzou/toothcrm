@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Patient;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Traits\TraitResource;
@@ -137,7 +138,7 @@ class UsersController extends Controller
     }
 
     // 个人患者列表页
-    public function patient(Request $request, User $user)
+    public function patient(Request $request, User $user, Patient $patient)
     {
         $today = Carbon::today();   // 今天
         $yesterday = Carbon::yesterday();   // 昨天
@@ -151,7 +152,13 @@ class UsersController extends Controller
             $limit = $request->input('limit', 10);
             $select_time = $request->input('created');
             $search_form = $request->input('form');
-            $patients = $user->patients()->with(['origin', 'project', 'platform'])->orderBy('created_at', 'desc')->get();
+
+            if (Auth::id() == 1) {
+                $patients = $patient->with(['origin', 'project', 'platform'])->where('user_id', '!=', 0)->orderBy('created_at', 'desc')->get();
+//                return $patients;
+            } else {
+                $patients = $user->patients()->with(['origin', 'project', 'platform'])->orderBy('created_at', 'desc')->get();
+            }
 
             if ($select_time) {
                 switch ($select_time) {
