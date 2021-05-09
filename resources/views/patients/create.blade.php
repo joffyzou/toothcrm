@@ -72,7 +72,7 @@
         <label class="layui-form-label">指派客服</label>
         <div class="layui-input-inline">
             <select name="users">
-                <option value="">请选择来源</option>
+                <option value="">请选择同事</option>
                 @foreach ($users as $user)
                     <option value="{{ $user->id }}">{{ $user->username }}</option>
                 @endforeach

@@ -50,8 +50,8 @@ class PatientsController extends Controller
         $origins = $origin::all();
         $projects = $project::all();
         $platforms = $platform::all();
-        $users = $user->where('p_id', 1)->get();
-
+        $id = Auth::id();
+        $users = $user->whereRaw("p_id = 1 and id != $id")->get();
         return view('patients.create', compact('origins', 'projects', 'platforms', 'users'));
     }
 
