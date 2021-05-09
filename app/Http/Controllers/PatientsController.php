@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Traits\TraitResource;
 use App\Models\Patient;
@@ -11,7 +10,6 @@ use App\Models\Platform;
 use App\Models\Project;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-use Debugbar;
 
 class PatientsController extends Controller
 {
@@ -48,7 +46,6 @@ class PatientsController extends Controller
 
     public function create(Origin $origin, Project $project, Platform $platform, User $user)
     {
-        Debugbar::info(time());
         $origins = $origin::all();
         $projects = $project::all();
         $platforms = $platform::all();
