@@ -6,6 +6,7 @@ use App\Models\Patient;
 use App\Models\Repay;
 use Illuminate\Http\Request;
 use App\Models\Role;
+use Illuminate\Support\Facades\DB;
 
 class IndexsController extends Controller
 {
@@ -59,13 +60,13 @@ class IndexsController extends Controller
         $to_store_rateJy = $this->chance($to_storeJy, $patientsJy);
         $to_store_rateJc = $this->chance($to_storeJc, $patientsJc);
 
+        $repaysCount = DB::table('repays')->select('patient_id')->distinct()->get()->count();
+        $waitRepaysCount = $patientsCount - $repaysCount;
 
-        $repays = $repay::all();
-        $repaysArr = [];
-        foreach ($repays as $key => $val) {
-            $repaysArr[$key] = $val->patient_id;
-        }
-        $repaysCount = count(array_unique($repaysArr));
+        $addWechatCount = $patients->where('is_add_wechat', 1)->count();
+        $waitWechatCount = $patientsCount - $addWechatCount;
+
+        $patientsseasCount = $patients->where('user_id', 0)->count();
 
         return view('index.index',
             compact('patientsCount',
@@ -104,7 +105,11 @@ class IndexsController extends Controller
                 'to_store_rateQk',
                 'to_store_rateJy',
                 'to_store_rateJc',
-                'repaysCount'
+                'repaysCount',
+                'waitRepaysCount',
+                'addWechatCount',
+                'waitWechatCount',
+                'patientsseasCount'
             ));
     }
 

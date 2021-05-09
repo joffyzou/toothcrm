@@ -164,6 +164,8 @@ layui.config({
         let time = '1' + Date.now().toString().substring(3);
         if (data.value === '0') {
             $('input[type=tel][name=phone]').val(time);
+        } else {
+            $('input[type=tel][name=phone]').val('');
         }
     });
 });

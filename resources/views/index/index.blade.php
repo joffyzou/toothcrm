@@ -251,7 +251,7 @@
                 <div class="layui-btn-container">
                     <div class="layui-btn-group">
                         <button type="button" class="layui-btn">转介绍业绩</button>
-                        <button type="button" class="layui-btn layui-btn-primary">86</button>
+                        <button type="button" class="layui-btn layui-btn-primary">0</button>
                     </div>
                 </div>
             </div>
@@ -259,13 +259,13 @@
                 <div class="layui-btn-container">
                     <div class="layui-btn-group">
                         <button type="button" class="layui-btn">待回访数量</button>
-                        <button type="button" class="layui-btn layui-btn-primary">86</button>
+                        <button type="button" class="layui-btn layui-btn-primary">{{ $waitRepaysCount }}</button>
                     </div>
                 </div>
                 <div class="layui-btn-container">
                     <div class="layui-btn-group">
                         <button type="button" class="layui-btn">转介绍意向</button>
-                        <button type="button" class="layui-btn layui-btn-primary">86</button>
+                        <button type="button" class="layui-btn layui-btn-primary">0</button>
                     </div>
                 </div>
             </div>
@@ -273,13 +273,13 @@
                 <div class="layui-btn-container">
                     <div class="layui-btn-group">
                         <button type="button" class="layui-btn">加微数量</button>
-                        <button type="button" class="layui-btn layui-btn-primary">86</button>
+                        <button type="button" class="layui-btn layui-btn-primary">{{ $addWechatCount }}</button>
                     </div>
                 </div>
                 <div class="layui-btn-container">
                     <div class="layui-btn-group">
                         <button type="button" class="layui-btn">流入公海数量</button>
-                        <button type="button" class="layui-btn layui-btn-primary">86</button>
+                        <button type="button" class="layui-btn layui-btn-primary">{{ $patientsseasCount }}</button>
                     </div>
                 </div>
             </div>
@@ -287,13 +287,13 @@
                 <div class="layui-btn-container">
                     <div class="layui-btn-group">
                         <button type="button" class="layui-btn">未加微数量</button>
-                        <button type="button" class="layui-btn layui-btn-primary">86</button>
+                        <button type="button" class="layui-btn layui-btn-primary">{{ $waitWechatCount }}</button>
                     </div>
                 </div>
                 <div class="layui-btn-container">
                     <div class="layui-btn-group">
                         <button type="button" class="layui-btn">公海申请数量</button>
-                        <button type="button" class="layui-btn layui-btn-primary">86</button>
+                        <button type="button" class="layui-btn layui-btn-primary">0</button>
                     </div>
                 </div>
             </div>
