@@ -6,7 +6,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">患者姓名</label>
         <div class="layui-input-inline">
-            <input type="text" name="name" required  lay-verify="required" value="{{ old('name') }}" placeholder="请输入患者姓名" autocomplete="off" class="layui-input">
+            <input type="text" name="name" required  lay-verify="required" value="{{ old('name') }}" placeholder="请输入患者姓名" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
@@ -19,7 +19,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">患者电话</label>
         <div class="layui-input-inline">
-            <input type="tel" name="phone" required  lay-verify="required|phone|number" value="{{ old('phone') }}" placeholder="请输入患者电话" autocomplete="off" class="layui-input">
+            <input type="tel" name="phone" required  lay-verify="required|phone|number" value="{{ old('phone') }}" placeholder="请输入患者电话" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">

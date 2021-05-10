@@ -155,7 +155,6 @@ class UsersController extends Controller
 
             if (Auth::id() == 1) {
                 $patients = $patient->with(['origin', 'project', 'platform'])->where('user_id', '!=', 0)->orderBy('created_at', 'desc')->get();
-//                return $patients;
             } else {
                 $patients = $user->patients()->with(['origin', 'project', 'platform'])->orderBy('created_at', 'desc')->get();
             }
