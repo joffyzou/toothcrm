@@ -7,33 +7,37 @@ use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('guest', [
+            'only' => ['index']
+        ]);
+    }
+
     public function index()
     {
         return view('users.login');
     }
 
-    // 登录验证并保存登录状态
     public function login(Request $request)
     {
         $credentials = $this->validate($request, [
             'username' => 'required',
             'password' => 'required'
         ]);
-
         if (Auth::attempt($credentials)) {
-            $fallback = route('admin.users.index');
+            $fallback = route('admin.users.index', Auth::user());
 
             return redirect()->intended($fallback);
         } else {
-            return $request->all();
+            return redirect()->back()->withInput();
         }
     }
 
-    // 退出登录
     public function logout()
     {
         Auth::logout();
 
-        return redirect()->route('admin.login');
+        return redirect()->back();
     }
 }

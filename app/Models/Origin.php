@@ -9,9 +9,11 @@ class Origin extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'name'
-    ];
-
     public $timestamps = false;
+
+    // 一对多：一个来源拥有多个患者
+    public function patients()
+    {
+        return $this->hasMany(Patient::class);
+    }
 }

@@ -9,11 +9,9 @@ class Role extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name'];
-
-    public function nodes()
+    // 一对多：一个角色拥有多个用户
+    public function users()
     {
-        // $role->nodes 角色下的权限
-        return $this->belongsToMany(Node::class, 'role_node', 'role_id', 'node_id');
+        return $this->hasMany(User::class);
     }
 }

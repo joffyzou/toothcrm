@@ -9,9 +9,11 @@ class Project extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'name'
-    ];
-
     public $timestamps = false;
+
+    // 一对多：一个项目拥有多个患者
+    public function patients()
+    {
+        return $this->hasMany(Patient::class);
+    }
 }

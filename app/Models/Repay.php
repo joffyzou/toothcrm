@@ -15,6 +15,7 @@ class Repay extends Model
         'repay'
     ];
 
+    // 多对一：多条回访属于一个患者
     public function patient()
     {
         return $this->belongsTo(Patient::class);

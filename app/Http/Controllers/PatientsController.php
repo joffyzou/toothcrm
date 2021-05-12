@@ -85,6 +85,7 @@ class PatientsController extends Controller
 
     public function update(Request $request, Patient $patient)
     {
+        $this->authorize('update', $patient);
         $info = $patient::find($patient->id);
         if (empty($info)) {
             return $this->resJson(1, '没有该条记录');

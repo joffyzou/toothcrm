@@ -81,28 +81,6 @@ class UsersController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -111,6 +89,7 @@ class UsersController extends Controller
      */
     public function update(Request $request, User $user)
     {
+        $this->authorize('update', $user);
         $info = $user->find($request->id);
         if (empty($info)) {
             return $this->resJson(1, '没有该条记录');
@@ -124,17 +103,6 @@ class UsersController extends Controller
         } else {
             return $this->resJson(0, '操作成功');
         }
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 
     // 个人患者列表页
@@ -162,7 +130,11 @@ class UsersController extends Controller
             if ($select_time) {
                 switch ($select_time) {
                     case 'today':
-                        $patients = $user->patients()->whereDate('created_at', '>=', now())->get();
+                        if (Auth::user()->is_admin) {
+                            $patients = $patient->with(['origin', 'project', 'platform'])->where('user_id', '!=', 0)->whereDate('created_at', '>=', now())->get();
+                        } else {
+                            $patients = $user->patients()->whereDate('created_at', '>=', now())->get();
+                        }
                         break;
                     case 'yesterday':
                         $patients = $user->patients()->whereBetween('created_at', [$yesterday, $today])->get();
@@ -177,7 +149,11 @@ class UsersController extends Controller
                         $patients = $user->patients()->whereBetween('created_at', [$fifteenDay, now()])->get();
                         break;
                     case 'thirtyDay':
-                        $patients = $user->patients()->whereBetween('created_at', [$thirtyDay, now()])->get();
+                        if (Auth::user()->is_admin) {
+                            $patients = $patient->with(['origin', 'project', 'platform'])->where('user_id', '!=', 0)->whereBetween('created_at', [$thirtyDay, now()])->get();
+                        } else {
+                            $patients = $user->patients()->whereBetween('created_at', [$thirtyDay, now()])->get();
+                        }
                         break;
                 }
             }

@@ -18,7 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('username')->unique()->comment('登录名');
             $table->unsignedInteger('role_id')->default(0)->comment('角色ID');
             $table->string('password')->comment('登录密码');
-            $table->smallInteger('is_admin')->default(0)->comment('超管(0=否)');
+            $table->boolean('is_admin')->default(false)->comment('超管(0=否)');
             $table->smallInteger('p_id')->default(0)->comment('父ID');
             $table->rememberToken();
             $table->timestamps();

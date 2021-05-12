@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -33,16 +32,24 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    // 多对一：多个用户对应一个角色
     public function role()
     {
-        return $this->belongsTo(Role::class, 'role_id', 'id');
+        return $this->belongsTo(Role::class);
     }
 
+    // 一对多：一个用户拥有多个患者
     public function patients()
     {
-        return $this->hasMany(Patient::class, 'user_id', 'id');
+        return $this->hasMany(Patient::class);
     }
 
+    public function feed()
+    {
+        return $this->patients()->orderBy('created_at', 'desc');
+    }
+
+    // 一对多：一个用户写了多条回访
     public function repays()
     {
         return $this->hasMany(Repay::class);

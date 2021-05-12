@@ -1,10 +1,9 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class SeedUsersData extends Migration
 {
@@ -19,10 +18,12 @@ class SeedUsersData extends Migration
             [
                 'username' => 'admin',
                 'password' => bcrypt('admin'),
-                'is_admin' => 1,
+                'is_admin' => true,
                 'role_id' => 0,
                 'p_id' => 0,
-                'remember_token' => Str::random(10)
+                'remember_token' => Str::random(10),
+                'created_at' => new Carbon,
+                'updated_at' => new Carbon
             ]
         ];
         DB::table('users')->insert($users);

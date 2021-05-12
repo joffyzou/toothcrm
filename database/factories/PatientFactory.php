@@ -23,17 +23,17 @@ class PatientFactory extends Factory
     {
         return [
             'name' => $this->faker->name,
-            'platform_id' => $this->faker->randomElement([1, 2, 3, 4]),
             'phone' => $this->faker->PhoneNumber,
-            'user_id' => $this->faker->randomElement([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]),
-            'is_appointment' => $this->faker->randomElement([0, 1]),
-            'is_add_wechat' => $this->faker->randomElement([0, 1]),
-            'project_id' => $this->faker->randomElement([1, 2, 3, 4, 5]),
-            'is_to_store' => $this->faker->randomElement([0, 1]),
-            'achievement' => $this->faker->numberBetween($min = 1000, $max = 9000),
-            'note' => $this->faker->text(50),
+            'user_id' => $this->faker->randomElement([0, 2, 3, 4, 5, 6, 7, 8, 9, 10]),
+            'platform_id' => $this->faker->randomElement([1, 2, 3, 4]),
             'origin_id' => $this->faker->randomElement([1, 2, 3]),
-            'created_at' => $this->faker->dateTimeBetween('2021-03-01', 'now', 'Asia/Shanghai')
+            'project_id' => $this->faker->randomElement([1, 2, 3, 4, 5]),
+            'is_appointment' => $this->faker->randomElement([true, false]),
+            'is_add_wechat' => $this->faker->randomElement([true, false]),
+            'is_to_store' => $this->faker->randomElement([true, false]),
+            'is_introduce_intention' => $this->faker->randomElement([true, false]),
+            'is_introduce' => $this->faker->randomElement([true, false]),
+            'created_at' => $this->faker->dateTimeBetween('2021-04-26', 'now', 'Asia/Shanghai')
         ];
     }
 }

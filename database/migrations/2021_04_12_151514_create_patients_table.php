@@ -15,18 +15,22 @@ class CreatePatientsTable extends Migration
     {
         Schema::create('patients', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->comment('患者姓名');
-            $table->string('platform_id')->default('大众')->comment('平台名称');
-            $table->string('phone')->unique()->index()->comment('患者电话');
-            $table->unsignedInteger('user_id')->index()->default(0)->comment('管理员ID(0=公海)');
-            $table->unsignedInteger('is_appointment')->default(0)->comment('预约(0=否)');
-            $table->unsignedInteger('is_add_wechat')->default(0)->comment('加微(0=否)');
-            $table->string('project_id')->nullable()->comment('咨询项目');
-            $table->unsignedInteger('is_to_store')->default(0)->comment('到店(0=否)');
+            $table->string('name')->index()->comment('姓名');
+            $table->string('phone')->unique()->index()->comment('电话');
+            $table->unsignedInteger('user_id')->default(0)->index()->comment('管理员ID(0=公海)');
+            $table->boolean('state')->default(true)->comment('状态(0=无效)');
+            $table->unsignedSmallInteger('platform_id')->nullable()->comment('平台');
+            $table->unsignedSmallInteger('origin_id')->nullable()->comment('来源');
+            $table->unsignedSmallInteger('project_id')->nullable()->comment('项目');
+            $table->boolean('is_appointment')->default(false)->index()->comment('预约(0=否)');
+            $table->boolean('is_add_wechat')->default(false)->index()->comment('加微(0=否)');
+            $table->boolean('is_to_store')->default(false)->index()->comment('到店(0=否)');
+            $table->boolean('is_introduce_intention')->default(false)->index()->comment('介绍意向(0=否)');
+            $table->boolean('is_introduce')->default(false)->index()->comment('介绍(0=否)');
+            $table->string('introducer')->nullable()->comment('介绍人');
             $table->string('achievement')->nullable()->comment('业绩');
             $table->dateTime('appointment_time')->nullable()->comment('预约时间');
             $table->string('note')->nullable()->comment('特殊备注');
-            $table->unsignedSmallInteger('origin_id')->comment('来源');
             $table->index(['created_at']);
             $table->timestamps();
         });

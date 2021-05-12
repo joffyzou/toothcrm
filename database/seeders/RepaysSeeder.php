@@ -14,6 +14,6 @@ class RepaysSeeder extends Seeder
      */
     public function run()
     {
-        Repay::factory(300)->create();
+        Repay::factory(139)->create();
     }
 }
