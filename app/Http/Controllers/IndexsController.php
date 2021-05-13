@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Patient;
 use App\Models\Repay;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\Role;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class IndexsController extends Controller
@@ -15,9 +17,25 @@ class IndexsController extends Controller
         $this->middleware('auth');
     }
 
-    public function index(Patient $patient, Repay $repay)
+    public function index(Patient $patient, User $user, Request $request)
     {
-        $patients = $patient::all();
+        if (is_null($request->getQueryString())) {
+            if (Auth::id() === 1) {
+                $patients = $patient::all();
+            } else {
+                $patients = $user::find(Auth::id())->patients()->get();
+            }
+        } else {
+            $patients = $user::find($request->id)->patients()->get();
+        }
+
+        if (Auth::user()->role_id > 0) {
+            $users = $user->with('role')->where('p_id', Auth::user()->role_id)->get();
+        } else {
+            $users = $user->with('role')->where('role_id', '>', 0)->get();
+        }
+
+
         $patientsCount = $patients->count();    // 录入客户数
         $patientsJz = $patients->where('project_id', 2)->count();   // 矫正客户数
         $patientsZh = $patients->where('project_id', 1)->count();   // 种植客户数
@@ -68,6 +86,9 @@ class IndexsController extends Controller
 
         $patientsseasCount = $patients->where('user_id', 0)->count();
 
+        $isIntroduceMany = $patients->where('is_introduce', true)->sum('achievement');
+        $introduceCount = $patients->where('is_introduce', true)->count();
+
         return view('index.index',
             compact('patientsCount',
                 'patientsJz',
@@ -109,7 +130,10 @@ class IndexsController extends Controller
                 'waitRepaysCount',
                 'addWechatCount',
                 'waitWechatCount',
-                'patientsseasCount'
+                'patientsseasCount',
+                'isIntroduceMany',
+                'introduceCount',
+                'users'
             ));
     }
 

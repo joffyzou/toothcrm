@@ -1,6 +1,16 @@
 @extends('layouts.app')
 
 @section('content')
+<fieldset class="layui-elem-field layui-field-title">
+    <legend>数据筛选</legend>
+</fieldset>
+
+<div class="layui-btn-container">
+    @foreach ($users as $user)
+        <a href="{{ route('admin.index.user', $user->id) }}" class="layui-btn {{ substr(Request::getQueryString(), 3) == $user->id ? '' : 'layui-btn-primary layui-border-green' }}">{{ $user->username }}</a>
+    @endforeach
+</div>
+
 <fieldset class="layui-elem-field">
     <legend>数据汇总</legend>
     <div class="layui-field-box">
@@ -251,7 +261,7 @@
                 <div class="layui-btn-container">
                     <div class="layui-btn-group">
                         <button type="button" class="layui-btn">转介绍业绩</button>
-                        <button type="button" class="layui-btn layui-btn-primary">0</button>
+                        <button type="button" class="layui-btn layui-btn-primary">{{ $isIntroduceMany }}</button>
                     </div>
                 </div>
             </div>
@@ -265,7 +275,7 @@
                 <div class="layui-btn-container">
                     <div class="layui-btn-group">
                         <button type="button" class="layui-btn">转介绍意向</button>
-                        <button type="button" class="layui-btn layui-btn-primary">0</button>
+                        <button type="button" class="layui-btn layui-btn-primary">{{ $introduceCount }}</button>
                     </div>
                 </div>
             </div>
@@ -300,4 +310,18 @@
         </div>
     </div>
 </fieldset>
+@endsection
+
+@section('scripts')
+<script>
+    layui.use(['layer', 'form'], function () {
+        var layer = layui.layer,
+            form = layui.form,
+            $ = layui.$;
+
+        form.on('select(users)', function (data) {
+
+        })
+    })
+</script>
 @endsection

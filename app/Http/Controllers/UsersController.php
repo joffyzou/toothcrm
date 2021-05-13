@@ -130,29 +130,81 @@ class UsersController extends Controller
             if ($select_time) {
                 switch ($select_time) {
                     case 'today':
-                        if (Auth::user()->is_admin) {
-                            $patients = $patient->with(['origin', 'project', 'platform'])->where('user_id', '!=', 0)->whereDate('created_at', '>=', now())->get();
+                        if (Auth::id() === 1) {
+                            $patients = $patient->with(['origin', 'project', 'platform'])
+                                ->where('user_id', '!=', 0)
+                                ->whereDate('created_at', '>=', now())
+                                ->get();
                         } else {
-                            $patients = $user->patients()->whereDate('created_at', '>=', now())->get();
+                            $patients = $user->patients()
+                                ->with(['origin', 'project', 'platform'])
+                                ->whereDate('created_at', '>=', now())
+                                ->get();
                         }
                         break;
                     case 'yesterday':
-                        $patients = $user->patients()->whereBetween('created_at', [$yesterday, $today])->get();
+                        if (Auth::id() === 1) {
+                            $patients = $patient->with(['origin', 'project', 'platform'])
+                                ->where('user_id', '!=', 0)
+                                ->whereBetween('created_at', [$yesterday, now()])
+                                ->get();
+                        } else {
+                            $patients = $user->patients()
+                                ->with(['origin', 'project', 'platform'])
+                                ->whereBetween('created_at', [$yesterday, $today])
+                                ->get();
+                        }
                         break;
                     case 'threeDay':
-                        $patients = $user->patients()->whereBetween('created_at', [$threeDay, now()])->get();
+                        if (Auth::id() === 1) {
+                            $patients = $patient->with(['origin', 'project', 'platform'])
+                                ->where('user_id', '!=', 0)
+                                ->whereBetween('created_at', [$threeDay, now()])
+                                ->get();
+                        } else {
+                            $patients = $user->patients()
+                                ->with(['origin', 'project', 'platform'])
+                                ->whereBetween('created_at', [$threeDay, now()])
+                                ->get();
+                        }
                         break;
                     case 'sevenDay':
-                        $patients = $user->patients()->whereBetween('created_at', [$sevenDay, now()])->get();
+                        if (Auth::id() === 1) {
+                            $patients = $patient->with(['origin', 'project', 'platform'])
+                                ->where('user_id', '!=', 0)
+                                ->whereBetween('created_at', [$sevenDay, now()])
+                                ->get();
+                        } else {
+                            $patients = $user->patients()
+                                ->with(['origin', 'project', 'platform'])
+                                ->whereBetween('created_at', [$sevenDay, now()])
+                                ->get();
+                        }
                         break;
                     case 'fifteenDay':
-                        $patients = $user->patients()->whereBetween('created_at', [$fifteenDay, now()])->get();
+                        if (Auth::id() === 1) {
+                            $patients = $patient->with(['origin', 'project', 'platform'])
+                                ->where('user_id', '!=', 0)
+                                ->whereBetween('created_at', [$fifteenDay, now()])
+                                ->get();
+                        } else {
+                            $patients = $user->patients()
+                                ->with(['origin', 'project', 'platform'])
+                                ->whereBetween('created_at', [$fifteenDay, now()])
+                                ->get();
+                        }
                         break;
                     case 'thirtyDay':
-                        if (Auth::user()->is_admin) {
-                            $patients = $patient->with(['origin', 'project', 'platform'])->where('user_id', '!=', 0)->whereBetween('created_at', [$thirtyDay, now()])->get();
+                        if (Auth::id() === 1) {
+                            $patients = $patient->with(['origin', 'project', 'platform'])
+                                ->where('user_id', '!=', 0)
+                                ->whereBetween('created_at', [$thirtyDay, now()])
+                                ->get();
                         } else {
-                            $patients = $user->patients()->whereBetween('created_at', [$thirtyDay, now()])->get();
+                            $patients = $user->patients()
+                                ->with(['origin', 'project', 'platform'])
+                                ->whereBetween('created_at', [$thirtyDay, now()])
+                                ->get();
                         }
                         break;
                 }

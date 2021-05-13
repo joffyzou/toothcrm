@@ -47,6 +47,11 @@
     <input type="checkbox" name="is_to_store" lay-skin="switch" lay-filter="toStore" data-id="@{{ d.id }}" lay-text="是|否" @{{ d.is_to_store ? 'checked':'' }}>
 </script>
 
+{{--是否有转介绍意向--}}
+<script type="text/html" id="switchIs_introduce_intention">
+    <input type="checkbox" name="is_introduce_intention" lay-skin="switch" lay-filter="Appointment" data-id="@{{ d.id }}" lay-text="是|否" @{{ d.is_introduce_intention ? 'checked':'' }}>
+</script>
+
 <script type="text/html" id="barDemo">
     <a class="layui-btn layui-btn-xs layui-btn-primary" lay-event="repay">添加回访</a>
     <a class="layui-btn layui-btn-xs" lay-event="more">更多</a>
@@ -79,7 +84,6 @@ layui.config({
             {field: 'name', title: '姓名', width: 75},
             {field: 'phone', title: '电话', width: 120},
             {field: 'platform_name', title: '平台', align:'center', width: 80},
-            // {field: 'is_appointment', title: '是否预约', width: 86, templet: '#switchAppointment', unresize: true},
             {field: 'is_add_wechat', title: '是否加微', width: 86, templet: '#switchWechat', unresize: true},
             {field: 'project_name', align:'center', title: '咨询项目', width: 86},
             {field: 'is_to_store', title: '是否到店', width: 86, templet: '#switchStore', unresize: true},
@@ -89,6 +93,8 @@ layui.config({
             {field: 'store_time', title: '到店剩余', sort: true, width: 102, align: 'center'},
             {field: 'note', title: '特殊备注'},
             {field: 'origin_name', title: '来源', width: 60},
+            {field: 'is_introduce_intention', title: '是否有转介绍意向', width: 86, templet: '#switchIs_introduce_intention', unresize: true},
+            {field: 'introducer', title: '介绍人', width: 86},
             {field: 'appointment_time', title: '预约时间', sort: true, align:'center', width: 160},
             {title:'操作', align:'center', toolbar: '#barDemo', width:140}
         ]],
