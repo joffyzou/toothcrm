@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::get('/', 'IndexsController@index')->name('index');   // Dashboard 面板
-    Route::get('/?id={user}', 'IndexsController@index')->name('index.dash');   // Dashboard 面板
+//    Route::get('/?id={user}', 'IndexsController@index')->name('index.dash');   // Dashboard 面板
 
     Route::get('login', 'LoginController@index')->name('login');    // 登录
     Route::post('login', 'LoginController@login')->name('store');  // 保存登录状态
