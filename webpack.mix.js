@@ -12,8 +12,6 @@ const mix = require('laravel-mix');
  */
 
 mix.js('resources/js/app.js', 'public/js')
-    .postCss('resources/css/app.css', 'public/css', [
-        //
-    ])
+    .sass('resources/sass/app.scss', 'public/css')
     .copyDirectory('node_modules/layui/dist/css/modules', 'public/js/css/modules')
     .version();

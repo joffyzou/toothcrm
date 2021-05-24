@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -59,5 +60,54 @@ class Patient extends Model
     public function project()
     {
         return $this->belongsTo(Project::class);
+    }
+
+    public function scopePatients($query)
+    {
+        return $query->where('user_id', '>', 0)->recent();
+    }
+
+    public function scopeSeas($query)
+    {
+        return $query->where('user_id', 0)->recent();
+    }
+
+    public function scopeRecent($query)
+    {
+        return $query->orderBy('created_at', 'desc');
+    }
+
+    public function scopeWithOrder($query, $order)
+    {
+        $today = Carbon::today();
+        $yesterday = Carbon::yesterday();
+        $threeDay = Carbon::today()->modify('-3 days');
+        $sevenDay = Carbon::today()->modify('-7 days');
+        $fifteenDay = Carbon::today()->modify('-15 days');
+        $thirtyDay = Carbon::today()->modify('-30 days');
+
+        switch ($order) {
+            case 'today':
+                $query->whereBetween('created_at', [$today, now()]);
+                break;
+            case 'yesterday':
+                $query->whereBetween('created_at', [$yesterday, $today]);
+                break;
+            case 'threeDay':
+                $query->whereBetween('created_at', [$threeDay, now()]);
+                break;
+            case 'sevenDay':
+                $query->whereBetween('created_at', [$sevenDay, now()]);
+                break;
+            case 'fifteenDay':
+                $query->whereBetween('created_at', [$fifteenDay, now()]);
+                break;
+            case 'thirtyDay':
+                $query->whereBetween('created_at', [$thirtyDay, now()]);
+                break;
+            default:
+                $query->recent();
+                break;
+        }
     }
 }

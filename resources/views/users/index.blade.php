@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-
 <script type="text/html" id="toolbarTime">
     <a href="{{ route('admin.users.create') }}" class="layui-btn layui-btn-primary">
         <i class="layui-icon">&#xe654;</i> 添加员工

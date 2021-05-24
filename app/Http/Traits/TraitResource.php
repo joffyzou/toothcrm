@@ -15,9 +15,6 @@ trait TraitResource
      * @param int $limit 没有数量
      * @return array
      * Description:获取分页数据
-     * User: Vijay
-     * Date: 2019/5/26
-     * Time: 15:45
      */
     private static function getPageData($list, $page, $limit)
     {
@@ -46,9 +43,6 @@ trait TraitResource
      * @param array $header 头信息
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      * Description:返回json数据
-     * User: Vijay
-     * Date: 2019/5/26
-     * Time: 16:41
      */
     protected function resJson($code = 0, $msg = '', $data = null, array $additional = [], array $header = [])
     {
@@ -62,13 +56,7 @@ trait TraitResource
                 $result[$key] = $val;
             }
         }
-        $result['create_time'] = date('Y-m-d H:i:s', time());
 
         return response($result)->withHeaders($header);
-    }
-
-    public function getError()
-    {
-        return $this->error;
     }
 }

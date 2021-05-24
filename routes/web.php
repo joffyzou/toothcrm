@@ -15,7 +15,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::get('/', 'IndexsController@index')->name('index');   // Dashboard 面板
-//    Route::get('/?id={user}', 'IndexsController@index')->name('index.dash');   // Dashboard 面板
 
     Route::get('login', 'LoginController@index')->name('login');    // 登录
     Route::post('login', 'LoginController@login')->name('store');  // 保存登录状态
@@ -24,9 +23,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::resource('users', 'UsersController');  // 管理员管理
     Route::match(['get', 'put'], 'users', 'UsersController@index')->name('users.index');   // 修改账号密码
 
+    Route::get('patients/lists', 'PatientsController@lists')->name('patients.lists'); // 患者公海
     Route::resource('patients', 'PatientsController');  // 患者管理
-    Route::match(['get', 'put'], 'patients','PatientsController@index')->name('patients.index'); // 患者公海
-    Route::match(['get', 'post'],'users/{user}/patients', 'UsersController@patient')->name('users.patients'); // 我的患者
+
+    Route::get('users/{user}/patients', 'UsersController@patients')->name('users.patients'); // 我的患者
+    Route::match(['get', 'post'],'users/{user}/patients/data', 'UsersController@usersPatientsData')->name('users.patients.data'); // 我的患者
     Route::post('patients/updates', 'PatientsController@updates')->name('patients.updates');
 
     Route::resource('repays', 'RepaysController');  // 回访管理

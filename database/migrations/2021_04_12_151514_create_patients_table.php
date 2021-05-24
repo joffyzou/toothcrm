@@ -28,7 +28,7 @@ class CreatePatientsTable extends Migration
             $table->boolean('is_introduce_intention')->default(false)->index()->comment('介绍意向(0=否)');
             $table->boolean('is_introduce')->default(false)->index()->comment('介绍(0=否)');
             $table->string('introducer')->nullable()->comment('介绍人');
-            $table->string('achievement')->nullable()->comment('业绩');
+            $table->float('achievement')->nullable()->comment('业绩');
             $table->dateTime('appointment_time')->nullable()->comment('预约时间');
             $table->string('note')->nullable()->comment('特殊备注');
             $table->index(['created_at']);
