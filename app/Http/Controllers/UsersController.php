@@ -106,7 +106,7 @@ class UsersController extends Controller
     }
 
     // 个人患者列表页
-    public function patients()
+    public function showPatientsView()
     {
         return view('users.patients');
     }

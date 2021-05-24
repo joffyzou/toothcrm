@@ -14,7 +14,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
-    Route::get('patients/lists', 'PatientsController@lists'); // 患者公海
     Route::get('/', 'IndexsController@index')->name('index');   // Dashboard 面板
 
     Route::get('login', 'LoginController@index')->name('login');    // 登录
@@ -24,11 +23,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::resource('users', 'UsersController');  // 管理员管理
     Route::match(['get', 'put'], 'users', 'UsersController@index')->name('users.index');   // 修改账号密码
 
-
+    Route::get('patients/lists', 'PatientsController@lists'); // 患者公海
     Route::resource('patients', 'PatientsController');  // 患者管理
 
-
-    Route::get('users/{user}/patients', 'UsersController@patients')->name('users.patients'); // 我的患者
+    Route::get('users/{user}/patients', 'UsersController@showPatientsView')->name('users.patients'); // 我的患者
     Route::match(['get', 'post'],'users/{user}/patients/data', 'UsersController@usersPatientsData')->name('users.patients.data'); // 我的患者
     Route::post('patients/updates', 'PatientsController@updates')->name('patients.updates');
 
