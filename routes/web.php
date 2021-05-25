@@ -20,7 +20,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::post('login', 'LoginController@login')->name('store');  // 保存登录状态
     Route::delete('logout', 'LoginController@logout')->name('logout');    // 退出
 
-
     Route::resource('users', 'UsersController');  // 管理员管理
     Route::match(['get', 'post'],'users/{user}/patients', 'UsersController@patients')->name('users.patients'); // 我的患者
     Route::match(['get', 'put'], 'users', 'UsersController@index')->name('users.index');   // 修改账号密码

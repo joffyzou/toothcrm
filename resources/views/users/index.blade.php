@@ -6,6 +6,7 @@
         <i class="layui-icon">&#xe654;</i> 添加员工
     </a>
 </script>
+@csrf
 <table class="layui-hide" id="users_table" lay-filter="users_table"></table>
 <script type="text/html" id="account-list">
     <a class="layui-btn layui-btn-xs layui-btn-primary layui-border-red" lay-event="account">
@@ -16,16 +17,10 @@
 
 @section('scripts')
 <script>
-layui.config({
-    base: "/static/layuiadmin/"
-}).extend({
-    index: 'lib/index'
-}).use(['index', 'admin'], function(){
+layui.use(['table'], function(){
     var $ = layui.$,
-        table = layui.table,
-        admin = layui.admin,
-        form = layui.form;
-    var csrf_token = $('meta[name="csrf-token"]').attr('content');
+        table = layui.table;
+    var csrf_token = $('input[name=_token]').val();
 
     table.render({
         elem: '#users_table',
