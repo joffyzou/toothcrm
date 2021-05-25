@@ -23,7 +23,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::resource('users', 'UsersController');  // 管理员管理
     Route::match(['get', 'put'], 'users', 'UsersController@index')->name('users.index');   // 修改账号密码
 
-//    Route::get('patients/lists', 'PatientsController@lists'); // 患者公海
     Route::resource('patients', 'PatientsController');  // 患者管理
 
     Route::get('users/{user}/patients', 'UsersController@showPatientsView')->name('users.patients'); // 我的患者

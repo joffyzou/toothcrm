@@ -89,7 +89,6 @@
 layui.use(['table', 'laydate', 'form'], function () {
     var table = layui.table,
         laydate = layui.laydate,
-        form = layui.form,
         $ = layui.$;
 
     table.render({
@@ -116,7 +115,7 @@ layui.use(['table', 'laydate', 'form'], function () {
 
     $('#nameSearchBtn').on('click', function () {
         table.reload('testReload', {
-            url: "/admin/patients/lists",
+            url: "{{ route('admin.patients.index') }}",
             where: {
                 name: $('#nameSearch').val()
             }
@@ -125,7 +124,7 @@ layui.use(['table', 'laydate', 'form'], function () {
 
     $('#phoneSearchBtn').on('click', function () {
         table.reload('testReload', {
-            url: "/admin/patients/lists",
+            url: "{{ route('admin.patients.index') }}",
             where: {
                 phone: $('#phoneSearch').val()
             }
@@ -140,7 +139,7 @@ layui.use(['table', 'laydate', 'form'], function () {
 
     $('#dateSearchBtn').on('click', function () {
         table.reload('testReload', {
-            url: "/admin/patients/lists",
+            url: "{{ route('admin.patients.index') }}",
             where: {
                 startDate: $('#startDate').val(),
                 endDate: $('#endDate').val()
@@ -153,7 +152,7 @@ layui.use(['table', 'laydate', 'form'], function () {
             $(this).removeClass('layui-btn-primary');
             $(this).siblings().addClass('layui-btn-primary');
             table.reload('testReload', {
-                url: "/admin/patients/lists",
+                url: "{{ route('admin.patients.index') }}",
                 where: {
                     date : $(e).val()
                 }
