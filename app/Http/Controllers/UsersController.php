@@ -105,7 +105,7 @@ class UsersController extends Controller
         }
     }
 
-    public function patients(Request $request, User $user, Patient $patient)
+    public function patients(Patient $patient, Request $request, User $user)
     {
         if ($request->ajax()) {
             $page = $request->input('page', 1);
@@ -188,12 +188,10 @@ class UsersController extends Controller
                     // 当30天没有预约
                     $patient->store_time = '0' . '小时';
                 }
-
                 $patient->origin_name = $patient->origin->name;
                 $patient->project_name = $patient->project->name;
                 $patient->platform_name = $patient->platform->name;
             }
-
             $res = self::getPageData($patients, $page, $limit);
 
             return self::resJson(0, '获取成功', $res['data'], ['count' => $res['count']]);
