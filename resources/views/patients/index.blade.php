@@ -94,7 +94,7 @@ layui.use(['table', 'laydate', 'form'], function () {
 
     table.render({
         elem: '#admin_patients_table',
-        url: "/admin/patients/lists",
+        url: "{{ route('admin.patients.index') }}",
         page: true,
         limit: 10,
         id: 'testReload',

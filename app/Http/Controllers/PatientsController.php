@@ -24,6 +24,33 @@ class PatientsController extends Controller
     public function index(Request $request, User $user, Patient $patient)
     {
         $users = $user->where('p_id', 1)->get();
+        if ($request->ajax()) {
+            $page = $request->page;
+            $limit = $request->limit;
+            $patients = $patient->withOrder($request->date)
+                ->with(['origin', 'platform', 'project'])
+                ->seas()
+                ->get();
+
+            if ($request->name) {
+                $patients = $patient->where('name', $request->name)->seas()->get();
+            } elseif ($request->phone) {
+                $patients = $patient->where('phone', $request->phone)->seas()->get();
+            } elseif ($request->startDate && $request->endDate) {
+                $patients = $patient->whereBetween('updated_at', [$request->startDate, $request->endDate])->seas()->get();
+            }
+
+
+            foreach ($patients as $patient) {
+                $patient->origin_name = $patient->origin->name;
+                $patient->project_name = $patient->project->name;
+                $patient->platform_name = $patient->platform->name;
+            }
+
+            $res = self::getPageData($patients, $page, $limit);
+
+            return self::resJson(0, '获取成功', $res['data'], ['count' => $res['count']]);
+        }
 
         return view('patients.index', compact('users'));
     }
