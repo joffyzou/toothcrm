@@ -197,6 +197,7 @@ class UsersController extends Controller
 //            return self::resJson(0, '获取成功', $res['data'], ['count' => $res['count']]);
 //        }
 
-        return view('users.patients');
+        return 123;
+//        return view('users.patients');
     }
 }
