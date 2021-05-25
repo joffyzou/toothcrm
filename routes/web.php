@@ -22,11 +22,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
 
 
     Route::resource('users', 'UsersController');  // 管理员管理
-//    Route::match(['get', 'post'],'users/{user}/patients', 'UsersController@patients')->name('users.patients'); // 我的患者
-//    Route::match(['get', 'put'], 'users', 'UsersController@index')->name('users.index');   // 修改账号密码
+    Route::match(['get', 'post'],'users/{user}/patients', 'UsersController@patients')->name('users.patients'); // 我的患者
+    Route::match(['get', 'put'], 'users', 'UsersController@index')->name('users.index');   // 修改账号密码
 
     Route::resource('patients', 'PatientsController');  // 患者管理
-//    Route::post('patients/updates', 'PatientsController@updates')->name('patients.updates');
+    Route::post('patients/updates', 'PatientsController@updates')->name('patients.updates');
 
     Route::resource('repays', 'RepaysController');  // 回访管理
 
