@@ -83,7 +83,7 @@ layui.use(['table', 'laydate', 'dropdown', 'form', 'dropdown'], function(){
 
     table.render({
         elem: '#admin_patients_table',
-        url: "{{ route('admin.users.patients.data', Auth::id()) }}",
+        url: "{{ route('admin.users.patients', Auth::id()) }}",
         defaultToolbar: false,
         cols: [[
             {field: 'name', title: '姓名', width: 75},
@@ -110,7 +110,7 @@ layui.use(['table', 'laydate', 'dropdown', 'form', 'dropdown'], function(){
 
     $('#nameSearchBtn').on('click', function () {
         table.reload('testReload', {
-            url: "{{ route('admin.users.patients.data', Auth::id()) }}",
+            url: "{{ route('admin.users.patients', Auth::id()) }}",
             where: {
                 name: $('#nameSearch').val()
             }
@@ -119,7 +119,7 @@ layui.use(['table', 'laydate', 'dropdown', 'form', 'dropdown'], function(){
 
     $('#phoneSearchBtn').on('click', function () {
         table.reload('testReload', {
-            url: "{{ route('admin.users.patients.data', Auth::id()) }}",
+            url: "{{ route('admin.users.patients', Auth::id()) }}",
             where: {
                 phone: $('#phoneSearch').val()
             }
@@ -134,7 +134,7 @@ layui.use(['table', 'laydate', 'dropdown', 'form', 'dropdown'], function(){
 
     $('#dateSearchBtn').on('click', function () {
         table.reload('testReload', {
-            url: "{{ route('admin.users.patients.data', Auth::id()) }}",
+            url: "{{ route('admin.users.patients', Auth::id()) }}",
             where: {
                 startDate: $('#startDate').val(),
                 endDate: $('#endDate').val()
@@ -147,7 +147,7 @@ layui.use(['table', 'laydate', 'dropdown', 'form', 'dropdown'], function(){
             $(this).removeClass('layui-btn-primary');
             $(this).siblings().addClass('layui-btn-primary');
             table.reload('testReload', {
-                url: "{{ route('admin.users.patients.data', Auth::id()) }}",
+                url: "{{ route('admin.users.patients', Auth::id()) }}",
                 where: {
                     date : $(e).val()
                 }
