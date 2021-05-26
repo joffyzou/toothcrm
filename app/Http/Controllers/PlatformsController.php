@@ -15,6 +15,17 @@ class PlatformsController extends Controller
         $this->middleware('auth');
     }
 
+    public function index(Request $request, Platform $platform)
+    {
+        if ($request->ajax()) {
+            $res = $platform->paginate($request->input('limit',30));
+
+            return $this->success('ok', $res->items(), $res->total());
+        }
+
+        return view('platforms.index');
+    }
+
     public function store(Request $request, Platform $platform)
     {
         $platform->name = $request->platform;

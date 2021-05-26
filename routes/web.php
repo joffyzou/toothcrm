@@ -29,5 +29,5 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
 
     Route::resource('repays', 'RepaysController');  // 回访管理
 
-    Route::resource('platforms', 'PlatformsController')->only(['store']); // 平台管理
+    Route::resource('platforms', 'PlatformsController'); // 平台管理
 });

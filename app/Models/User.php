@@ -38,6 +38,12 @@ class User extends Authenticatable
         return $this->belongsTo(Role::class);
     }
 
+    // 一对多：一个运营可以管理多个平台
+    public function platform()
+    {
+        return $this->hasMany(Platform::class);
+    }
+
     // 一对多：一个用户拥有多个患者
     public function patients()
     {
