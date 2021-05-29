@@ -47,19 +47,19 @@ class Patient extends Model
     // 多对一：多个患者属于一个来源
     public function origin()
     {
-        return $this->belongsTo(Origin::class);
+        return $this->belongsTo(Origin::class)->withDefault(['name' => '-']);
     }
 
     // 多对一：多个患者属于一个平台
     public function platform()
     {
-        return $this->belongsTo(Platform::class);
+        return $this->belongsTo(Platform::class)->withDefault(['name' => '-']);
     }
 
     // 多对一：多个患者属于一个项目
     public function project()
     {
-        return $this->belongsTo(Project::class);
+        return $this->belongsTo(Project::class)->withDefault(['name' => '-']);
     }
 
     public function scopePatients($query)

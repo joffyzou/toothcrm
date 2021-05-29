@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Traits\TraitResource;
 use App\Models\Patient;
@@ -31,7 +30,6 @@ class PatientsController extends Controller
                 ->with(['origin', 'platform', 'project'])
                 ->seas()
                 ->get();
-
             if ($request->name) {
                 $patients = $patient->where('name', $request->name)->seas()->get();
             } elseif ($request->phone) {
@@ -39,14 +37,6 @@ class PatientsController extends Controller
             } elseif ($request->startDate && $request->endDate) {
                 $patients = $patient->whereBetween('updated_at', [$request->startDate, $request->endDate])->seas()->get();
             }
-
-
-            foreach ($patients as $patient) {
-                $patient->origin_name = $patient->origin->name;
-                $patient->project_name = $patient->project->name;
-                $patient->platform_name = $patient->platform->name;
-            }
-
             $res = self::getPageData($patients, $page, $limit);
 
             return self::resJson(0, '获取成功', $res['data'], ['count' => $res['count']]);

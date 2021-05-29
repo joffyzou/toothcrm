@@ -60,4 +60,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Repay::class);
     }
+
+    public function scopeOperater($query)
+    {
+        return $query->where('role_id', 4);
+    }
 }

@@ -16,4 +16,10 @@ class Platform extends Model
     {
         return $this->hasMany(Patient::class);
     }
+
+    // 多对一：多个平台属于一个运营
+    public function user()
+    {
+        return $this->belongsTo(User::class)->withDefault(['username' => '未分配']);
+    }
 }

@@ -102,17 +102,12 @@
 
 @section('scripts')
 <script>
-layui.config({
-    base: "/static/layuiadmin/"
-}).extend({
-    index: 'lib/index'
-}).use(['index', 'admin'], function(){
+layui.use(['form', 'laydate'], function(){
     var laydate = layui.laydate,
         form = layui.form,
         layer = layui.layer,
-        $ = layui.$,
-        admin = layui.admin;
-    var csrf_token = $('meta[name="csrf-token"]').attr('content');
+        $ = layui.$;
+    var csrf_token = $('input[name=_token]').val();
 
     laydate.render({
         elem: '#appointment_time',
@@ -126,7 +121,7 @@ layui.config({
             title: '添加新平台',
             move: false
         }, function(val, index){
-            admin.req({
+            $.ajax({
                 url: '/admin/platforms/',
                 method: 'POST',
                 data: {
@@ -138,7 +133,7 @@ layui.config({
                 beforeSend: function (XMLHttpRequest) {
                     layer.load();
                 },
-                done: function (res) {
+                success: function (res) {
                     layer.closeAll('loading');
                     if (res.code === 0) {
                         layer.msg(res.msg, {

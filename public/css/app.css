@@ -288,3 +288,15 @@ html {
   padding: 0;
   width: 100%;
 }
+
+.border-b-0 {
+  border-bottom: none;
+}
+
+.p-t-15 {
+  padding-top: 15px;
+}
+
+.add-form {
+  padding: 20px 45px 0 0px;
+}
