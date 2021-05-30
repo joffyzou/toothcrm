@@ -18,20 +18,6 @@
                 </div>
                 <button class="layui-btn" id="phoneSearchBtn" data-type="reload">搜索</button>
             </div>
-
-            <div class="layui-inline layui-form-item" style="margin-bottom: 0;">
-                <label class="layui-form-label">日期范围</label>
-                <div class="layui-inline" id="dateSearch" style="margin: 0;">
-                    <div class="layui-input-inline">
-                        <input type="text" name="startDate" id="startDate" class="layui-input" placeholder="开始日期">
-                    </div>
-                    <div class="layui-form-mid">-</div>
-                    <div class="layui-input-inline" style="margin: 0;">
-                        <input type="text" name="endDate" id="endDate" class="layui-input" placeholder="结束日期">
-                    </div>
-                </div>
-                <button class="layui-btn" id="dateSearchBtn" data-type="reload">搜索</button>
-            </div>
         </div>
 
         <div class="layui-form" style="margin-bottom: 15px;">
@@ -48,7 +34,7 @@
             <button class="layui-btn" id="allotBtn">确定</button>
         </div>
 
-        <div class="layui-btn-container">
+        <div class="layui-btn-container layui-clear" style="float: left;">
             <button class="layui-btn layui-btn-sm btn-date" value="default">全部</button>
             <button class="layui-btn layui-btn-sm layui-btn-primary btn-date" value="today">今天</button>
             <button class="layui-btn layui-btn-sm layui-btn-primary btn-date" value="yesterday">昨天</button>
@@ -57,8 +43,21 @@
             <button class="layui-btn layui-btn-sm layui-btn-primary btn-date" value="fifteenDay">最近15天</button>
             <button class="layui-btn layui-btn-sm layui-btn-primary btn-date" value="thirtyDay">最近一个月</button>
         </div>
+        <div class="layui-inline layui-form-item" style="margin-top: -16px; margin-bottom: 0;">
+            <label class="layui-form-label">日期范围</label>
+            <div class="layui-inline" id="dateSearch" style="margin: 0;">
+                <div class="layui-input-inline">
+                    <input type="text" name="startDate" id="startDate" class="layui-input" placeholder="开始日期">
+                </div>
+                <div class="layui-form-mid">-</div>
+                <div class="layui-input-inline" style="margin: 0;">
+                    <input type="text" name="endDate" id="endDate" class="layui-input" placeholder="结束日期">
+                </div>
+            </div>
+            <button class="layui-btn" id="dateSearchBtn" data-type="reload">搜索</button>
+        </div>
     </div>
-    <div class="layui-card-body">
+    <div class="layui-card-body" style="padding-top: 0;">
         <table class="layui-hide" id="admin_patients_table" lay-filter="admin_patients_table"></table>
         <script type="text/html" id="barDemo">
             <a class="layui-btn layui-btn-xs" lay-event="more">更多</a>

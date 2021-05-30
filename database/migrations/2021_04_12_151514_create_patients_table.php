@@ -17,11 +17,11 @@ class CreatePatientsTable extends Migration
             $table->id();
             $table->string('name')->index()->comment('姓名');
             $table->string('phone')->unique()->index()->comment('电话');
-            $table->unsignedInteger('user_id')->default(0)->index()->comment('管理员ID(0=公海)');
+            $table->unsignedSmallInteger('user_id')->default(0)->index()->comment('管理员ID(0=公海)');
             $table->boolean('state')->default(true)->comment('状态(0=无效)');
-            $table->unsignedSmallInteger('platform_id')->nullable()->comment('平台');
-            $table->unsignedSmallInteger('origin_id')->nullable()->comment('来源');
-            $table->unsignedSmallInteger('project_id')->nullable()->comment('项目');
+            $table->unsignedSmallInteger('platform_id')->nullable()->comment('平台ID');
+            $table->unsignedSmallInteger('origin_id')->nullable()->comment('来源ID');
+            $table->unsignedSmallInteger('project_id')->nullable()->comment('项目ID');
             $table->boolean('is_appointment')->default(false)->index()->comment('预约(0=否)');
             $table->boolean('is_add_wechat')->default(false)->index()->comment('加微(0=否)');
             $table->boolean('is_to_store')->default(false)->index()->comment('到店(0=否)');

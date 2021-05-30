@@ -38,7 +38,7 @@ class PlatformsController extends Controller
 
     public function store(Request $request, Platform $platform)
     {
-        $user_id = $request->user_id;
+        $platform->user_id = $request->user_id;
         $platform->name = $request->platform;
         $res = $platform->save();
         if ($res !== true) {
@@ -46,6 +46,13 @@ class PlatformsController extends Controller
         } else {
             return $this->success(0, '操作成功');
         }
+    }
+
+    public function show(Platform $platform)
+    {
+        $platforms = $platform->all();
+
+        return view('platforms.show', compact('platforms', 'platform'));
     }
 
     public function edit(Platform $platform)

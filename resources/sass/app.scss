@@ -295,3 +295,14 @@ html {
 .add-form {
     padding: 20px 45px 0 0px;
 }
+
+.count-list {
+    .layui-btn {
+        padding: 0;
+        width: 80px;
+    }
+    .layui-btn-group {
+        margin-left: 0;
+    }
+}
+

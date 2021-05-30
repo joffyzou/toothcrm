@@ -13,26 +13,26 @@ class SeedPlatformsData extends Migration
     public function up()
     {
         $platforms = [
-            ['name' => '大众'],
-            ['name' => '天猫'],
-            ['name' => '阿里健康'],
-            ['name' => '口碑'],
-            ['name' => '新氧'],
-            ['name' => '京东'],
-            ['name' => '更美'],
-            ['name' => '悦美'],
-            ['name' => '拼多多'],
-            ['name' => '美呗'],
-            ['name' => '牙么么'],
-            ['name' => '美帮'],
-            ['name' => '无忧爱美'],
-            ['name' => '笑颜'],
-            ['name' => '诺美尔'],
-            ['name' => '爱牙无忧'],
-            ['name' => '美貌'],
-            ['name' => '高济医疗'],
-            ['name' => '倾尔美'],
-            ['name' => '牙蜜儿']
+            ['name' => '大众', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => '天猫', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => '阿里健康', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => '口碑', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => '新氧', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => '京东', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => '更美', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => '悦美', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => '拼多多', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => '美呗', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => '牙么么', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => '美帮', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => '无忧爱美', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => '笑颜', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => '诺美尔', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => '爱牙无忧', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => '美貌', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => '高济医疗', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => '倾尔美', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => '牙蜜儿', 'created_at' => now(), 'updated_at' => now()]
         ];
         DB::table('platforms')->insert($platforms);
     }

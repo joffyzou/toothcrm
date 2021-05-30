@@ -15,7 +15,7 @@ class CreateRepaysTable extends Migration
     {
         Schema::create('repays', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('user_id')->comment('员工ID');
+            $table->unsignedSmallInteger('user_id')->comment('员工ID');
             $table->unsignedInteger('patient_id')->comment('患者ID');
             $table->string('repay')->comment('回访详情');
             $table->timestamps();

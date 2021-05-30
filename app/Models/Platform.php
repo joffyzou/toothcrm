@@ -9,8 +9,6 @@ class Platform extends Model
 {
     use HasFactory;
 
-    public $timestamps = false;
-
     // 一对多：一个平台拥有多个患者
     public function patients()
     {
