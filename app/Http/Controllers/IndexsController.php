@@ -29,11 +29,11 @@ class IndexsController extends Controller
             $patients = $user::find($request->id)->patients()->get();
         }
 
-        if (Auth::user()->role_id > 0) {
-            $users = $user->with('role')->where('p_id', Auth::user()->role_id)->get();
-        } else {
-            $users = $user->with('role')->where('role_id', '>', 0)->get();
-        }
+//        if (Auth::user()->role_id > 0) {
+//            $users = $user->with('role')->where('p_id', Auth::user()->role_id)->get();
+//        } else {
+//            $users = $user->with('role')->where('role_id', '>', 0)->get();
+//        }
 
 
         $patientsCount = $patients->count();    // 录入客户数
@@ -132,8 +132,8 @@ class IndexsController extends Controller
                 'waitWechatCount',
                 'patientsseasCount',
                 'isIntroduceMany',
-                'introduceCount',
-                'users'
+                'introduceCount'
+//                'users'
             ));
     }
 

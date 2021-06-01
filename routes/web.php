@@ -4,30 +4,60 @@ use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
-| Web Routes
+| 用户登录、退出
 |--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
 */
+Route::get('login', 'LoginController@index')->name('admin.login');    // 登录
+Route::post('login', 'LoginController@login')->name('admin.store');  // 保存登录状态
+Route::delete('logout', 'LoginController@logout')->name('admin.logout')->middleware('auth');    // 退出
 
-Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
-    Route::get('/', 'IndexsController@index')->name('index');   // Dashboard 面板
+/*
+|--------------------------------------------------------------------------
+| 后台公共页面
+|--------------------------------------------------------------------------
+*/
+Route::group(['middleware'=>'auth'], function () {
+    Route::get('/', 'IndexsController@index')->name('admin.index');   // Dashboard 面板
+});
 
-    Route::get('login', 'LoginController@index')->name('login');    // 登录
-    Route::post('login', 'LoginController@login')->name('store');  // 保存登录状态
-    Route::delete('logout', 'LoginController@logout')->name('logout');    // 退出
+/*
+|--------------------------------------------------------------------------
+| 系统管理模块
+|--------------------------------------------------------------------------
+*/
+Route::group(['prefix' => 'system', 'as' => 'system.', 'namespace' => 'System', 'middleware' => ['auth', 'permission:system']], function () {
+    Route::resource('permissions', 'PermissionsController');    // 权限管理
 
-    Route::resource('users', 'UsersController');  // 管理员管理
-    Route::match(['get', 'post'],'users/{user}/patients', 'UsersController@patients')->name('users.patients'); // 我的患者
-    Route::match(['get', 'put'], 'users', 'UsersController@index')->name('users.index');   // 修改账号密码
+    Route::resource('roles', 'RolesController');    // 角色管理
+
+    Route::resource('users', 'UsersController');  // 用户管理
+    Route::post('users/status', 'UsersController@status')->name('users.status');
+
+    Route::resource('platforms', 'PlatformsController'); // 平台管理
+
+    Route::resource('menus', 'MenusController');    // 菜单管理
+});
+
+/*
+|--------------------------------------------------------------------------
+| CRM模块
+|--------------------------------------------------------------------------
+*/
+Route::group(['prefix' => 'crm', 'as' => 'crm.', 'namespace' => 'Crm', 'middleware' => ['auth', 'permission:crm']], function () {
+    Route::resource('departments', 'DepartmentsController');    // 部门管理
 
     Route::resource('patients', 'PatientsController');  // 患者管理
+
+//    Route::match(['get', 'post'],'users/{user}/patients', 'UsersController@patients')->name('users.patients'); // 我的患者
+//    Route::match(['get', 'put'], 'users', 'UsersController@index')->name('users.index');   // 修改账号密码
     Route::post('patients/updates', 'PatientsController@updates')->name('patients.updates');
 
     Route::resource('repays', 'RepaysController');  // 回访管理
-
-    Route::resource('platforms', 'PlatformsController'); // 平台管理
 });
+
+//Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'permission:admin']], function () {
+//
+//
+//});
+
+

@@ -8,9 +8,9 @@
         </fieldset>
 
         <div class="layui-btn-container">
-            @foreach ($users as $user)
-                <a href="{{ route('admin.index') . '/?id=' . $user->id }}" class="layui-btn {{ substr(Request::getQueryString(), 3) == $user->id ? '' : 'layui-btn-primary layui-border-green' }}">{{ $user->username }}</a>
-            @endforeach
+{{--            @foreach ($users as $user)--}}
+{{--                <a href="{{ route('admin.index') . '/?id=' . $user->id }}" class="layui-btn {{ substr(Request::getQueryString(), 3) == $user->id ? '' : 'layui-btn-primary layui-border-green' }}">{{ $user->username }}</a>--}}
+{{--            @endforeach--}}
         </div>
 
         <fieldset class="layui-elem-field">

@@ -5,22 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasRoles;
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = [
-        'username',
-        'password',
-        'role_id',
-        'p_id'
-    ];
+    protected $guarded = ['id'];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -31,6 +27,12 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    // 一对一
+    public function department()
+    {
+        return $this->hasOne(Department::class, 'id', 'department_id')->withDefault(['name' => '-']);
+    }
 
     // 多对一：多个用户对应一个角色
     public function role()

@@ -16,7 +16,6 @@ class CreateDailiesTable extends Migration
         Schema::create('dailies', function (Blueprint $table) {
             $table->id();
             $table->unsignedSmallInteger('platform_id')->comment('平台ID');
-            $table->
             $table->dateTime('created_at')->default(now())->comment('日报时间');
         });
     }

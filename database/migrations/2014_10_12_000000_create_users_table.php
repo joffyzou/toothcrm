@@ -16,10 +16,12 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->smallIncrements('id')->comment('管理员ID');
             $table->string('username')->unique()->comment('登录名');
-            $table->unsignedSmallInteger('role_id')->default(0)->comment('角色ID');
+//            $table->unsignedSmallInteger('role_id')->default(0)->comment('角色ID');
             $table->string('password')->comment('登录密码');
-            $table->boolean('is_admin')->default(false)->comment('超管(0=否)');
-            $table->unsignedSmallInteger('p_id')->default(0)->comment('父ID');
+            $table->boolean('status')->default(1)->comment('状态(0=禁用)');
+            $table->unsignedSmallInteger('department_id')->default(0)->comment('部门ID');
+//            $table->boolean('is_admin')->default(false)->comment('超管(0=否)');
+//            $table->unsignedSmallInteger('p_id')->default(0)->comment('父ID');
             $table->rememberToken();
             $table->timestamps();
         });

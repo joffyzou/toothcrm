@@ -16,7 +16,7 @@ class LoginController extends Controller
 
     public function index()
     {
-        return view('users.login');
+        return view('system.users.login');
     }
 
     public function login(Request $request)
@@ -26,7 +26,7 @@ class LoginController extends Controller
             'password' => 'required'
         ]);
         if (Auth::attempt($credentials)) {
-            $fallback = route('admin.users.index', Auth::user());
+            $fallback = route('system.users.index', Auth::user());
 
             return redirect()->intended($fallback);
         } else {

@@ -26,9 +26,9 @@
                 @csrf
                 <select id="users" lay-filter="users">
                     <option value="">请选择客服</option>
-                    @foreach ($users as $user)
-                        <option value="{{ $user->id }}">{{ $user->username }}</option>
-                    @endforeach
+{{--                    @foreach ($users as $user)--}}
+{{--                        <option value="{{ $user->id }}">{{ $user->username }}</option>--}}
+{{--                    @endforeach--}}
                 </select>
             </div>
             <button class="layui-btn" id="allotBtn">确定</button>
@@ -75,7 +75,7 @@ layui.use(['table', 'laydate', 'form'], function () {
 
     table.render({
         elem: '#admin_patients_table',
-        url: "{{ route('admin.patients.index') }}",
+        url: "{{ route('crm.patients.index') }}",
         page: true,
         limit: 10,
         id: 'testReload',
@@ -121,7 +121,7 @@ layui.use(['table', 'laydate', 'form'], function () {
 
     $('#nameSearchBtn').on('click', function () {
         table.reload('testReload', {
-            url: "{{ route('admin.patients.index') }}",
+            url: "{{ route('crm.patients.index') }}",
             where: {
                 name: $('#nameSearch').val()
             }
@@ -130,7 +130,7 @@ layui.use(['table', 'laydate', 'form'], function () {
 
     $('#phoneSearchBtn').on('click', function () {
         table.reload('testReload', {
-            url: "{{ route('admin.patients.index') }}",
+            url: "{{ route('crm.patients.index') }}",
             where: {
                 phone: $('#phoneSearch').val()
             }
@@ -145,7 +145,7 @@ layui.use(['table', 'laydate', 'form'], function () {
 
     $('#dateSearchBtn').on('click', function () {
         table.reload('testReload', {
-            url: "{{ route('admin.patients.index') }}",
+            url: "{{ route('crm.patients.index') }}",
             where: {
                 startDate: $('#startDate').val(),
                 endDate: $('#endDate').val()
@@ -158,7 +158,7 @@ layui.use(['table', 'laydate', 'form'], function () {
             $(this).removeClass('layui-btn-primary');
             $(this).siblings().addClass('layui-btn-primary');
             table.reload('testReload', {
-                url: "{{ route('admin.patients.index') }}",
+                url: "{{ route('crm.patients.index') }}",
                 where: {
                     date : $(e).val()
                 }
@@ -176,7 +176,7 @@ layui.use(['table', 'laydate', 'form'], function () {
                 ids[i] = data[i].id;
             }
             $.ajax({
-                url: "{{ route('admin.patients.updates') }}",
+                url: "{{ route('crm.patients.updates') }}",
                 data: {
                     id: JSON.stringify(ids),
                     zid: $('#users').val()
