@@ -19,21 +19,6 @@
                 <button class="layui-btn" id="phoneSearchBtn" data-type="reload">搜索</button>
             </div>
         </div>
-
-        <div class="layui-form" style="margin-bottom: 15px;">
-            指派给：
-            <div class="layui-inline">
-                @csrf
-                <select id="users" lay-filter="users">
-                    <option value="">请选择客服</option>
-{{--                    @foreach ($users as $user)--}}
-{{--                        <option value="{{ $user->id }}">{{ $user->username }}</option>--}}
-{{--                    @endforeach--}}
-                </select>
-            </div>
-            <button class="layui-btn" id="allotBtn">确定</button>
-        </div>
-
         <div class="layui-btn-container layui-clear" style="float: left;">
             <button class="layui-btn layui-btn-sm btn-date" value="default">全部</button>
             <button class="layui-btn layui-btn-sm layui-btn-primary btn-date" value="today">今天</button>
@@ -58,12 +43,16 @@
         </div>
     </div>
     <div class="layui-card-body" style="padding-top: 0;">
-        <table class="layui-hide" id="admin_patients_table" lay-filter="admin_patients_table"></table>
+        <table id="dataTable" lay-filter="dataTable"></table>
         <script type="text/html" id="barDemo">
             <a class="layui-btn layui-btn-xs" lay-event="more">更多</a>
         </script>
     </div>
 </div>
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs layui-btn-primary" lay-event="repay">添加回访</a>
+    <a class="layui-btn layui-btn-xs" lay-event="more">更多</a>
+</script>
 @endsection
 
 @section('scripts')
@@ -71,71 +60,87 @@
 layui.use(['table', 'laydate', 'form'], function () {
     var table = layui.table,
         laydate = layui.laydate,
-        $ = layui.$;
+        $ = layui.$,
+        form = layui.form;
 
-    table.render({
-        elem: '#admin_patients_table',
+    var dataTable = table.render({
+        elem: '#dataTable',
         url: "{{ route('crm.patients.index') }}",
+        height: 'full-280',
+        limit: 15,
         page: true,
-        limit: 10,
-        id: 'testReload',
         cols: [[
-            {type: 'checkbox'},
-            {field: 'name', title: '姓名', width: 75},
-            {field: 'phone', title: '电话', width: 120},
-            {field: 'is_appointment', title: '是否预约', width: 86, unresize: true, align:'center', templet: function (res) {
-                    if (res.is_appointment) {
-                        return '<span class="layui-badge layui-bg-green">是</span>';
-                    } else {
-                        return '<span class="layui-badge layui-bg-gray">否</span>';
-                    }
+            {field: 'name', title: '姓名', align:'center', width: 75},
+            {field: 'phone', title: '电话', align:'center', width: 120},
+            {field: 'platform_id', title: '平台', align:'center', width: 90, templet: function (res) {
+                    return res.platform.name;
                 }},
-            {field: 'platform_id', title: '平台', align:'center', width: 120, templet: function (res) {
-                return res.platform.name;
-                }},
-            {field: 'is_add_wechat', title: '是否加微', width: 86, unresize: true, align:'center', templet: function (res) {
-                    if (res.is_add_wechat) {
-                        return '<span class="layui-badge layui-bg-green">是</span>';
+            {field: 'is_add_wechat', title: '是否加微', align:'center', width: 92, templet: function (res) {
+                    if (res.is_add_wechat === 1) {
+                        return '<input type="checkbox" name="switch" lay-skin="switch" lay-text="已加|未加" data-id="'+res.id+'" lay-filter="wechat-switch" checked />';
                     } else {
-                        return '<span class="layui-badge layui-bg-gray">否</span>';
+                        return '<input type="checkbox" name="switch" lay-skin="switch" lay-text="已加|未加" data-id="'+res.id+'" lay-filter="wechat-switch" />';
                     }
                 }},
             {field: 'project_id', align:'center', title: '咨询项目', width: 86, templet: function (res) {
-                return res.project.name;
+                    return res.project.name;
                 }},
-            {field: 'is_to_store', title: '是否到店', width: 86, unresize: true, align:'center', templet: function (res) {
-                    if (res.is_to_store) {
-                        return '<span class="layui-badge layui-bg-green">是</span>';
+            {field: 'is_to_store', title: '是否到店', align:'center', width: 92, templet: function (res) {
+                    if (res.is_to_store === 1) {
+                        return '<input type="checkbox" name="switch" lay-skin="switch" lay-text="已到|未到" data-id="'+res.id+'" lay-filter="store-switch" checked />';
                     } else {
-                        return '<span class="layui-badge layui-bg-gray">否</span>';
+                        return '<input type="checkbox" name="switch" lay-skin="switch" lay-text="已到|未到" data-id="'+res.id+'" lay-filter="store-switch" />';
                     }
                 }},
+            {field: 'achievement', title: '业绩', width: 86},
+            {field: 'rema_time', title: '剩余时间', sort: true, width: 102, align: 'center'},
+            {field: 'repay_time', title: '回访剩余', sort: true, width: 102, align: 'center'},
+            {field: 'store_time', title: '到店剩余', sort: true, width: 102, align: 'center'},
             {field: 'note', title: '特殊备注'},
             {field: 'origin_id', title: '来源', width: 60, templet: function (res) {
-                return res.origin.name;
+                    return res.origin.name;
                 }},
-            {field: 'updated_at', title: '流入时间', width: 180},
-            {title:'操作', align:'center', toolbar: '#barDemo', width:140}
+            {field: 'is_introduce_intention', title: '转介绍意向?', align: 'center', width: 110, templet: function (res) {
+                    if (res.is_introduce_intention === 1) {
+                        return '<input type="checkbox" name="switch" lay-skin="switch" lay-text="有|没有" data-id="'+res.id+'" lay-filter="intention-switch" checked />';
+                    } else {
+                        return '<input type="checkbox" name="switch" lay-skin="switch" lay-text="有|没有" data-id="'+res.id+'" lay-filter="intention-switch" />';
+                    }
+                }},
+            {field: 'introducer', title: '介绍人', width: 86},
+            {field: 'appointment_time', title: '预约时间', sort: true, align:'center', width: 160},
+            {fixed: 'right', title:'操作', align:'center', toolbar: '#barDemo', width:140}
         ]]
     });
 
+    form.on('switch(wechat-switch)', function (data) {
+        var wechat = data.elem.checked ? 1 : 0,
+            load = layer.load();
+        $.post('{{route('crm.patients.update', 'patient_id')}}'.replace(/patient_id/, $(data.elem).data('id')),
+            {wechat: wechat, patient_id: $(data.elem).data('id'), _method: 'PUT'},
+            function (res) {
+                layer.close(load);
+                layer.msg(res.msg, {icon: res.code == 0 ? 1 : 2})
+            })
+    });
+
     $('#nameSearchBtn').on('click', function () {
-        table.reload('testReload', {
+        table.reload('dataTable', {
             url: "{{ route('crm.patients.index') }}",
             where: {
                 name: $('#nameSearch').val()
             }
         })
-    })
+    });
 
     $('#phoneSearchBtn').on('click', function () {
-        table.reload('testReload', {
+        table.reload('dataTable', {
             url: "{{ route('crm.patients.index') }}",
             where: {
                 phone: $('#phoneSearch').val()
             }
         })
-    })
+    });
 
     laydate.render({
         elem: '#dateSearch',
@@ -144,20 +149,20 @@ layui.use(['table', 'laydate', 'form'], function () {
     });
 
     $('#dateSearchBtn').on('click', function () {
-        table.reload('testReload', {
+        table.reload('dataTable', {
             url: "{{ route('crm.patients.index') }}",
             where: {
                 startDate: $('#startDate').val(),
                 endDate: $('#endDate').val()
             }
         })
-    })
+    });
 
     $('.btn-date').each(function (i, e) {
         $(e).on('click', function () {
             $(this).removeClass('layui-btn-primary');
             $(this).siblings().addClass('layui-btn-primary');
-            table.reload('testReload', {
+            table.reload('dataTable', {
                 url: "{{ route('crm.patients.index') }}",
                 where: {
                     date : $(e).val()
@@ -165,50 +170,6 @@ layui.use(['table', 'laydate', 'form'], function () {
             });
         })
     });
-
-    $('#allotBtn').on('click', function () {
-        var checkStatus = table.checkStatus('testReload'),
-            data = checkStatus.data,
-            ids = new Array(),
-            selectval = $('#users').val();
-        if (selectval && data.length > 0) {
-            for (i=0; i<data.length; i++) {
-                ids[i] = data[i].id;
-            }
-            $.ajax({
-                url: "{{ route('crm.patients.updates') }}",
-                data: {
-                    id: JSON.stringify(ids),
-                    zid: $('#users').val()
-                },
-                method: 'POST',
-                headers: {
-                    'X-CSRF-TOKEN': $('input[name=_token]').val()
-                },
-                beforeSend: function (XMLHttpRequest) {
-                    layer.load();
-                },
-                success: function (res) {
-                    layer.closeAll('loading');
-                    if (res.code === 0) {
-                        layer.msg(res.msg, {
-                            offset: '15px'
-                            , icon: 1
-                            , time: 1000
-                        }, function () {
-                            table.reload('testReload');
-                        });
-                    } else {
-                        layer.msg(res.msg, {icon: 2});
-                    }
-                }
-            })
-        } else if (data.length <= 1) {
-            layer.alert('请至少勾选一位患者！');
-        } else {
-            layer.alert('请选择一位客服！');
-        }
-    })
 });
 </script>
 @endsection

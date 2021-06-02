@@ -10,7 +10,7 @@ use App\Models\Role;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
-class IndexsController extends Controller
+class IndexController extends Controller
 {
     public function __construct()
     {
@@ -160,5 +160,10 @@ class IndexsController extends Controller
         $roleAll = Role::all();
 
         return  view('user.role',compact('user','roleAll'));
+    }
+
+    public function console()
+    {
+        return view('indexes.console');
     }
 }

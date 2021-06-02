@@ -8,27 +8,29 @@
 {{--                    <dd><a href="#">添加员工</a></dd>--}}
 {{--                </dl>--}}
 {{--            </li>--}}
+            <li class="layui-nav-item {{ Request::is('console') || Request::is('console/*') ? 'layui-this' : '' }}"><a href="{{ route('admin.console') }}">控制台</a></li>
+            <li class="layui-nav-item {{ Request::is('system/users') || Request::is('system/users/*') ? 'layui-this' : '' }}"><a href="{{ route('system.users.index') }}">用户管理</a></li>
+            <li class="layui-nav-item {{ Request::is('system/roles') || Request::is('system/roles/*') ? 'layui-this' : '' }}"><a href="{{ route('system.roles.index') }}">角色管理</a></li>
+            <li class="layui-nav-item {{ Request::is('system/permissions') || Request::is('system/permissions/*') ? 'layui-this' : '' }}"><a href="{{ route('system.permissions.index') }}">权限管理</a></li>
+            <li class="layui-nav-item {{ Request::is('crm/departments') || Request::is('crm/departments/*') ? 'layui-this' : '' }}"><a href="{{ route('crm.departments.index') }}">部门管理</a></li>
+            <li class="layui-nav-item {{ Request::is('system/platforms') || Request::is('system/platforms/*') ? 'layui-this' : '' }}"><a href="{{ route('system.platforms.index') }}">平台管理</a></li>
+            <li class="layui-nav-item {{ Request::is('crm/patients') || Request::is('crm/patients/*') ? 'layui-this' : '' }}"><a href="{{ route('crm.patients.index') }}">患者管理</a></li>
+            <li class="layui-nav-item {{ Request::is('crm/seas') || Request::is('crm/seas/*') ? 'layui-this' : '' }}"><a href="{{ route('crm.seas.index') }}">患者公海</a></li>
 
-            <li class="layui-nav-item layui-this"><a href="{{ route('system.users.index') }}">用户管理</a></li>
-            <li class="layui-nav-item"><a href="{{ route('system.roles.index') }}">角色管理</a></li>
-            <li class="layui-nav-item"><a href="{{ route('system.permissions.index') }}">权限管理</a></li>
-            <li class="layui-nav-item"><a href="{{ route('crm.departments.index') }}">部门管理</a></li>
-            <li class="layui-nav-item"><a href="">患者管理</a></li>
 
-
-            <li class="layui-nav-item {{ Request::path() == 'admin' ? 'layui-this' : '' }}"><a href="{{ route('admin.index') }}">数据概览</a></li>
-            @if (Auth::user()->role_id == 0 || Auth::user()->role_id == 1 || Auth::user()->role_id == 3)
-                <li class="layui-nav-item {{ Request::path() == 'admin/users' ? 'layui-this' : '' }}"><a href="{{ route('system.users.index') }}">我的员工</a></li>
-            @endif
+{{--            <li class="layui-nav-item {{ Request::path() == 'admin' ? 'layui-this' : '' }}"><a href="{{ route('admin.index') }}">数据概览</a></li>--}}
+{{--            @if (Auth::user()->role_id == 0 || Auth::user()->role_id == 1 || Auth::user()->role_id == 3)--}}
+{{--                <li class="layui-nav-item {{ Request::path() == 'admin/users' ? 'layui-this' : '' }}"><a href="{{ route('system.users.index') }}">我的员工</a></li>--}}
+{{--            @endif--}}
 
 {{--            @can ('isAdmin', Auth::user())--}}
-                <li class="layui-nav-item">
-                    <a href="javascript:;">平台管理</a>
-                    <dl class="layui-nav-child">
-                        <dd class="layui-this"><a href="{{ route('system.platforms.index') }}">平台列表</a></dd>
-                        <dd><a href="#">添加员工</a></dd>
-                    </dl>
-                </li>
+{{--                <li class="layui-nav-item">--}}
+{{--                    <a href="javascript:;">平台管理</a>--}}
+{{--                    <dl class="layui-nav-child">--}}
+{{--                        <dd class="layui-this"><a href="{{ route('system.platforms.index') }}">平台列表</a></dd>--}}
+{{--                        <dd><a href="#">添加员工</a></dd>--}}
+{{--                    </dl>--}}
+{{--                </li>--}}
 {{--            @endcan--}}
 
 {{--            <li class="layui-nav-item">--}}

@@ -4,6 +4,7 @@ layui.use(['form', 'layer'], function () {
     var $ = layui.$,
         form = layui.form,
         layer = layui.layer;
+
     $.ajax({
         method: 'POST',
         url: '{{ route('api.getRoleByUserId', ['user_id' => $user_id ?? 0]) }}',

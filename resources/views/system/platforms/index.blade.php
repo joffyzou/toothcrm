@@ -4,7 +4,7 @@
 @section('content')
 <div class="layui-card">
     <div class="layui-card-header border-b-0 p-t-15">
-        <a class="layui-btn" href="{{ route('admin.platforms.create') }}"><i class="layui-icon">&#xe654;</i> 添加新平台</a>
+        <a class="layui-btn" href="{{ route('system.platforms.create') }}"><i class="layui-icon">&#xe654;</i> 添加新平台</a>
     </div>
     <div class="layui-card-body">
         <table id="dataTable" lay-filter="dataTable"></table>
@@ -24,7 +24,7 @@ layui.use(['table', 'layer'], function () {
         layer = layui.layer,
         dataTable = table.render({
             elem: '#dataTable',
-            url: "{{ route('admin.platforms.index') }}",
+            url: "{{ route('system.platforms.index') }}",
             page: true,
             limit: 15,
             cols: [[
@@ -39,9 +39,9 @@ layui.use(['table', 'layer'], function () {
 
     table.on('tool(dataTable)', function (obj) {
         if (obj.event === 'del') {
-            deleteData(obj, "{{ route('admin.platforms.destroy', 'platform_id') }}".replace(/platform_id/, obj.data.id), 'dataTable');
+            deleteData(obj, "{{ route('system.platforms.destroy', 'platform_id') }}".replace(/platform_id/, obj.data.id), 'dataTable');
         } else if (obj.event === 'edit') {
-            window.location.href = "{{ route('admin.platforms.edit', 'platform_id') }}".replace(/platform_id/, obj.data.id);
+            window.location.href = "{{ route('system.platforms.edit', 'platform_id') }}".replace(/platform_id/, obj.data.id);
         }
     });
 })

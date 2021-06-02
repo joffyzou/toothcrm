@@ -308,3 +308,20 @@ html {
 .count-list .layui-btn-group {
   margin-left: 0;
 }
+
+.layui-card-header.layuiadmin-card-header-auto {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  height: auto;
+}
+
+.layuiadmin-card-header-auto i.layuiadmin-button-btn {
+  position: relative;
+  right: 0;
+  top: 0;
+  vertical-align: middle;
+}
+
+.layuiadmin-card-header-auto .layui-form-item:last-child {
+  margin-bottom: 0;
+}

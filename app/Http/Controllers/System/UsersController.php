@@ -18,7 +18,6 @@ class UsersController extends Controller
             $res = User::query()
                 ->with('department')
                 ->orderByDesc('id')
-                ->orderByDesc('id')
                 ->paginate($request->get('limit', 30));
 
             return $this->success('ok', $res->items(), $res->total());

@@ -2,12 +2,10 @@
 
 @section('content')
 <div class="layui-card">
-    <div class="layui-card-header">
-        <div class="layui-btn-group">
-            @can ('system.users.create')
-                <a href="{{ route('system.users.create') }}" class="layui-btn layui-btn-sm">添加</a>
-            @endcan
-        </div>
+    <div class="layui-card-header layuiadmin-card-header-auto">
+        @can ('system.users.create')
+            <a href="{{ route('system.users.create') }}" class="layui-btn layui-btn-sm"><i class="layui-icon">&#xe654;</i> 添加</a>
+        @endcan
     </div>
     <div class="layui-card-body">
         <table id="dataTable" lay-filter="dataTable"></table>
@@ -38,17 +36,17 @@ layui.use(['layer', 'table', 'form'], function () {
 
     var dataTable = table.render({
         elem: '#dataTable',
-        height: 'full-200',
+        height: 'full-218',
         url: '{{ route('system.users.index') }}',
         page: true,
         cols: [[
-            {checkbox: true, fixed: true},
             {field: 'id', title: 'ID', sort: true, width: 80},
             {field: 'username', title: '帐号'},
             {field: 'department_id', title: '部门', templet: function (res) {
                     return res.department.name;
                 }},
-            {field: 'status', title: '状态', templet: function (res) {
+            {field: 'role', title: '角色'},
+            {field: 'status', title: '状态', align: 'center', templet: function (res) {
                     if (res.status == 1) {
                         return '<input type="checkbox" name="switch" lay-skin="switch" lay-text="启用|禁用" data-userid="'+res.id+'" lay-filter="status-switch" checked />';
                     } else {

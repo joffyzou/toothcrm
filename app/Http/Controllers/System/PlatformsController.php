@@ -27,7 +27,7 @@ class PlatformsController extends Controller
             return $this->success('ok', $res->items(), $res->total());
         }
 
-        return view('platforms.index');
+        return view('system.platforms.index');
     }
 
     public function create(Platform $platform)
@@ -53,14 +53,14 @@ class PlatformsController extends Controller
     {
         $platforms = $platform->all();
 
-        return view('platforms.show', compact('platforms', 'platform'));
+        return view('system.platforms.show', compact('platforms', 'platform'));
     }
 
     public function edit(Platform $platform)
     {
         $users = User::operater()->get();
 
-        return view('platforms.create_and_edit', compact('platform', 'users'));
+        return view('system.platforms.create_and_edit', compact('platform', 'users'));
     }
 
     public function update(Request $request, Platform $platform)

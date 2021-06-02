@@ -17,7 +17,9 @@ Route::delete('logout', 'LoginController@logout')->name('admin.logout')->middlew
 |--------------------------------------------------------------------------
 */
 Route::group(['middleware'=>'auth'], function () {
-    Route::get('/', 'IndexsController@index')->name('admin.index');   // Dashboard 面板
+    Route::get('/', 'IndexController@index')->name('admin.index');   // 后台首页
+
+    Route::get('/console','IndexController@console')->name('admin.console');    // 后台控制台
 });
 
 /*
@@ -34,8 +36,6 @@ Route::group(['prefix' => 'system', 'as' => 'system.', 'namespace' => 'System', 
     Route::post('users/status', 'UsersController@status')->name('users.status');
 
     Route::resource('platforms', 'PlatformsController'); // 平台管理
-
-    Route::resource('menus', 'MenusController');    // 菜单管理
 });
 
 /*
@@ -53,6 +53,8 @@ Route::group(['prefix' => 'crm', 'as' => 'crm.', 'namespace' => 'Crm', 'middlewa
     Route::post('patients/updates', 'PatientsController@updates')->name('patients.updates');
 
     Route::resource('repays', 'RepaysController');  // 回访管理
+
+    Route::resource('seas', 'SeasController');  // 公海
 });
 
 //Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'permission:admin']], function () {

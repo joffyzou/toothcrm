@@ -71,7 +71,7 @@ layui.use(['layer', 'table', 'form'], function () {
             var code = res.code
             layer.msg(res.msg, {time: 2000, icon: code === 0 ? 1 : 2}, function () {
                 if (code === 0) {
-                    layui.table.reload('dataTable');
+                    table.reload('dataTable');
                     layer.close(layer.getFrameIndex(window.name));
                 }
             });

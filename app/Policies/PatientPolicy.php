@@ -10,8 +10,8 @@ class PatientPolicy
 {
     use HandlesAuthorization;
 
-    public function update(User $user, Patient $patient)
-    {
-        return $user->is_admin || $user->id === $patient->user_id;
-    }
+//    public function update(User $user, Patient $patient)
+//    {
+//        return $user->is_admin || $user->id === $patient->user_id;
+//    }
 }

@@ -2,7 +2,9 @@
 
 @section('content')
 <div class="layui-card">
-    <div class="layui-card-header"></div>
+    <div class="layui-card-header">
+        添加用户
+    </div>
     <div class="layui-card-body">
         <form action="{{ route('system.users.store') }}" method="POST" class="layui-form">
             @csrf
