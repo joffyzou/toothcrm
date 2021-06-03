@@ -34,12 +34,6 @@ class User extends Authenticatable
         return $this->hasOne(Department::class, 'id', 'department_id')->withDefault(['name' => '-']);
     }
 
-    // 多对一：多个用户对应一个角色
-    public function role()
-    {
-        return $this->belongsTo(Role::class);
-    }
-
     // 一对多：一个运营可以管理多个平台
     public function platform()
     {
@@ -65,6 +59,6 @@ class User extends Authenticatable
 
     public function scopeOperater($query)
     {
-        return $query->where('role_id', 4);
+        return $query->where('department_id', 2);
     }
 }

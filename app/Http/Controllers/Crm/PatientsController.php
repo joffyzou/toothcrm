@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Crm;
 
 use App\Http\Controllers\Controller;
 use App\Http\Traits\TraitResource;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\Patient;
 use App\Models\Origin;
@@ -16,7 +17,8 @@ use Illuminate\Support\Facades\Log;
 class PatientsController extends Controller
 {
     use TraitResource;
-    public function index(Request $request, User $user, Patient $patient)
+
+    public function index(Request $request)
     {
         if ($request->ajax()) {
             $data = $request->all([
@@ -47,6 +49,56 @@ class PatientsController extends Controller
                     return $query->whereBetween('created_at', [$data['startDate'], $data['endDate']]);
                 })
                 ->paginate($request->get('limit', 30));
+
+            foreach ($res as $patient) {
+                $currUserRepays = $patient->repays()->where('user_id', Auth::id())->count();   // 当前客服回访数
+                if ($currUserRepays == 0) {
+                    // 当没有回访时，剩余时间=录入时间+30天
+                    $currRemaAdd = $patient->created_at->addDays(30);
+                    if ($currRemaAdd->isPast() && is_null($patient->note)) {
+                        $patient->user_id = 0;
+                        $patient->save();
+                    } else {
+                        $remaTime = now()->diffInHours($currRemaAdd) . '小时';
+                        $patient->rema_time = $remaTime;
+                    }
+
+                    // 当没有回访时，回访剩余=录入时间+15天
+                    $currRepayAdd = $patient->created_at->addDays(15);
+                    $remaRepayTime = now()->diffInHours($currRepayAdd) . '小时';
+                    $patient->repay_time = $remaRepayTime;
+
+                } else if ($currUserRepays < 5 && $currUserRepays > 0) {
+                    // 客服A回访次数少于5时，每次回访重置剩余时间=最后回访时间+30天
+                    $currRepayLast = $patient->repays()->where('user_id', Auth::id())->orderBy('created_at', 'desc')->first();
+                    $currRemaAdd = $currRepayLast->created_at->addDays(30);
+                    $remaTime = (new Carbon)->diffInHours($currRemaAdd, true) . '小时';
+                    $patient->rema_time = $remaTime;
+
+                    // 当客服A回访次数少于5时，每次回访重置回访剩余=最后回访时间+15天
+                    $currRepayAdd = $currRepayLast->created_at->addDays(15);
+                    $remaRepayTime = (new Carbon)->diffInHours($currRepayAdd, true) . '小时';
+                    $patient->repay_time = $remaRepayTime;
+
+                    // 剩余时间小于当前时间、没有特殊备注 流入公海
+                    if ($currRemaAdd < now() && $patient->note != null) {
+                        $patient->user_id = 0;
+                    }
+                } else {
+                    $patient->rema_time = '0' . '小时';
+                    $patient->repay_time = '0' . '小时';
+                }
+
+                // 当有预约时间，再计算 到店剩余
+                if ($patient->appointment_time) {
+                    $appointment_time = Carbon::parse($patient->appointment_time);
+                    $remaAppointmentTime = (new Carbon)->diffInHours($appointment_time, true) . '小时';
+                    $patient->store_time = $remaAppointmentTime;
+                } else {
+                    // 当30天没有预约
+                    $patient->store_time = '0' . '小时';
+                }
+            }
 
             return $this->success('ok', $res->items(), $res->total());
         }
@@ -97,26 +149,29 @@ class PatientsController extends Controller
     {
         $data = $request->all([
             'patient_id',
-            'wechat'
+            'wechat',
+            'store',
+            'intention'
         ]);
         try {
-            Patient::query()->where('id', '=', $data['patient_id'])->update(['is_add_wechat' => $data['wechat']]);
+            Patient::query()
+                ->where('id', '=', $data['patient_id'])
+                ->when(!is_null($data['wechat']), function ($query) use ($data) {
+                    $query->update(['is_add_wechat' => $data['wechat']]);
+                })
+                ->when(!is_null($data['store']), function ($query) use ($data) {
+                    $query->update(['is_to_store' => $data['store']]);
+                })
+                ->when(!is_null($data['intention']), function ($query) use ($data) {
+                    $query->update(['is_introduce_intention' => $data['intention']]);
+                });
 
             return $this->success();
         } catch (\Exception $exception) {
             Log::error('设置患者是否加微信异常：' . $exception->getMessage());
+
             return $this->error();
         }
-//        $info = $patient::find($patient->id);
-//        if (empty($info)) {
-//            return $this->resJson(1, '没有该条记录');
-//        }
-//        $res = $info->update($request->input());
-//        if ($res !== true) {
-//            return $this->resJson(1, $info->getError());
-//        } else {
-//            return $this->resJson(0, '操作成功');
-//        }
     }
 
     public function updates(Request $request, Patient $patient)

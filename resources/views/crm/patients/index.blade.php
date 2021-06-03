@@ -124,6 +124,28 @@ layui.use(['table', 'laydate', 'form'], function () {
             })
     });
 
+    form.on('switch(store-switch)', function (data) {
+        var store = data.elem.checked ? 1 : 0,
+            load = layer.load();
+        $.post('{{route('crm.patients.update', 'patient_id')}}'.replace(/patient_id/, $(data.elem).data('id')),
+            {store: store, patient_id: $(data.elem).data('id'), _method: 'PUT'},
+            function (res) {
+                layer.close(load);
+                layer.msg(res.msg, {icon: res.code == 0 ? 1 : 2})
+            })
+    });
+
+    form.on('switch(intention-switch)', function (data) {
+        var intention = data.elem.checked ? 1 : 0,
+            load = layer.load();
+        $.post('{{route('crm.patients.update', 'patient_id')}}'.replace(/patient_id/, $(data.elem).data('id')),
+            {intention: intention, patient_id: $(data.elem).data('id'), _method: 'PUT'},
+            function (res) {
+                layer.close(load);
+                layer.msg(res.msg, {icon: res.code == 0 ? 1 : 2})
+            })
+    });
+
     $('#nameSearchBtn').on('click', function () {
         table.reload('dataTable', {
             url: "{{ route('crm.patients.index') }}",

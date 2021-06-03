@@ -45,417 +45,706 @@
         </div>
     </div>
     <div class="layui-card-body">
-        <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+        <fieldset class="layui-elem-field layui-field-title">
             <legend>对话</legend>
         </fieldset>
-        <div class="layui-btn-container count-list">
-            <div class="layui-row">
-                <div class="layui-col-md2">
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">预约数量</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
-                    </div>
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">矫正</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
-                    </div>
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">种植</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
-                    </div>
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">全科</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
-                    </div>
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">检查</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
-                    </div>
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">洁牙</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
+        <div class="layui-form layui-form-pane">
+            <div class="layui-inline" style="width: 175px;">
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0; color: red;">对话数量</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="">
                     </div>
                 </div>
-                <div class="layui-col-md2">
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">套电数量</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
-                    </div>
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">矫正</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
-                    </div>
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">种植</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
-                    </div>
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">全科</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
-                    </div>
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">检查</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
-                    </div>
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">洁牙</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0; color: red;">矫正</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="">
                     </div>
                 </div>
-                <div class="layui-col-md2">
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">套电率</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
-                    </div>
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">矫正</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
-                    </div>
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">种植</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
-                    </div>
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">全科</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
-                    </div>
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">检查</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
-                    </div>
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">洁牙</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0; color: red;">种植</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="">
                     </div>
                 </div>
-                <div class="layui-col-md2">
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">到店人数</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
-                    </div>
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">矫正</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
-                    </div>
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">种植</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
-                    </div>
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">全科</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
-                    </div>
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">检查</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
-                    </div>
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">洁牙</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0; color: red;">全科</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="">
                     </div>
                 </div>
-                <div class="layui-col-md2">
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">业绩</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0; color: red;">检查</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="">
                     </div>
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">矫正</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0; color: red;">洁牙</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="">
                     </div>
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">种植</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
+                </div>
+            </div>
+            <div class="layui-inline" style="width: 175px;">
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0; color: red;">有效数量</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="">
                     </div>
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">全科</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0; color: red;">矫正</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="">
                     </div>
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">检查</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0; color: red;">种植</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="">
                     </div>
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">洁牙</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0; color: red;">全科</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0; color: red;">检查</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0; color: red;">洁牙</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-inline" style="width: 175px;">
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">预约数量</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="100" disabled>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">矫正</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">种植</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">全科</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">检查</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">洁牙</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-inline" style="width: 175px;">
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">套电数量</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="100" disabled>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">矫正</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">种植</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">全科</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">检查</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">洁牙</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-inline" style="width: 175px;">
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">套电率</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="100" disabled>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">矫正</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">种植</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">全科</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">检查</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">洁牙</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-inline" style="width: 175px;">
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">到店人数</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="100" disabled>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">矫正</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">种植</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">全科</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">检查</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">洁牙</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-inline" style="width: 175px;">
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">业绩</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="100" disabled>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">矫正</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">种植</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">全科</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">检查</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">洁牙</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
                     </div>
                 </div>
             </div>
         </div>
-        <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+        <fieldset class="layui-elem-field layui-field-title">
             <legend>进电</legend>
         </fieldset>
-        <div class="layui-btn-container count-list">
-            <div class="layui-row">
-                <div class="layui-col-md2">
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">预约数量</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
-                    </div>
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">矫正</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
-                    </div>
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">种植</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
-                    </div>
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">全科</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
-                    </div>
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">检查</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
-                    </div>
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">洁牙</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
+        <div class="layui-form layui-form-pane">
+            <div class="layui-inline" style="width: 175px;">
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0; color: red;">进电数量</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="">
                     </div>
                 </div>
-                <div class="layui-col-md2">
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">套电数量</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
-                    </div>
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">矫正</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
-                    </div>
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">种植</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
-                    </div>
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">全科</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
-                    </div>
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">检查</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
-                    </div>
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">洁牙</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0; color: red;">矫正</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="">
                     </div>
                 </div>
-                <div class="layui-col-md2">
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">套电率</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
-                    </div>
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">矫正</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
-                    </div>
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">种植</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
-                    </div>
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">全科</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
-                    </div>
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">检查</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
-                    </div>
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">洁牙</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0; color: red;">种植</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="">
                     </div>
                 </div>
-                <div class="layui-col-md2">
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">到店人数</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
-                    </div>
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">矫正</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
-                    </div>
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">种植</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
-                    </div>
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">全科</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
-                    </div>
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">检查</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
-                    </div>
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">洁牙</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0; color: red;">全科</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="">
                     </div>
                 </div>
-                <div class="layui-col-md2">
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">业绩</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0; color: red;">检查</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="">
                     </div>
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">矫正</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0; color: red;">洁牙</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="">
                     </div>
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">种植</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
+                </div>
+            </div>
+            <div class="layui-inline" style="width: 175px;">
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0; color: red;">有效数量</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="">
                     </div>
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">全科</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0; color: red;">矫正</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="">
                     </div>
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">检查</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0; color: red;">种植</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="">
                     </div>
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">洁牙</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0; color: red;">全科</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0; color: red;">检查</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0; color: red;">洁牙</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-inline" style="width: 175px;">
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">预约数量</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="100" disabled>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">矫正</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">种植</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">全科</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">检查</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">洁牙</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-inline" style="width: 175px;">
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">到店人数</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="100" disabled>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">矫正</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">种植</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">全科</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">检查</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">洁牙</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-inline" style="width: 175px;">
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">业绩</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="100" disabled>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">矫正</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">种植</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">全科</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">检查</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">洁牙</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
                     </div>
                 </div>
             </div>
         </div>
-        <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+        <fieldset class="layui-elem-field layui-field-title">
             <legend>留咨</legend>
         </fieldset>
-        <div class="layui-btn-container count-list">
-            <div class="layui-row">
-                <div class="layui-col-md2">
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">预约数量</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
-                    </div>
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">矫正</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
-                    </div>
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">种植</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
-                    </div>
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">全科</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
-                    </div>
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">检查</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
-                    </div>
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">洁牙</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
+        <div class="layui-form layui-form-pane">
+            <div class="layui-inline" style="width: 175px;">
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0; color: red;">留咨数量</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="">
                     </div>
                 </div>
-                <div class="layui-col-md2">
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">套电数量</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
-                    </div>
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">矫正</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
-                    </div>
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">种植</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
-                    </div>
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">全科</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
-                    </div>
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">检查</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
-                    </div>
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">洁牙</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0; color: red;">矫正</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="">
                     </div>
                 </div>
-                <div class="layui-col-md2">
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">套电率</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
-                    </div>
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">矫正</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
-                    </div>
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">种植</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
-                    </div>
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">全科</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
-                    </div>
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">检查</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
-                    </div>
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">洁牙</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0; color: red;">种植</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="">
                     </div>
                 </div>
-                <div class="layui-col-md2">
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">到店人数</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
-                    </div>
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">矫正</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
-                    </div>
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">种植</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
-                    </div>
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">全科</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
-                    </div>
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">检查</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
-                    </div>
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">洁牙</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0; color: red;">全科</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="">
                     </div>
                 </div>
-                <div class="layui-col-md2">
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">业绩</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0; color: red;">检查</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="">
                     </div>
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">矫正</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0; color: red;">洁牙</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="">
                     </div>
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">种植</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
+                </div>
+            </div>
+            <div class="layui-inline" style="width: 175px;">
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0; color: red;">有效数量</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="">
                     </div>
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">全科</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0; color: red;">矫正</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="">
                     </div>
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">检查</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0; color: red;">种植</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="">
                     </div>
-                    <div class="layui-btn-group">
-                        <span class="layui-btn layui-btn-primary layui-bg-gray">洁牙</span>
-                        <span class="layui-btn layui-btn-primary">25</span>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0; color: red;">全科</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0; color: red;">检查</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0; color: red;">洁牙</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-inline" style="width: 175px;">
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">预约数量</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="100" disabled>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">矫正</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">种植</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">全科</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">检查</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">洁牙</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-inline" style="width: 175px;">
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">到店人数</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="100" disabled>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">矫正</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">种植</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">全科</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">检查</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">洁牙</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-inline" style="width: 175px;">
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">业绩</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="100" disabled>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">矫正</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">种植</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">全科</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">检查</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">洁牙</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+@endsection
+
+@section('scripts')
+<script>
+layui.use(['table', 'laydate'], function () {
+    var $ = layui.$,
+        table = layui.table,
+        laydate = layui.laydate;
+
+    laydate.render({
+        elem: '#dateSearch',
+        type: 'datetime',
+        range: ['#startDate', '#endDate']
+    });
+
+    $('#dateSearchBtn').on('click', function () {
+        table.reload('dataTable', {
+            url: "{{ route('crm.seas.index') }}",
+            where: {
+                startDate: $('#startDate').val(),
+                endDate: $('#endDate').val()
+            }
+        })
+    })
+
+    $('.btn-date').each(function (i, e) {
+        $(e).on('click', function () {
+            $(this).removeClass('layui-btn-primary');
+            $(this).siblings().addClass('layui-btn-primary');
+            table.reload('dataTable', {
+                url: "{{ route('crm.seas.index') }}",
+                where: {
+                    date : $(e).val()
+                }
+            });
+        })
+    });
+})
+</script>
 @endsection

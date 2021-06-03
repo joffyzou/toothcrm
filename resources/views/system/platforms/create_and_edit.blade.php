@@ -12,10 +12,10 @@
     </div>
     <div class="layui-card-body">
         @if ($platform->id)
-            <form class="layui-form p-t-15" action="{{ route('admin.platforms.update', $platform->id) }}" method="POST">
+            <form class="layui-form p-t-15" action="{{ route('system.platforms.update', $platform->id) }}" method="POST">
                 @method('PATCH')
         @else
-            <form class="layui-form p-t-15" action="{{ route('admin.platforms.store') }}" method="POST">
+            <form class="layui-form p-t-15" action="{{ route('system.platforms.store') }}" method="POST">
         @endif
                 @csrf
             <div class="layui-form-item">

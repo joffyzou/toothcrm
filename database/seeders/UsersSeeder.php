@@ -50,7 +50,7 @@ class UsersSeeder extends Seeder
                         ]
                     ],
                     [
-                        'name' => 'system.user',
+                        'name' => 'system.users',
                         'display_name' => '用户管理',
                         'child' => [
                             ['name' => 'system.users.create', 'display_name' => '添加'],
@@ -58,6 +58,15 @@ class UsersSeeder extends Seeder
                             ['name' => 'system.users.resetPassword', 'display_name' => '重置密码'],
                             ['name' => 'system.users.status', 'display_name' => '启用/禁用'],
                             ['name' => 'system.users.destroy', 'display_name' => '删除'],
+                        ]
+                    ],
+                    [
+                        'name' => 'system.platforms',
+                        'display_name' => '平台管理',
+                        'child' => [
+                            ['name' => 'system.platforms.create', 'display_name' => '添加'],
+                            ['name' => 'system.platforms.edit', 'display_name' => '编辑'],
+                            ['name' => 'system.platforms.destroy', 'display_name' => '删除'],
                         ]
                     ]
                 ],
@@ -76,25 +85,17 @@ class UsersSeeder extends Seeder
                         ]
                     ],
                     [
-                        'name' => 'crm.business',
-                        'display_name' => '经理库',
-                        'child' => [
-                            ['name' => 'crm.business.to', 'display_name' => '分配'],
-                        ]
-                    ],
-                    [
-                        'name' => 'crm.waste',
+                        'name' => 'crm.seas',
                         'display_name' => '公海库',
                         'child' => [
-                            ['name' => 'crm.waste.retrieve', 'display_name' => '拾回'],
-                            ['name' => 'crm.waste.show', 'display_name' => '详情'],
-                            ['name' => 'crm.waste.destroy', 'display_name' => '删除'],
+                            ['name' => 'crm.seas.index', 'display_name' => '首页'],
+                            ['name' => 'crm.seas.update', 'display_name' => '更新'],
                         ]
                     ],
                     [
                         'name' => 'crm.patients',
-                        'display_name' => '客户管理',
-                        'route' => 'crm.customer',
+                        'display_name' => '患者管理',
+                        'route' => 'crm.patients',
                         'child' => [
                             ['name' => 'crm.patients.create', 'display_name' => '添加'],
                             ['name' => 'crm.patients.edit', 'display_name' => '编辑'],
@@ -105,6 +106,17 @@ class UsersSeeder extends Seeder
                             ['name' => 'crm.patients.list_department', 'display_name' => '查看本部门客户'],
                             ['name' => 'crm.patients.transfer', 'display_name' => '移交'],
                             ['name' => 'crm.patients.remove', 'display_name' => '剔除'],
+                        ]
+                    ],
+                    [
+                        'name' => 'crm.repays',
+                        'display_name' => '回访管理',
+                        'route' => 'crm.repays',
+                        'child' => [
+                            ['name' => 'crm.repays.create', 'display_name' => '添加'],
+                            ['name' => 'crm.repays.edit', 'display_name' => '编辑'],
+                            ['name' => 'crm.repays.destroy', 'display_name' => '删除'],
+                            ['name' => 'crm.repays.show', 'display_name' => '详情'],
                         ]
                     ],
                 ],
