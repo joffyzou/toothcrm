@@ -8,7 +8,8 @@
 {{--                    <dd><a href="#">添加员工</a></dd>--}}
 {{--                </dl>--}}
 {{--            </li>--}}
-            <li class="layui-nav-item {{ Request::is('console') || Request::is('console/*') ? 'layui-this' : '' }}"><a href="{{ route('admin.console') }}">控制台</a></li>
+            <li class="layui-nav-item {{ Request::is('operate') ? 'layui-this' : '' }}"><a href="{{ route('operate') }}">运营数据</a></li>
+            <li class="layui-nav-item {{ Request::is('customer') ? 'layui-this' : '' }}"><a href="{{ route('customer') }}">客服数据</a></li>
             <li class="layui-nav-item {{ Request::is('system/users') || Request::is('system/users/*') ? 'layui-this' : '' }}"><a href="{{ route('system.users.index') }}">用户管理</a></li>
             <li class="layui-nav-item {{ Request::is('system/roles') || Request::is('system/roles/*') ? 'layui-this' : '' }}"><a href="{{ route('system.roles.index') }}">角色管理</a></li>
             <li class="layui-nav-item {{ Request::is('system/permissions') || Request::is('system/permissions/*') ? 'layui-this' : '' }}"><a href="{{ route('system.permissions.index') }}">权限管理</a></li>

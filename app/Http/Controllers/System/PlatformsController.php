@@ -3,7 +3,11 @@
 namespace App\Http\Controllers\System;
 
 use App\Http\Controllers\Controller;
+use App\Models\Origin;
+use App\Models\Patient;
+use App\Models\Project;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\Platform;
 use App\Http\Traits\TraitResource;
@@ -12,11 +16,6 @@ use Illuminate\Support\Facades\Log;
 class PlatformsController extends Controller
 {
     use TraitResource;
-
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
 
     public function index(Request $request)
     {
@@ -34,7 +33,7 @@ class PlatformsController extends Controller
     {
         $users = User::operater()->get();
 
-        return view('platforms.create_and_edit', compact('users', 'platform'));
+        return view('system.platforms.create_and_edit', compact('users', 'platform'));
     }
 
     public function store(Request $request, Platform $platform)
@@ -45,15 +44,8 @@ class PlatformsController extends Controller
         if ($res !== true) {
             return $this->error();
         } else {
-            return $this->success(0, '操作成功');
+            return redirect()->route('system.platforms.index');
         }
-    }
-
-    public function show(Platform $platform)
-    {
-        $platforms = $platform->all();
-
-        return view('system.platforms.show', compact('platforms', 'platform'));
     }
 
     public function edit(Platform $platform)
@@ -65,8 +57,11 @@ class PlatformsController extends Controller
 
     public function update(Request $request, Platform $platform)
     {
+        $platform->name = $request->platform;
         $platform->user_id = $request->user_id;
         $platform->save();
+
+        return redirect()->route('system.platforms.index');
     }
 
     public function destroy(Request $request)

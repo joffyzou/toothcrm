@@ -111,18 +111,36 @@ class PatientsController extends Controller
         $origins = $origin::all();
         $projects = $project::all();
         $platforms = $platform::all();
-        $id = Auth::id();
-        $users = $user->whereRaw("p_id = 1 and id != $id")->get();
+        $users = User::query()
+            ->where('department_id', 1)
+            ->get();
+
         return view('crm.patients.create', compact('origins', 'projects', 'platforms', 'users'));
     }
 
     public function store(Request $request, Patient $patient)
     {
+        $this->validate($request, [
+            'phone' => 'unique:patients'
+        ], [
+            'phone.unique' => '已存在该电话联系人'
+        ]);
+
+        $data = $request->all([
+            'name',
+            'state',
+            'phone',
+            'project',
+            'platform',
+
+        ]);
+
         if ($request->users) {
             $patient->user_id = $request->users;
         } else {
             $patient->user_id = Auth::id();
         }
+
         $patient->name = $request->name;
         $patient->phone = $request->phone;
         $patient->project_id = $request->project;
@@ -134,7 +152,7 @@ class PatientsController extends Controller
         $patient->note = $request->note;
         $patient->state = $request->state;
         if ($patient->save()) {
-            return redirect()->route('admin.users.patients', Auth::id());
+            return redirect()->route('crm.patients.index', Auth::id());
         }
     }
 
@@ -145,30 +163,77 @@ class PatientsController extends Controller
         return view('crm.patients.show', compact('patient', 'repays'));
     }
 
-    public function update(Request $request, Patient $patient)
+    public function edit(Patient $patient, Origin $origin, Project $project, Platform $platform)
+    {
+        $origins = $origin::all();
+        $projects = $project::all();
+        $platforms = $platform::all();
+        return view('crm.patients.edit', compact('patient', 'origins', 'projects', 'platforms'));
+    }
+
+    public function update(Request $request)
     {
         $data = $request->all([
-            'patient_id',
-            'wechat',
-            'store',
-            'intention'
+            'patient_id', 'name', 'phone', 'user_id', 'state', 'platform_id', 'origin_id', 'project_id', 'is_appointment',
+            'is_add_wechat', 'is_to_store', 'is_introduce_intention', 'is_introduce', 'introducer', 'achievement', 'appointment_time',
+            'note'
         ]);
+
         try {
             Patient::query()
-                ->where('id', '=', $data['patient_id'])
-                ->when(!is_null($data['wechat']), function ($query) use ($data) {
-                    $query->update(['is_add_wechat' => $data['wechat']]);
+                ->where('id', $data['patient_id'])
+                ->when(!is_null($data['name']), function ($query) use ($data) {
+                    $query->update(['name' => $data['name']]);
                 })
-                ->when(!is_null($data['store']), function ($query) use ($data) {
-                    $query->update(['is_to_store' => $data['store']]);
+                ->when(!is_null($data['phone']), function ($query) use ($data) {
+                    $query->update(['phone' => $data['phone']]);
                 })
-                ->when(!is_null($data['intention']), function ($query) use ($data) {
-                    $query->update(['is_introduce_intention' => $data['intention']]);
+                ->when(!is_null($data['user_id']), function ($query) use ($data) {
+                    $query->update(['user_id' => $data['user_id']]);
+                })
+                ->when(!is_null($data['state']), function ($query) use ($data) {
+                    $query->update(['state' => $data['state']]);
+                })
+                ->when(!is_null($data['platform_id']), function ($query) use ($data) {
+                    $query->update(['platform_id' => $data['platform_id']]);
+                })
+                ->when(!is_null($data['origin_id']), function ($query) use ($data) {
+                    $query->update(['origin_id' => $data['origin_id']]);
+                })
+                ->when(!is_null($data['project_id']), function ($query) use ($data) {
+                    $query->update(['project_id' => $data['project_id']]);
+                })
+                ->when(!is_null($data['is_appointment']), function ($query) use ($data) {
+                    $query->update(['is_appointment' => $data['is_appointment']]);
+                })
+                ->when(!is_null($data['is_add_wechat']), function ($query) use ($data) {
+                    $query->update(['is_add_wechat' => $data['is_add_wechat']]);
+                })
+                ->when(!is_null($data['is_to_store']), function ($query) use ($data) {
+                    $query->update(['is_to_store' => $data['is_to_store']]);
+                })
+                ->when(!is_null($data['is_introduce_intention']), function ($query) use ($data) {
+                    $query->update(['is_introduce_intention' => $data['is_introduce_intention']]);
+                })
+                ->when(!is_null($data['is_introduce']), function ($query) use ($data) {
+                    $query->update(['is_introduce' => $data['is_introduce']]);
+                })
+                ->when(!is_null($data['introducer']), function ($query) use ($data) {
+                    $query->update(['introducer' => $data['introducer']]);
+                })
+                ->when(!is_null($data['achievement']), function ($query) use ($data) {
+                    $query->update(['achievement' => $data['achievement']]);
+                })
+                ->when(!is_null($data['appointment_time']), function ($query) use ($data) {
+                    $query->update(['appointment_time' => $data['appointment_time']]);
+                })
+                ->when(!is_null($data['is_to_store']), function ($query) use ($data) {
+                    $query->update(['note' => $data['note']]);
                 });
 
             return $this->success();
         } catch (\Exception $exception) {
-            Log::error('设置患者是否加微信异常：' . $exception->getMessage());
+            Log::error('更新患者信息异常：' . $exception->getMessage());
 
             return $this->error();
         }
@@ -184,14 +249,7 @@ class PatientsController extends Controller
                 'created_at' => now()
             ]);
         }
-        return $this->resJson(0, '操作成功');
-    }
 
-    public function edit(Patient $patient, Origin $origin, Project $project, Platform $platform)
-    {
-        $origins = $origin::all();
-        $projects = $project::all();
-        $platforms = $platform::all();
-        return view('crm.patients.edit', compact('patient', 'origins', 'projects', 'platforms'));
+        return $this->success('操作成功');
     }
 }

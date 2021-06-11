@@ -45,7 +45,13 @@ layui.use(['layer', 'table', 'form'], function () {
             {field: 'department_id', title: '部门', templet: function (res) {
                     return res.department.name;
                 }},
-            {field: 'role', title: '角色'},
+            {field: 'role', title: '角色', templet: function (res) {
+                    var roles = [];
+                    for (let i in res.roles) {
+                         roles[i] = res.roles[i].display_name;
+                    }
+                    return roles;
+                }},
             {field: 'status', title: '状态', align: 'center', templet: function (res) {
                     if (res.status == 1) {
                         return '<input type="checkbox" name="switch" lay-skin="switch" lay-text="启用|禁用" data-userid="'+res.id+'" lay-filter="status-switch" checked />';

@@ -88,25 +88,25 @@ class Patient extends Model
 
         switch ($order) {
             case 'today':
-                $query->whereBetween('created_at', [$today, now()]);
+                return $query->whereBetween('created_at', [$today, now()]);
                 break;
             case 'yesterday':
-                $query->whereBetween('created_at', [$yesterday, $today]);
+                return $query->whereBetween('created_at', [$yesterday, $today]);
                 break;
             case 'threeDay':
-                $query->whereBetween('created_at', [$threeDay, now()]);
+                return $query->whereBetween('created_at', [$threeDay, now()]);
                 break;
             case 'sevenDay':
-                $query->whereBetween('created_at', [$sevenDay, now()]);
+                return $query->whereBetween('created_at', [$sevenDay, now()]);
                 break;
             case 'fifteenDay':
-                $query->whereBetween('created_at', [$fifteenDay, now()]);
+                return $query->whereBetween('created_at', [$fifteenDay, now()]);
                 break;
             case 'thirtyDay':
-                $query->whereBetween('created_at', [$thirtyDay, now()]);
+                return $query->whereBetween('created_at', [$thirtyDay, now()]);
                 break;
             default:
-                $query->recent();
+                return $query->recent();
                 break;
         }
     }

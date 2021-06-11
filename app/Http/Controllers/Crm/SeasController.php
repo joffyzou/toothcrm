@@ -4,12 +4,17 @@ namespace App\Http\Controllers\Crm;
 
 use App\Http\Controllers\Controller;
 use App\Models\Patient;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class SeasController extends Controller
 {
     public function index(Request $request)
     {
+        $users = User::query()
+            ->where('department_id', 1)
+            ->get();
+
         if ($request->ajax()) {
             $data = $request->all([
                 'name',
@@ -36,6 +41,6 @@ class SeasController extends Controller
             return $this->success('ok', $res->items(), $res->total());
         }
 
-        return view('crm.seas.index');
+        return view('crm.seas.index', compact('users'));
     }
 }

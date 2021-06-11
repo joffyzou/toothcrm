@@ -44,24 +44,22 @@
     </div>
     <div class="layui-card-body" style="padding-top: 0;">
         <table id="dataTable" lay-filter="dataTable"></table>
-        <script type="text/html" id="barDemo">
-            <a class="layui-btn layui-btn-xs" lay-event="more">更多</a>
+        <script type="text/html" id="tableBar">
+            <button class="layui-btn layui-btn-xs layui-btn-primary" lay-event="repay">添加回访</button>
+            <button class="layui-btn layui-btn-xs" lay-event="more">更多</button>
         </script>
     </div>
 </div>
-<script type="text/html" id="barDemo">
-    <a class="layui-btn layui-btn-xs layui-btn-primary" lay-event="repay">添加回访</a>
-    <a class="layui-btn layui-btn-xs" lay-event="more">更多</a>
-</script>
 @endsection
 
 @section('scripts')
 <script>
-layui.use(['table', 'laydate', 'form'], function () {
+layui.use(['table', 'laydate', 'form', 'dropdown'], function () {
     var table = layui.table,
         laydate = layui.laydate,
         $ = layui.$,
-        form = layui.form;
+        form = layui.form,
+        dropdown = layui.dropdown;
 
     var dataTable = table.render({
         elem: '#dataTable',
@@ -76,7 +74,7 @@ layui.use(['table', 'laydate', 'form'], function () {
                     return res.platform.name;
                 }},
             {field: 'is_add_wechat', title: '是否加微', align:'center', width: 92, templet: function (res) {
-                    if (res.is_add_wechat === 1) {
+                    if (res.is_add_wechat) {
                         return '<input type="checkbox" name="switch" lay-skin="switch" lay-text="已加|未加" data-id="'+res.id+'" lay-filter="wechat-switch" checked />';
                     } else {
                         return '<input type="checkbox" name="switch" lay-skin="switch" lay-text="已加|未加" data-id="'+res.id+'" lay-filter="wechat-switch" />';
@@ -86,7 +84,7 @@ layui.use(['table', 'laydate', 'form'], function () {
                     return res.project.name;
                 }},
             {field: 'is_to_store', title: '是否到店', align:'center', width: 92, templet: function (res) {
-                    if (res.is_to_store === 1) {
+                    if (res.is_to_store) {
                         return '<input type="checkbox" name="switch" lay-skin="switch" lay-text="已到|未到" data-id="'+res.id+'" lay-filter="store-switch" checked />';
                     } else {
                         return '<input type="checkbox" name="switch" lay-skin="switch" lay-text="已到|未到" data-id="'+res.id+'" lay-filter="store-switch" />';
@@ -101,7 +99,7 @@ layui.use(['table', 'laydate', 'form'], function () {
                     return res.origin.name;
                 }},
             {field: 'is_introduce_intention', title: '转介绍意向?', align: 'center', width: 110, templet: function (res) {
-                    if (res.is_introduce_intention === 1) {
+                    if (res.is_introduce_intention || res.introducer) {
                         return '<input type="checkbox" name="switch" lay-skin="switch" lay-text="有|没有" data-id="'+res.id+'" lay-filter="intention-switch" checked />';
                     } else {
                         return '<input type="checkbox" name="switch" lay-skin="switch" lay-text="有|没有" data-id="'+res.id+'" lay-filter="intention-switch" />';
@@ -109,7 +107,7 @@ layui.use(['table', 'laydate', 'form'], function () {
                 }},
             {field: 'introducer', title: '介绍人', width: 86},
             {field: 'appointment_time', title: '预约时间', sort: true, align:'center', width: 160},
-            {fixed: 'right', title:'操作', align:'center', toolbar: '#barDemo', width:140}
+            {fixed: 'right', title:'操作', align:'center', toolbar: '#tableBar', width:140}
         ]]
     });
 
@@ -117,7 +115,7 @@ layui.use(['table', 'laydate', 'form'], function () {
         var wechat = data.elem.checked ? 1 : 0,
             load = layer.load();
         $.post('{{route('crm.patients.update', 'patient_id')}}'.replace(/patient_id/, $(data.elem).data('id')),
-            {wechat: wechat, patient_id: $(data.elem).data('id'), _method: 'PUT'},
+            {is_add_wechat: wechat, patient_id: $(data.elem).data('id'), _method: 'PUT'},
             function (res) {
                 layer.close(load);
                 layer.msg(res.msg, {icon: res.code == 0 ? 1 : 2})
@@ -128,7 +126,7 @@ layui.use(['table', 'laydate', 'form'], function () {
         var store = data.elem.checked ? 1 : 0,
             load = layer.load();
         $.post('{{route('crm.patients.update', 'patient_id')}}'.replace(/patient_id/, $(data.elem).data('id')),
-            {store: store, patient_id: $(data.elem).data('id'), _method: 'PUT'},
+            {is_to_store: store, patient_id: $(data.elem).data('id'), _method: 'PUT'},
             function (res) {
                 layer.close(load);
                 layer.msg(res.msg, {icon: res.code == 0 ? 1 : 2})
@@ -139,7 +137,7 @@ layui.use(['table', 'laydate', 'form'], function () {
         var intention = data.elem.checked ? 1 : 0,
             load = layer.load();
         $.post('{{route('crm.patients.update', 'patient_id')}}'.replace(/patient_id/, $(data.elem).data('id')),
-            {intention: intention, patient_id: $(data.elem).data('id'), _method: 'PUT'},
+            {is_introduce_intention: intention, patient_id: $(data.elem).data('id'), _method: 'PUT'},
             function (res) {
                 layer.close(load);
                 layer.msg(res.msg, {icon: res.code == 0 ? 1 : 2})
@@ -191,6 +189,147 @@ layui.use(['table', 'laydate', 'form'], function () {
                 }
             });
         })
+    });
+
+    table.on('tool(dataTable)', function(obj){
+        var data = obj.data, layEvent = obj.event;
+        if(layEvent === 'repay'){
+            layer.open({
+                type: 2,
+                title: '添加回访',
+                offset: 'auto',
+                area: ['450px', '400px'],
+                content: '{{ route('crm.patients.show', 'patient_id') }}'.replace(/patient_id/, obj.data.id),
+                btn: ['确定', '取消'],
+                btnAlign: 'c',
+                yes: function (index, layero) {
+                    var iframeWindow = window['layui-layer-iframe' + index],
+                        submit = layero.find('iframe').contents().find("#layuiadmin-app-form-add");
+                    iframeWindow.layui.form.on('submit(layuiadmin-app-form-add)', function (data) {
+                        var field = data.field;
+                        $.ajax({
+                            url: '{{ route('crm.repays.store') }}',
+                            data: field,
+                            method: 'POST',
+                            beforeSend: function () {
+                                layer.load();
+                            },
+                            success: function (res) {
+                                layer.closeAll('loading');
+                                if (res.code === 0) {
+                                    layer.msg(res.msg, {
+                                        offset: '15px'
+                                        , icon: 1
+                                        , time: 1000
+                                    }, function () {
+                                        layer.close(index); //关闭弹层
+                                    });
+                                } else {
+                                    layer.msg(res.msg, {icon: 2});
+                                }
+                            }
+                        });
+                    });
+                    submit.trigger('click');
+                }
+            })
+        } else if(layEvent === 'more') {
+            //下拉菜单
+            dropdown.render({
+                elem: this,
+                show: true,
+                data: [{
+                    title: '特殊备注',
+                    id: 'addNote'
+                }, {
+                    title: '编辑信息',
+                    id: 'edit'
+                }],
+                click: function (menudata) {
+                    if (menudata.id === 'addNote') {
+                        console.log(data.id);
+                        layer.prompt({
+                            title: '添加特殊备注',
+                            formType: 2,
+                            value: data.note,
+                            maxlength: 50
+                        }, function (value, index) {
+                            var date = {
+                                note: value
+                            };
+                            $.ajax({
+                                url: '{{ route('crm.patients.update', 'patient_id') }}'.replace(/patient_id/, data.id),
+                                method: 'put',
+                                data: date,
+                                beforeSend: function () {
+                                    layer.load();
+                                },
+                                success: function (res) {
+                                    layer.closeAll('loading');
+                                    if (res.code === 0) {
+                                        layer.msg(res.msg, {
+                                            offset: '15px'
+                                            , icon: 1
+                                            , time: 1000
+                                        }, function () {
+                                            obj.update({
+                                                note: value
+                                            });
+                                            table.reload('dataTable');
+                                            layer.close(index);
+                                        });
+                                    } else {
+                                        layer.msg(res.msg, {icon: 2});
+                                    }
+                                }
+                            });
+                        });
+                    } else if (menudata.id === 'edit') {
+                        layer.open({
+                            type: 2,
+                            title: '编辑',
+                            offset: 'auto',
+                            area: ['450px', '400px'],
+                            content: '{{ route('crm.patients.edit', 'patient_id') }}'.replace(/patient_id/, obj.data.id),
+                            btn: ['确定', '取消'],
+                            btnAlign: 'c',
+                            yes: function (index, layero) {
+                                var iframeWindow = window['layui-layer-iframe' + index],
+                                    submit = layero.find('iframe').contents().find("#patient_edit");
+                                iframeWindow.layui.form.on('submit(patient_edit)', function (data) {
+                                    var field = data.field;
+                                    $.ajax({
+                                        url: '{{ route('crm.patients.update', 'patient_id') }}'.replace(/patient_id/, obj.data.id),
+                                        data: field,
+                                        method: 'PUT',
+                                        beforeSend: function () {
+                                            layer.load();
+                                        },
+                                        success: function (res) {
+                                            layer.closeAll('loading');
+                                            if (res.code === 0) {
+                                                layer.msg(res.msg, {
+                                                    offset: '15px'
+                                                    , icon: 1
+                                                    , time: 1000
+                                                }, function () {
+                                                    table.reload('dataTable');
+                                                    layer.close(index); //关闭弹层
+                                                });
+                                            } else {
+                                                layer.msg(res.msg, {icon: 2});
+                                            }
+                                        }
+                                    });
+                                });
+                                submit.trigger('click');
+                            }
+                        });
+                    }
+                },
+                style: 'margin-left: -42px;' //设置额外样式
+            })
+        }
     });
 });
 </script>

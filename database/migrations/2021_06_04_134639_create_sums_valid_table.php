@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDailiesTable extends Migration
+class CreateSumsValidTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class CreateDailiesTable extends Migration
      */
     public function up()
     {
-        Schema::create('dailies', function (Blueprint $table) {
-            $table->id();
+        Schema::create('sums_valid', function (Blueprint $table) {
+            $table->bigInteger('sums_id')->comment('总数ID');
+            $table->unsignedSmallInteger('project_id')->comment('项目ID');
             $table->unsignedSmallInteger('origin_id')->comment('来源ID');
-            $table->unsignedSmallInteger('platform_id')->comment('平台ID');
-            $table->dateTime('created_at')->default(now())->comment('日报时间');
+            $table->bigInteger('number')->comment('数量');
+            $table->date('created_at')->comment('日期');
         });
     }
 
@@ -28,6 +29,6 @@ class CreateDailiesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('dailies');
+        Schema::dropIfExists('sums_valid');
     }
 }

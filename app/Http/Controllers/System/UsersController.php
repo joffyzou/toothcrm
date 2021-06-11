@@ -3,19 +3,32 @@
 namespace App\Http\Controllers\System;
 
 use App\Http\Controllers\Controller;
+use App\Models\Role;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Log;
 
 class UsersController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request, Role $role)
     {
         if ($request->ajax()) {
             $res = User::query()
-                ->with('department')
+                ->with(['department', 'roles'])
                 ->orderByDesc('id')
                 ->paginate($request->get('limit', 30));
+
+//            foreach ($res->items() as $item) {
+//                $item->role = $item->hasRole($role);
+//            }
+
+//            return $res;
+
+
+//            $roles = Role::query()->orderByDesc('id')->get();
+            // foreach ($roles as $role) {
+                // $role->selected = $user != null && $user->hasRole($role);
+            // }
 
             return $this->success('ok', $res->items(), $res->total());
         }
@@ -53,21 +66,23 @@ class UsersController extends Controller
     }
 
 
-    public function update(Request $request, User $user)
+    public function update(Request $request, $id)
     {
-        $this->authorize('update', $user);
-        $info = $user->find($request->id);
-        if (empty($info)) {
-            return $this->resJson(1, '没有该条记录');
+        $user = User::findOrFail($id);
+        $data = $request->all(['name','phone','nickname','password','role_ids','sip_id','department_id']);
+        $data['role_ids'] = $data['role_ids'] == null ? [] : explode(',',$data['role_ids']);
+        if ($data['password']){
+            $data['password'] = bcrypt($data['password']);
+        }else{
+            unset($data['password']);
         }
-        $res = $info->update([
-            'username' => $request->input('username'),
-            'password' => bcrypt($request->input('password'))
-        ]);
-        if ($res !== true) {
-            return $this->resJson(1, $info->getError());
-        } else {
-            return $this->resJson(0, '操作成功');
+        try{
+            $user->update($data);
+            $user->syncRoles($data['role_ids']);
+            return $this->success();
+        }catch (\Exception $exception){
+            Log::error('更新用户信息异常：'.$exception->getMessage());
+            return $this->error();
         }
     }
 

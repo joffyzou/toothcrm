@@ -6,13 +6,11 @@
         <fieldset class="layui-elem-field layui-field-title">
             <legend>数据筛选</legend>
         </fieldset>
-
         <div class="layui-btn-container">
 {{--            @foreach ($users as $user)--}}
 {{--                <a href="{{ route('admin.index') . '/?id=' . $user->id }}" class="layui-btn {{ substr(Request::getQueryString(), 3) == $user->id ? '' : 'layui-btn-primary layui-border-green' }}">{{ $user->username }}</a>--}}
 {{--            @endforeach--}}
         </div>
-
         <fieldset class="layui-elem-field">
             <legend>数据汇总</legend>
             <div class="layui-field-box">

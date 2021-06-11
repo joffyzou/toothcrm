@@ -12,9 +12,9 @@
             <div class="layui-form">
                 <div class="layui-inline">
                     <div class="layui-input-inline">
-                        <select name="city" lay-verify="required">
-                            @foreach ($platforms as $platform)
-                                <option value="{{ $platform->id }}">{{ $platform->name }}</option>
+                        <select name="city" lay-verify="required" lay-filter="platforms">
+                            @foreach ($platforms as $d)
+                                <option value="{{ $d->id }}" {{ $platform->id == $d->id ? 'selected' : '' }}>{{ $d->name }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -22,13 +22,13 @@
             </div>
         </div>
         <div class="layui-btn-container layui-clear" style="float: left;">
-            <button class="layui-btn layui-btn-sm btn-date" value="default">全部</button>
-            <button class="layui-btn layui-btn-sm layui-btn-primary btn-date" value="today">今天</button>
-            <button class="layui-btn layui-btn-sm layui-btn-primary btn-date" value="yesterday">昨天</button>
-            <button class="layui-btn layui-btn-sm layui-btn-primary btn-date" value="threeDay">最近三天</button>
-            <button class="layui-btn layui-btn-sm layui-btn-primary btn-date" value="sevenDay">最近一周</button>
-            <button class="layui-btn layui-btn-sm layui-btn-primary btn-date" value="fifteenDay">最近15天</button>
-            <button class="layui-btn layui-btn-sm layui-btn-primary btn-date" value="thirtyDay">最近一个月</button>
+            <a href="{{ route('system.platforms.show', $platform->id) }}" class="layui-btn layui-btn-sm btn-date {{ empty(Request::getQueryString()) ? '' : 'layui-btn-primary' }}">全部</a>
+            <a href="{{ route('system.platforms.show', $platform->id) }}?date=today" class="layui-btn layui-btn-sm {{ Request::input('date') == 'today' ? '' : 'layui-btn-primary' }}">今天</a>
+            <a href="{{ route('system.platforms.show', $platform->id) }}?date=yesterday" class="layui-btn layui-btn-sm {{ Request::input('date') == 'yesterday' ? '' : 'layui-btn-primary' }}">昨天</a>
+            <a href="{{ route('system.platforms.show', $platform->id) }}?date=threeDay" class="layui-btn layui-btn-sm {{ Request::input('date') == 'threeDay' ? '' : 'layui-btn-primary' }}">最近三天</a>
+            <a href="{{ route('system.platforms.show', $platform->id) }}?date=sevenDay" class="layui-btn layui-btn-sm {{ Request::input('date') == 'sevenDay' ? '' : 'layui-btn-primary' }}">最近一周</a>
+            <a href="{{ route('system.platforms.show', $platform->id) }}?date=fifteenDay" class="layui-btn layui-btn-sm {{ Request::input('date') == 'fifteenDay' ? '' : 'layui-btn-primary' }}">最近15天</a>
+            <a href="{{ route('system.platforms.show', $platform->id) }}?date=thirtyDay" class="layui-btn layui-btn-sm {{ Request::input('date') == 'thirtyDay' ? '' : 'layui-btn-primary' }}">最近一个月</a>
         </div>
         <div class="layui-inline layui-form-item" style="margin-top: -16px; margin-bottom: 0;">
             <label class="layui-form-label">日期范围</label>
@@ -53,113 +53,69 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0; color: red;">对话数量</label>
                     <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="">
+                        <input type="text" name="origin_sum" data-platform-id="{{ $platform->id }}" data-origin-id="2" class="layui-input sums-total" value="">
                     </div>
                 </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0; color: red;">矫正</label>
-                    <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="">
+                @foreach ($projects as $project)
+                    <div class="layui-form-item">
+                        <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0; color: red;">{{ $project->name }}</label>
+                        <div class="layui-input-inline" style="width: 80px;">
+                            <input type="text" name="number[{{ $project->id }}]" autocomplete="off" class="layui-input" value="">
+                        </div>
                     </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0; color: red;">种植</label>
-                    <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0; color: red;">全科</label>
-                    <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0; color: red;">检查</label>
-                    <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0; color: red;">洁牙</label>
-                    <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="">
-                    </div>
-                </div>
+                @endforeach
             </div>
             <div class="layui-inline" style="width: 175px;">
                 <div class="layui-form-item">
                     <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0; color: red;">有效数量</label>
                     <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="">
+                        <input type="text" name="valid_sum" autocomplete="off" class="layui-input sums-total" value="">
                     </div>
                 </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0; color: red;">矫正</label>
-                    <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="">
+                @foreach ($projects as $project)
+                    <div class="layui-form-item">
+                        <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0; color: red;">{{ $project->name }}</label>
+                        <div class="layui-input-inline" style="width: 80px;">
+                            <input type="text" name="number[{{ $project->id }}]" autocomplete="off" class="layui-input" value="">
+                        </div>
                     </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0; color: red;">种植</label>
-                    <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0; color: red;">全科</label>
-                    <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0; color: red;">检查</label>
-                    <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0; color: red;">洁牙</label>
-                    <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="">
-                    </div>
-                </div>
+                @endforeach
             </div>
             <div class="layui-inline" style="width: 175px;">
                 <div class="layui-form-item">
                     <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">预约数量</label>
                     <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="100" disabled>
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="{{ $dhyy }}" disabled>
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">矫正</label>
                     <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="{{ $dhyyjz }}" disabled>
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">种植</label>
                     <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="{{ $dhyyzz }}" disabled>
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">全科</label>
                     <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="{{ $dhyyqk }}" disabled>
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">检查</label>
                     <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="{{ $dhyyjc }}" disabled>
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">洁牙</label>
                     <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="{{ $dhyyjy }}" disabled>
                     </div>
                 </div>
             </div>
@@ -243,37 +199,37 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">到店人数</label>
                     <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="100" disabled>
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="{{ $dhdd }}" disabled>
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">矫正</label>
                     <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="{{ $dhddjz }}" disabled>
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">种植</label>
                     <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="{{ $dhddzz }}" disabled>
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">全科</label>
                     <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="{{ $dhddqk }}" disabled>
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">检查</label>
                     <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="{{ $dhddjc }}" disabled>
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">洁牙</label>
                     <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="{{ $dhddjy }}" disabled>
                     </div>
                 </div>
             </div>
@@ -281,37 +237,37 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">业绩</label>
                     <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="100" disabled>
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="{{ $dhyj }}" disabled>
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">矫正</label>
                     <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="{{ $dhyjjz }}" disabled>
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">种植</label>
                     <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="{{ $dhyjzz }}" disabled>
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">全科</label>
                     <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="{{ $dhyjqk }}" disabled>
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">检查</label>
                     <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="{{ $dhyjjc }}" disabled>
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">洁牙</label>
                     <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="{{ $dhyjjy }}" disabled>
                     </div>
                 </div>
             </div>
@@ -327,36 +283,14 @@
                         <input type="text" name="number" autocomplete="off" class="layui-input" value="">
                     </div>
                 </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0; color: red;">矫正</label>
-                    <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="">
+                @foreach ($projects as $project)
+                    <div class="layui-form-item">
+                        <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0; color: red;">{{ $project->name }}</label>
+                        <div class="layui-input-inline" style="width: 80px;">
+                            <input type="text" name="number[{{ $project->id }}]" autocomplete="off" class="layui-input" value="">
+                        </div>
                     </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0; color: red;">种植</label>
-                    <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0; color: red;">全科</label>
-                    <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0; color: red;">检查</label>
-                    <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0; color: red;">洁牙</label>
-                    <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="">
-                    </div>
-                </div>
+                @endforeach
             </div>
             <div class="layui-inline" style="width: 175px;">
                 <div class="layui-form-item">
@@ -365,72 +299,50 @@
                         <input type="text" name="number" autocomplete="off" class="layui-input" value="">
                     </div>
                 </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0; color: red;">矫正</label>
-                    <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="">
+                @foreach ($projects as $project)
+                    <div class="layui-form-item">
+                        <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0; color: red;">{{ $project->name }}</label>
+                        <div class="layui-input-inline" style="width: 80px;">
+                            <input type="text" name="number[{{ $project->id }}]" autocomplete="off" class="layui-input" value="">
+                        </div>
                     </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0; color: red;">种植</label>
-                    <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0; color: red;">全科</label>
-                    <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0; color: red;">检查</label>
-                    <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0; color: red;">洁牙</label>
-                    <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="">
-                    </div>
-                </div>
+                @endforeach
             </div>
             <div class="layui-inline" style="width: 175px;">
                 <div class="layui-form-item">
                     <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">预约数量</label>
                     <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="100" disabled>
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="{{ $jdyy }}" disabled>
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">矫正</label>
                     <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="{{ $jdyyjz }}" disabled>
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">种植</label>
                     <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="{{ $jdyyzz }}" disabled>
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">全科</label>
                     <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="{{ $jdyyqk }}" disabled>
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">检查</label>
                     <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="{{ $jdyyjc }}" disabled>
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">洁牙</label>
                     <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="{{ $jdyyjy }}" disabled>
                     </div>
                 </div>
             </div>
@@ -438,37 +350,37 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">到店人数</label>
                     <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="100" disabled>
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="{{ $jddd }}" disabled>
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">矫正</label>
                     <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="{{ $jdddjz }}" disabled>
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">种植</label>
                     <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="{{ $jdddzz }}" disabled>
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">全科</label>
                     <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="{{ $jdddqk }}" disabled>
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">检查</label>
                     <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="{{ $jdddjc }}" disabled>
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">洁牙</label>
                     <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="{{ $jdddjy }}" disabled>
                     </div>
                 </div>
             </div>
@@ -476,37 +388,37 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">业绩</label>
                     <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="100" disabled>
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="{{ $jdyj }}" disabled>
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">矫正</label>
                     <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="{{ $jdyjjz }}" disabled>
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">种植</label>
                     <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="{{ $jdyjzz }}" disabled>
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">全科</label>
                     <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="{{ $jdyjqk }}" disabled>
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">检查</label>
                     <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="{{ $jdyjjc }}" disabled>
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">洁牙</label>
                     <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="{{ $jdyjjy }}" disabled>
                     </div>
                 </div>
             </div>
@@ -522,36 +434,14 @@
                         <input type="text" name="number" autocomplete="off" class="layui-input" value="">
                     </div>
                 </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0; color: red;">矫正</label>
-                    <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="">
+                @foreach ($projects as $project)
+                    <div class="layui-form-item">
+                        <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0; color: red;">{{ $project->name }}</label>
+                        <div class="layui-input-inline" style="width: 80px;">
+                            <input type="text" name="number[{{ $project->id }}]" autocomplete="off" class="layui-input" value="">
+                        </div>
                     </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0; color: red;">种植</label>
-                    <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0; color: red;">全科</label>
-                    <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0; color: red;">检查</label>
-                    <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0; color: red;">洁牙</label>
-                    <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="">
-                    </div>
-                </div>
+                @endforeach
             </div>
             <div class="layui-inline" style="width: 175px;">
                 <div class="layui-form-item">
@@ -560,72 +450,50 @@
                         <input type="text" name="number" autocomplete="off" class="layui-input" value="">
                     </div>
                 </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0; color: red;">矫正</label>
-                    <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="">
+                @foreach ($projects as $project)
+                    <div class="layui-form-item">
+                        <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0; color: red;">{{ $project->name }}</label>
+                        <div class="layui-input-inline" style="width: 80px;">
+                            <input type="text" name="number[{{ $project->id }}]" autocomplete="off" class="layui-input" value="">
+                        </div>
                     </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0; color: red;">种植</label>
-                    <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0; color: red;">全科</label>
-                    <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0; color: red;">检查</label>
-                    <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0; color: red;">洁牙</label>
-                    <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="">
-                    </div>
-                </div>
+                @endforeach
             </div>
             <div class="layui-inline" style="width: 175px;">
                 <div class="layui-form-item">
                     <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">预约数量</label>
                     <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="100" disabled>
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="{{ $lzyy }}" disabled>
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">矫正</label>
                     <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="{{ $lzyyjz }}" disabled>
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">种植</label>
                     <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="{{ $lzyyzz }}" disabled>
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">全科</label>
                     <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="{{ $lzyyqk }}" disabled>
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">检查</label>
                     <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="{{ $lzyyjc }}" disabled>
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">洁牙</label>
                     <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="{{ $lzyyjy }}" disabled>
                     </div>
                 </div>
             </div>
@@ -633,37 +501,37 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">到店人数</label>
                     <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="100" disabled>
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="{{ $lzdd }}" disabled>
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">矫正</label>
                     <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="{{ $lzddjz }}" disabled>
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">种植</label>
                     <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="{{ $lzddzz }}" disabled>
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">全科</label>
                     <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="{{ $lzddqk }}" disabled>
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">检查</label>
                     <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="{{ $lzddjc }}" disabled>
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">洁牙</label>
                     <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="{{ $lzddjy }}" disabled>
                     </div>
                 </div>
             </div>
@@ -671,37 +539,37 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">业绩</label>
                     <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="100" disabled>
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="{{ $lzyj }}" disabled>
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">矫正</label>
                     <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="{{ $lzyjjz }}" disabled>
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">种植</label>
                     <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="{{ $lzyjzz }}" disabled>
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">全科</label>
                     <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="{{ $lzyjqk }}" disabled>
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">检查</label>
                     <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="{{ $lzyjjc }}" disabled>
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label" style="width: 80px; padding-left: 0; padding-right: 0;">洁牙</label>
                     <div class="layui-input-inline" style="width: 80px;">
-                        <input type="text" name="number" autocomplete="off" class="layui-input" value="25" disabled>
+                        <input type="text" name="number" autocomplete="off" class="layui-input" value="{{ $lzyjjy }}" disabled>
                     </div>
                 </div>
             </div>
@@ -712,9 +580,9 @@
 
 @section('scripts')
 <script>
-layui.use(['table', 'laydate'], function () {
+layui.use(['laydate', 'form'], function () {
     var $ = layui.$,
-        table = layui.table,
+        form = layui.form,
         laydate = layui.laydate;
 
     laydate.render({
@@ -724,27 +592,27 @@ layui.use(['table', 'laydate'], function () {
     });
 
     $('#dateSearchBtn').on('click', function () {
-        table.reload('dataTable', {
-            url: "{{ route('crm.seas.index') }}",
-            where: {
-                startDate: $('#startDate').val(),
-                endDate: $('#endDate').val()
+        window.location.href = '{{ Request::url() }}' + '?startDate=' + $('#startDate').val() + '&&endDate=' + $('#endDate').val();
+    });
+
+    form.on('select(platforms)', function (e) {
+        window.location.href = '{{ route('system.platforms.show', 'platform_id') }}'.replace(/platform_id/, e.value);
+    })
+
+    $('#test889').on('blur', function (e) {
+        $.ajax({
+            url: '{{ route('sums') }}',
+            method: 'POST',
+            data: {
+                'platform_id': $(this).data('platform-id'),
+                'origin_id': $(this).data('origin-id'),
+                'origin_sum': this.value
+            },
+            success: function (e) {
+                console.log(e);
             }
         })
     })
-
-    $('.btn-date').each(function (i, e) {
-        $(e).on('click', function () {
-            $(this).removeClass('layui-btn-primary');
-            $(this).siblings().addClass('layui-btn-primary');
-            table.reload('dataTable', {
-                url: "{{ route('crm.seas.index') }}",
-                where: {
-                    date : $(e).val()
-                }
-            });
-        })
-    });
 })
 </script>
 @endsection

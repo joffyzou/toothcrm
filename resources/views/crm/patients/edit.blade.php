@@ -5,6 +5,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">姓名</label>
         <div class="layui-input-inline">
+            <input type="hidden" name="patient_id" value="{{ $patient->id }}">
             <input type="text" name="name" autocomplete="off" class="layui-input" value="{{ $patient->name }}">
         </div>
     </div>
@@ -17,7 +18,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">平台</label>
         <div class="layui-input-inline">
-            <select name="platform" lay-filter="platform">
+            <select name="platform_id" lay-filter="platform">
                 @foreach ($platforms as $platform)
                     <option value="{{ $platform->id }}" @if ($platform->id == $patient->platform_id) selected @endif>{{ $platform->name }}</option>
                 @endforeach
@@ -27,7 +28,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">咨询项目</label>
         <div class="layui-input-inline">
-            <select name="project" lay-filter="project">
+            <select name="project_id" lay-filter="project">
                 @foreach ($projects as $project)
                     <option value="{{ $project->id }}" @if ($project->id == $patient->project_id) selected @endif>{{ $project->name }}</option>
                 @endforeach
@@ -49,11 +50,17 @@
     <div class="layui-form-item">
         <label class="layui-form-label">来源</label>
         <div class="layui-input-inline">
-            <select name="origin" lay-filter="origin">
+            <select name="origin_id" lay-filter="origin">
                 @foreach ($origins as $origin)
                 <option value="{{ $origin->id }}" @if ($origin->id == $patient->origin_id) selected @endif>{{ $origin->name }}</option>
                 @endforeach
             </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">介绍人</label>
+        <div class="layui-input-inline">
+            <input type="text" name="introducer" autocomplete="off" class="layui-input" value="{{ $patient->introducer }}">
         </div>
     </div>
     <div class="layui-form-item layui-hide">

@@ -26,9 +26,9 @@
                 @csrf
                 <select id="users" lay-filter="users">
                     <option value="">请选择客服</option>
-                    {{--                    @foreach ($users as $user)--}}
-                    {{--                        <option value="{{ $user->id }}">{{ $user->username }}</option>--}}
-                    {{--                    @endforeach--}}
+                    @foreach ($users as $user)
+                        <option value="{{ $user->id }}">{{ $user->username }}</option>
+                    @endforeach
                 </select>
             </div>
             <button class="layui-btn" id="allotBtn">确定</button>
@@ -168,7 +168,7 @@ layui.use(['table', 'laydate', 'form'], function () {
     });
 
     $('#allotBtn').on('click', function () {
-        var checkStatus = table.checkStatus('testReload'),
+        var checkStatus = table.checkStatus('dataTable'),
             data = checkStatus.data,
             ids = new Array(),
             selectval = $('#users').val();
@@ -204,7 +204,7 @@ layui.use(['table', 'laydate', 'form'], function () {
                     }
                 }
             })
-        } else if (data.length <= 1) {
+        } else if (data.length < 1) {
             layer.alert('请至少勾选一位患者！');
         } else {
             layer.alert('请选择一位客服！');

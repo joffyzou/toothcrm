@@ -3,9 +3,9 @@
 @section('content')
 <div class="layui-card">
     <div class="layui-card-body">
-        <form action="{{ route('system.users.update', $user->id) }}" method="POST">
+        <form class="layui-form" action="{{ route('system.users.update', $user->id) }}" method="POST">
             @csrf
-            @method('PATH')
+            @method('PUT')
             <div class="layui-form-item">
                 <label for="" class="layui-form-label">帐号</label>
                 <div class="layui-input-block">

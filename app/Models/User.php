@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
@@ -28,7 +30,12 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    // 一对一
+    protected function serializeDate(DateTimeInterface $date)
+    {
+        return $date->format($this->dateFormat ?: 'Y-m-d H:i:s');
+    }
+
+    // 一对一 部门
     public function department()
     {
         return $this->hasOne(Department::class, 'id', 'department_id')->withDefault(['name' => '-']);
