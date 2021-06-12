@@ -844,6 +844,10 @@ class IndexController extends Controller
             'endDate'
         ]);
 
+        if (Auth::user()->hasRole('staff')) {
+            $data['user_id'] = Auth::id();
+        }
+
         $users = User::query()
             ->where('department_id', 1)
             ->get();

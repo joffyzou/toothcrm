@@ -17,9 +17,6 @@ Route::delete('logout', 'LoginController@logout')->name('admin.logout')->middlew
 |--------------------------------------------------------------------------
 */
 Route::group(['middleware'=>'auth'], function () {
-    Route::get('/console/kf', 'IndexController@index')->name('admin.index');   // 后台首页
-
-    Route::get('/console','IndexController@console')->name('admin.console');    // 后台控制台
 
     Route::any('/sums', 'IndexController@sums')->name('sums');
 

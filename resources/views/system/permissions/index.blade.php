@@ -54,7 +54,6 @@ layui.config({
                 , {field: 'name', title: '权限名称'}
                 , {field: 'created_at', title: '创建时间'}
                 , {field: 'updated_at', title: '更新时间'}
-                , {fixed: 'right',title:'操作', width: 260, align: 'center', toolbar: '#options'}
             ]]
         });
     }

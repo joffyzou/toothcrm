@@ -78,6 +78,7 @@ class UsersSeeder extends Seeder
                     [
                         'name' => 'crm.departments',
                         'display_name' => '部门管理',
+                        'route' => 'crm.departments',
                         'child' => [
                             ['name' => 'crm.departments.create', 'display_name' => '添加'],
                             ['name' => 'crm.departments.edit', 'display_name' => '编辑'],
@@ -87,6 +88,7 @@ class UsersSeeder extends Seeder
                     [
                         'name' => 'crm.seas',
                         'display_name' => '公海库',
+                        'route' => 'crm.seas',
                         'child' => [
                             ['name' => 'crm.seas.index', 'display_name' => '首页'],
                             ['name' => 'crm.seas.update', 'display_name' => '更新'],
@@ -101,11 +103,6 @@ class UsersSeeder extends Seeder
                             ['name' => 'crm.patients.edit', 'display_name' => '编辑'],
                             ['name' => 'crm.patients.destroy', 'display_name' => '删除'],
                             ['name' => 'crm.patients.show', 'display_name' => '详情'],
-                            ['name' => 'crm.patients.remark', 'display_name' => '备注跟进'],
-                            ['name' => 'crm.patients.list_all', 'display_name' => '查看所有客户'],
-                            ['name' => 'crm.patients.list_department', 'display_name' => '查看本部门客户'],
-                            ['name' => 'crm.patients.transfer', 'display_name' => '移交'],
-                            ['name' => 'crm.patients.remove', 'display_name' => '剔除'],
                         ]
                     ],
                     [

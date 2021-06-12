@@ -39,6 +39,7 @@ layui.use(['layer', 'table', 'form'], function () {
         height: 'full-218',
         url: '{{ route('system.users.index') }}',
         page: true,
+        limit: 11,
         cols: [[
             {field: 'id', title: 'ID', sort: true, width: 80},
             {field: 'username', title: '帐号'},

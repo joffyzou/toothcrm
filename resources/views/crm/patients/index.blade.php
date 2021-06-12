@@ -3,6 +3,9 @@
 @section('content')
 <div class="layui-card">
     <div class="layui-card-header border-b-0 p-t-15" style="height: auto;">
+        @can ('system.users.create')
+            <a href="{{ route('crm.patients.create') }}" class="layui-btn layui-btn-sm"><i class="layui-icon">&#xe654;</i> 添加患者</a>
+        @endcan
         <div class="searchForm" style="margin-bottom: 15px;">
             <div class="layui-inline">
                 <span>姓名：</span>

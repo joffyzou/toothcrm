@@ -5,6 +5,9 @@
         <div class="layui-card-header p-t-15 border-b-0" style="height: auto;">
             <div style="margin-bottom: 15px; height: 43px;">
                 <div class="layui-layout-right" style="padding-right: 20px; padding-top: 15px;">
+                    @role('staff')
+
+                    @else
                     <div class="layui-form layui-input-inline">
                         <select name="users" lay-verify="required" lay-filter="users">
                             <option value="0">全客服部</option>
@@ -13,6 +16,7 @@
                             @endforeach
                         </select>
                     </div>
+                    @endrole
                 </div>
             </div>
             <div class="layui-btn-container layui-clear" style="float: left;">

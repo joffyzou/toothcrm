@@ -31,7 +31,7 @@ class PatientsController extends Controller
             $user = $request->user();
             $res = Patient::query()
                 ->where(function ($query) use ($user) {
-                    if ($user->hasPermissionTo('crm.patients.list_all')) {
+                    if ($user->hasPermissionTo('crm.seas')) {
                         return $query->where('user_id', '>', 0);
                     } else {
                         return $query->where('user_id', $user->id);
