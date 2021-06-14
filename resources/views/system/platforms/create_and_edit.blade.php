@@ -31,7 +31,7 @@
                     <label class="layui-form-label">负责人</label>
                     <div class="layui-input-inline">
                         <select name="user_id" lay-filter="user_id" required>
-                            <option value="" hidden disabled {{ $platform->id ? '' : 'selected' }}>请选择分类</option>
+                            <option {{ $platform->id ? '' : 'selected' }}>请选择分类</option>
                             @foreach ($users as $user)
                                 <option value="{{ $user->id }}" {{ $platform->user_id == $user->id ? 'selected' : '' }}>{{ $user->username }}</option>
                             @endforeach
