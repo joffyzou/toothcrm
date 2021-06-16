@@ -21,7 +21,7 @@ Route::group(['middleware'=>'auth'], function () {
     Route::any('/sums', 'IndexController@sums')->name('sums');
 
     Route::get('operate/add', 'IndexController@add')->name('operate.add');
-    Route::get('operate', 'IndexController@operate')->name('operate');
+    Route::get('operate', 'IndexController@operate')->name('operate.index');
 
 
     Route::get('customer', 'IndexController@customer')->name('customer');
