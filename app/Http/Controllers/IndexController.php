@@ -42,13 +42,28 @@ class IndexController extends Controller
         $data = $request->all([
             'platform_id',
             'origin_id',
-            'origin_sum',
-            'valid_sum'
+            'project_zz',
+            'project_jz',
+            'project_qk',
+            'project_jc',
+            'project_jy',
+            'sum',
+            'status'
         ]);
+        $data['created_at'] = Carbon::yesterday();
+
         if ($request->ajax()) {
-            DB::table('sums')->insert($request->all());
+            DB::table('count')->insert($data);
             return $this->success();
         }
+    }
+
+    public function add()
+    {
+        $platforms = Platform::all();
+        $projects = Project::all();
+
+        return view('indexes.add', compact('platforms', 'projects'));
     }
 
     public function operate(Request $request)
@@ -72,6 +87,164 @@ class IndexController extends Controller
             ->first();
 
         // ---------- 对话
+        $dhsl = DB::table('count')
+            ->when($data['platform_id'], function ($query) use ($data) {
+                return $query->where('platform_id', $data['platform_id']);
+            })
+            ->where('origin_id', 2)
+            ->where('status', false)
+            ->when($data['startDate'] && $data['endDate'], function ($query) use ($data) {
+                return $query->whereBetween('created_at', [$data['startDate'], $data['endDate']]);
+            })
+            ->when($date, function ($query) use ($date) {
+                return $query->whereBetween('created_at', [$date, now()]);
+            })
+            ->sum('sum');
+
+        $dhslzz = DB::table('count')
+            ->when($data['platform_id'], function ($query) use ($data) {
+                return $query->where('platform_id', $data['platform_id']);
+            })
+            ->where('origin_id', 2)
+            ->where('status', false)
+            ->when($data['startDate'] && $data['endDate'], function ($query) use ($data) {
+                return $query->whereBetween('created_at', [$data['startDate'], $data['endDate']]);
+            })
+            ->when($date, function ($query) use ($date) {
+                return $query->whereBetween('created_at', [$date, now()]);
+            })
+            ->sum('project_zz');
+        $dhsljz = DB::table('count')
+            ->when($data['platform_id'], function ($query) use ($data) {
+                return $query->where('platform_id', $data['platform_id']);
+            })
+            ->where('origin_id', 2)
+            ->where('status', false)
+            ->when($data['startDate'] && $data['endDate'], function ($query) use ($data) {
+                return $query->whereBetween('created_at', [$data['startDate'], $data['endDate']]);
+            })
+            ->when($date, function ($query) use ($date) {
+                return $query->whereBetween('created_at', [$date, now()]);
+            })
+            ->sum('project_jz');
+        $dhslqk = DB::table('count')
+            ->when($data['platform_id'], function ($query) use ($data) {
+                return $query->where('platform_id', $data['platform_id']);
+            })
+            ->where('origin_id', 2)
+            ->where('status', false)
+            ->when($data['startDate'] && $data['endDate'], function ($query) use ($data) {
+                return $query->whereBetween('created_at', [$data['startDate'], $data['endDate']]);
+            })
+            ->when($date, function ($query) use ($date) {
+                return $query->whereBetween('created_at', [$date, now()]);
+            })
+            ->sum('project_qk');
+        $dhsljc = DB::table('count')
+            ->when($data['platform_id'], function ($query) use ($data) {
+                return $query->where('platform_id', $data['platform_id']);
+            })
+            ->where('origin_id', 2)
+            ->where('status', false)
+            ->when($data['startDate'] && $data['endDate'], function ($query) use ($data) {
+                return $query->whereBetween('created_at', [$data['startDate'], $data['endDate']]);
+            })
+            ->when($date, function ($query) use ($date) {
+                return $query->whereBetween('created_at', [$date, now()]);
+            })
+            ->sum('project_jc');
+        $dhsljy = DB::table('count')
+            ->when($data['platform_id'], function ($query) use ($data) {
+                return $query->where('platform_id', $data['platform_id']);
+            })
+            ->where('origin_id', 2)
+            ->where('status', false)
+            ->when($data['startDate'] && $data['endDate'], function ($query) use ($data) {
+                return $query->whereBetween('created_at', [$data['startDate'], $data['endDate']]);
+            })
+            ->when($date, function ($query) use ($date) {
+                return $query->whereBetween('created_at', [$date, now()]);
+            })
+            ->sum('project_jy');
+        $dhyxsl = DB::table('count')
+            ->when($data['platform_id'], function ($query) use ($data) {
+                return $query->where('platform_id', $data['platform_id']);
+            })
+            ->where('origin_id', 2)
+            ->where('status', true)
+            ->when($data['startDate'] && $data['endDate'], function ($query) use ($data) {
+                return $query->whereBetween('created_at', [$data['startDate'], $data['endDate']]);
+            })
+            ->when($date, function ($query) use ($date) {
+                return $query->whereBetween('created_at', [$date, now()]);
+            })
+            ->sum('sum');
+        $dhyxslzz = DB::table('count')
+            ->when($data['platform_id'], function ($query) use ($data) {
+                return $query->where('platform_id', $data['platform_id']);
+            })
+            ->where('origin_id', 2)
+            ->where('status', true)
+            ->when($data['startDate'] && $data['endDate'], function ($query) use ($data) {
+                return $query->whereBetween('created_at', [$data['startDate'], $data['endDate']]);
+            })
+            ->when($date, function ($query) use ($date) {
+                return $query->whereBetween('created_at', [$date, now()]);
+            })
+            ->sum('project_zz');
+        $dhyxsljz = DB::table('count')
+            ->when($data['platform_id'], function ($query) use ($data) {
+                return $query->where('platform_id', $data['platform_id']);
+            })
+            ->where('origin_id', 2)
+            ->where('status', true)
+            ->when($data['startDate'] && $data['endDate'], function ($query) use ($data) {
+                return $query->whereBetween('created_at', [$data['startDate'], $data['endDate']]);
+            })
+            ->when($date, function ($query) use ($date) {
+                return $query->whereBetween('created_at', [$date, now()]);
+            })
+            ->sum('project_jz');
+        $dhyxslqk = DB::table('count')
+            ->when($data['platform_id'], function ($query) use ($data) {
+                return $query->where('platform_id', $data['platform_id']);
+            })
+            ->where('origin_id', 2)
+            ->where('status', true)
+            ->when($data['startDate'] && $data['endDate'], function ($query) use ($data) {
+                return $query->whereBetween('created_at', [$data['startDate'], $data['endDate']]);
+            })
+            ->when($date, function ($query) use ($date) {
+                return $query->whereBetween('created_at', [$date, now()]);
+            })
+            ->sum('project_qk');
+        $dhyxsljc = DB::table('count')
+            ->when($data['platform_id'], function ($query) use ($data) {
+                return $query->where('platform_id', $data['platform_id']);
+            })
+            ->where('origin_id', 2)
+            ->where('status', true)
+            ->when($data['startDate'] && $data['endDate'], function ($query) use ($data) {
+                return $query->whereBetween('created_at', [$data['startDate'], $data['endDate']]);
+            })
+            ->when($date, function ($query) use ($date) {
+                return $query->whereBetween('created_at', [$date, now()]);
+            })
+            ->sum('project_jc');
+        $dhyxsljy = DB::table('count')
+            ->when($data['platform_id'], function ($query) use ($data) {
+                return $query->where('platform_id', $data['platform_id']);
+            })
+            ->where('origin_id', 2)
+            ->where('status', true)
+            ->when($data['startDate'] && $data['endDate'], function ($query) use ($data) {
+                return $query->whereBetween('created_at', [$data['startDate'], $data['endDate']]);
+            })
+            ->when($date, function ($query) use ($date) {
+                return $query->whereBetween('created_at', [$date, now()]);
+            })
+            ->sum('project_jy');
+
         // 预约
         $dhyy = Patient::query()
             ->when($data['platform_id'], function ($query) use ($data) {
@@ -322,6 +495,163 @@ class IndexController extends Controller
             ->sum('achievement');
 
         // ---------- 进电
+        $jdsl = DB::table('count')
+            ->when($data['platform_id'], function ($query) use ($data) {
+                return $query->where('platform_id', $data['platform_id']);
+            })
+            ->where('origin_id', 1)
+            ->where('status', false)
+            ->when($data['startDate'] && $data['endDate'], function ($query) use ($data) {
+                return $query->whereBetween('created_at', [$data['startDate'], $data['endDate']]);
+            })
+            ->when($date, function ($query) use ($date) {
+                return $query->whereBetween('created_at', [$date, now()]);
+            })
+            ->sum('sum');
+        $jdslzz = DB::table('count')
+            ->when($data['platform_id'], function ($query) use ($data) {
+                return $query->where('platform_id', $data['platform_id']);
+            })
+            ->where('origin_id', 1)
+            ->where('status', false)
+            ->when($data['startDate'] && $data['endDate'], function ($query) use ($data) {
+                return $query->whereBetween('created_at', [$data['startDate'], $data['endDate']]);
+            })
+            ->when($date, function ($query) use ($date) {
+                return $query->whereBetween('created_at', [$date, now()]);
+            })
+            ->sum('project_zz');
+        $jdsljz = DB::table('count')
+            ->when($data['platform_id'], function ($query) use ($data) {
+                return $query->where('platform_id', $data['platform_id']);
+            })
+            ->where('origin_id', 1)
+            ->where('status', false)
+            ->when($data['startDate'] && $data['endDate'], function ($query) use ($data) {
+                return $query->whereBetween('created_at', [$data['startDate'], $data['endDate']]);
+            })
+            ->when($date, function ($query) use ($date) {
+                return $query->whereBetween('created_at', [$date, now()]);
+            })
+            ->sum('project_jz');
+        $jdslqk = DB::table('count')
+            ->when($data['platform_id'], function ($query) use ($data) {
+                return $query->where('platform_id', $data['platform_id']);
+            })
+            ->where('origin_id', 1)
+            ->where('status', false)
+            ->when($data['startDate'] && $data['endDate'], function ($query) use ($data) {
+                return $query->whereBetween('created_at', [$data['startDate'], $data['endDate']]);
+            })
+            ->when($date, function ($query) use ($date) {
+                return $query->whereBetween('created_at', [$date, now()]);
+            })
+            ->sum('project_qk');
+        $jdsljc = DB::table('count')
+            ->when($data['platform_id'], function ($query) use ($data) {
+                return $query->where('platform_id', $data['platform_id']);
+            })
+            ->where('origin_id', 1)
+            ->where('status', false)
+            ->when($data['startDate'] && $data['endDate'], function ($query) use ($data) {
+                return $query->whereBetween('created_at', [$data['startDate'], $data['endDate']]);
+            })
+            ->when($date, function ($query) use ($date) {
+                return $query->whereBetween('created_at', [$date, now()]);
+            })
+            ->sum('project_jc');
+        $jdsljy = DB::table('count')
+            ->when($data['platform_id'], function ($query) use ($data) {
+                return $query->where('platform_id', $data['platform_id']);
+            })
+            ->where('origin_id', 1)
+            ->where('status', false)
+            ->when($data['startDate'] && $data['endDate'], function ($query) use ($data) {
+                return $query->whereBetween('created_at', [$data['startDate'], $data['endDate']]);
+            })
+            ->when($date, function ($query) use ($date) {
+                return $query->whereBetween('created_at', [$date, now()]);
+            })
+            ->sum('project_jy');
+        $jdyxsl = DB::table('count')
+            ->when($data['platform_id'], function ($query) use ($data) {
+                return $query->where('platform_id', $data['platform_id']);
+            })
+            ->where('origin_id', 1)
+            ->where('status', true)
+            ->when($data['startDate'] && $data['endDate'], function ($query) use ($data) {
+                return $query->whereBetween('created_at', [$data['startDate'], $data['endDate']]);
+            })
+            ->when($date, function ($query) use ($date) {
+                return $query->whereBetween('created_at', [$date, now()]);
+            })
+            ->sum('sum');
+        $jdyxslzz = DB::table('count')
+            ->when($data['platform_id'], function ($query) use ($data) {
+                return $query->where('platform_id', $data['platform_id']);
+            })
+            ->where('origin_id', 1)
+            ->where('status', true)
+            ->when($data['startDate'] && $data['endDate'], function ($query) use ($data) {
+                return $query->whereBetween('created_at', [$data['startDate'], $data['endDate']]);
+            })
+            ->when($date, function ($query) use ($date) {
+                return $query->whereBetween('created_at', [$date, now()]);
+            })
+            ->sum('project_zz');
+        $jdyxsljz = DB::table('count')
+            ->when($data['platform_id'], function ($query) use ($data) {
+                return $query->where('platform_id', $data['platform_id']);
+            })
+            ->where('origin_id', 1)
+            ->where('status', true)
+            ->when($data['startDate'] && $data['endDate'], function ($query) use ($data) {
+                return $query->whereBetween('created_at', [$data['startDate'], $data['endDate']]);
+            })
+            ->when($date, function ($query) use ($date) {
+                return $query->whereBetween('created_at', [$date, now()]);
+            })
+            ->sum('project_jz');
+        $jdyxslqk = DB::table('count')
+            ->when($data['platform_id'], function ($query) use ($data) {
+                return $query->where('platform_id', $data['platform_id']);
+            })
+            ->where('origin_id', 1)
+            ->where('status', true)
+            ->when($data['startDate'] && $data['endDate'], function ($query) use ($data) {
+                return $query->whereBetween('created_at', [$data['startDate'], $data['endDate']]);
+            })
+            ->when($date, function ($query) use ($date) {
+                return $query->whereBetween('created_at', [$date, now()]);
+            })
+            ->sum('project_qk');
+        $jdyxsljc = DB::table('count')
+            ->when($data['platform_id'], function ($query) use ($data) {
+                return $query->where('platform_id', $data['platform_id']);
+            })
+            ->where('origin_id', 1)
+            ->where('status', true)
+            ->when($data['startDate'] && $data['endDate'], function ($query) use ($data) {
+                return $query->whereBetween('created_at', [$data['startDate'], $data['endDate']]);
+            })
+            ->when($date, function ($query) use ($date) {
+                return $query->whereBetween('created_at', [$date, now()]);
+            })
+            ->sum('project_jc');
+        $jdyxsljy = DB::table('count')
+            ->when($data['platform_id'], function ($query) use ($data) {
+                return $query->where('platform_id', $data['platform_id']);
+            })
+            ->where('origin_id', 1)
+            ->where('status', true)
+            ->when($data['startDate'] && $data['endDate'], function ($query) use ($data) {
+                return $query->whereBetween('created_at', [$data['startDate'], $data['endDate']]);
+            })
+            ->when($date, function ($query) use ($date) {
+                return $query->whereBetween('created_at', [$date, now()]);
+            })
+            ->sum('project_jy');
+
         // 预约
         $jdyy = Patient::query()
             ->when($data['platform_id'], function ($query) use ($data) {
@@ -573,6 +903,163 @@ class IndexController extends Controller
 
 
         // ---------- 留咨
+        $lzsl = DB::table('count')
+            ->when($data['platform_id'], function ($query) use ($data) {
+                return $query->where('platform_id', $data['platform_id']);
+            })
+            ->where('origin_id', 3)
+            ->where('status', false)
+            ->when($data['startDate'] && $data['endDate'], function ($query) use ($data) {
+                return $query->whereBetween('created_at', [$data['startDate'], $data['endDate']]);
+            })
+            ->when($date, function ($query) use ($date) {
+                return $query->whereBetween('created_at', [$date, now()]);
+            })
+            ->sum('sum');
+        $lzslzz = DB::table('count')
+            ->when($data['platform_id'], function ($query) use ($data) {
+                return $query->where('platform_id', $data['platform_id']);
+            })
+            ->where('origin_id', 3)
+            ->where('status', false)
+            ->when($data['startDate'] && $data['endDate'], function ($query) use ($data) {
+                return $query->whereBetween('created_at', [$data['startDate'], $data['endDate']]);
+            })
+            ->when($date, function ($query) use ($date) {
+                return $query->whereBetween('created_at', [$date, now()]);
+            })
+            ->sum('project_zz');
+        $lzsljz = DB::table('count')
+            ->when($data['platform_id'], function ($query) use ($data) {
+                return $query->where('platform_id', $data['platform_id']);
+            })
+            ->where('origin_id', 3)
+            ->where('status', false)
+            ->when($data['startDate'] && $data['endDate'], function ($query) use ($data) {
+                return $query->whereBetween('created_at', [$data['startDate'], $data['endDate']]);
+            })
+            ->when($date, function ($query) use ($date) {
+                return $query->whereBetween('created_at', [$date, now()]);
+            })
+            ->sum('project_jz');
+        $lzslqk = DB::table('count')
+            ->when($data['platform_id'], function ($query) use ($data) {
+                return $query->where('platform_id', $data['platform_id']);
+            })
+            ->where('origin_id', 3)
+            ->where('status', false)
+            ->when($data['startDate'] && $data['endDate'], function ($query) use ($data) {
+                return $query->whereBetween('created_at', [$data['startDate'], $data['endDate']]);
+            })
+            ->when($date, function ($query) use ($date) {
+                return $query->whereBetween('created_at', [$date, now()]);
+            })
+            ->sum('project_qk');
+        $lzsljc = DB::table('count')
+            ->when($data['platform_id'], function ($query) use ($data) {
+                return $query->where('platform_id', $data['platform_id']);
+            })
+            ->where('origin_id', 3)
+            ->where('status', false)
+            ->when($data['startDate'] && $data['endDate'], function ($query) use ($data) {
+                return $query->whereBetween('created_at', [$data['startDate'], $data['endDate']]);
+            })
+            ->when($date, function ($query) use ($date) {
+                return $query->whereBetween('created_at', [$date, now()]);
+            })
+            ->sum('project_jc');
+        $lzsljy = DB::table('count')
+            ->when($data['platform_id'], function ($query) use ($data) {
+                return $query->where('platform_id', $data['platform_id']);
+            })
+            ->where('origin_id', 3)
+            ->where('status', false)
+            ->when($data['startDate'] && $data['endDate'], function ($query) use ($data) {
+                return $query->whereBetween('created_at', [$data['startDate'], $data['endDate']]);
+            })
+            ->when($date, function ($query) use ($date) {
+                return $query->whereBetween('created_at', [$date, now()]);
+            })
+            ->sum('project_jy');
+        $lzyxsl = DB::table('count')
+            ->when($data['platform_id'], function ($query) use ($data) {
+                return $query->where('platform_id', $data['platform_id']);
+            })
+            ->where('origin_id', 3)
+            ->where('status', true)
+            ->when($data['startDate'] && $data['endDate'], function ($query) use ($data) {
+                return $query->whereBetween('created_at', [$data['startDate'], $data['endDate']]);
+            })
+            ->when($date, function ($query) use ($date) {
+                return $query->whereBetween('created_at', [$date, now()]);
+            })
+            ->sum('sum');
+        $lzyxslzz = DB::table('count')
+            ->when($data['platform_id'], function ($query) use ($data) {
+                return $query->where('platform_id', $data['platform_id']);
+            })
+            ->where('origin_id', 3)
+            ->where('status', true)
+            ->when($data['startDate'] && $data['endDate'], function ($query) use ($data) {
+                return $query->whereBetween('created_at', [$data['startDate'], $data['endDate']]);
+            })
+            ->when($date, function ($query) use ($date) {
+                return $query->whereBetween('created_at', [$date, now()]);
+            })
+            ->sum('project_zz');
+        $lzyxsljz = DB::table('count')
+            ->when($data['platform_id'], function ($query) use ($data) {
+                return $query->where('platform_id', $data['platform_id']);
+            })
+            ->where('origin_id', 3)
+            ->where('status', true)
+            ->when($data['startDate'] && $data['endDate'], function ($query) use ($data) {
+                return $query->whereBetween('created_at', [$data['startDate'], $data['endDate']]);
+            })
+            ->when($date, function ($query) use ($date) {
+                return $query->whereBetween('created_at', [$date, now()]);
+            })
+            ->sum('project_jz');
+        $lzyxslqk = DB::table('count')
+            ->when($data['platform_id'], function ($query) use ($data) {
+                return $query->where('platform_id', $data['platform_id']);
+            })
+            ->where('origin_id', 3)
+            ->where('status', true)
+            ->when($data['startDate'] && $data['endDate'], function ($query) use ($data) {
+                return $query->whereBetween('created_at', [$data['startDate'], $data['endDate']]);
+            })
+            ->when($date, function ($query) use ($date) {
+                return $query->whereBetween('created_at', [$date, now()]);
+            })
+            ->sum('project_qk');
+        $lzyxsljc = DB::table('count')
+            ->when($data['platform_id'], function ($query) use ($data) {
+                return $query->where('platform_id', $data['platform_id']);
+            })
+            ->where('origin_id', 3)
+            ->where('status', true)
+            ->when($data['startDate'] && $data['endDate'], function ($query) use ($data) {
+                return $query->whereBetween('created_at', [$data['startDate'], $data['endDate']]);
+            })
+            ->when($date, function ($query) use ($date) {
+                return $query->whereBetween('created_at', [$date, now()]);
+            })
+            ->sum('project_jc');
+        $lzyxsljy = DB::table('count')
+            ->when($data['platform_id'], function ($query) use ($data) {
+                return $query->where('platform_id', $data['platform_id']);
+            })
+            ->where('origin_id', 3)
+            ->where('status', true)
+            ->when($data['startDate'] && $data['endDate'], function ($query) use ($data) {
+                return $query->whereBetween('created_at', [$data['startDate'], $data['endDate']]);
+            })
+            ->when($date, function ($query) use ($date) {
+                return $query->whereBetween('created_at', [$date, now()]);
+            })
+            ->sum('project_jy');
+
         // 预约
         $lzyy = Patient::query()
             ->when($data['platform_id'], function ($query) use ($data) {
@@ -827,10 +1314,16 @@ class IndexController extends Controller
             'platform',
             'projects',
             // 对话
+            'dhsl', 'dhslzz', 'dhsljz', 'dhslqk', 'dhsljc', 'dhsljy',
+            'dhyxsl', 'dhyxslzz', 'dhyxsljz', 'dhyxslqk', 'dhyxsljc', 'dhyxsljy',
             'dhyy', 'dhyyjz', 'dhyyzz', 'dhyyqk', 'dhyyjc', 'dhyyjy', 'dhdd', 'dhddjz', 'dhddzz', 'dhddqk', 'dhddjc', 'dhddjy', 'dhyj', 'dhyjjz', 'dhyjzz', 'dhyjqk', 'dhyjjc', 'dhyjjy',
             // 进电
+            'jdsl', 'jdslzz', 'jdsljz', 'jdslqk', 'jdsljc', 'jdsljy',
+            'jdyxsl', 'jdyxslzz', 'jdyxsljz', 'jdyxslqk', 'jdyxsljc', 'jdyxsljy',
             'jdyy', 'jdyyjz', 'jdyyzz', 'jdyyqk', 'jdyyjc', 'jdyyjy', 'jddd', 'jdddjz', 'jdddzz', 'jdddqk', 'jdddjc', 'jdddjy', 'jdyj', 'jdyjjz', 'jdyjzz', 'jdyjqk', 'jdyjjc', 'jdyjjy',
             // 留咨
+            'lzsl', 'lzslzz', 'lzsljz', 'lzslqk', 'lzsljc', 'lzsljy',
+            'lzyxsl', 'lzyxslzz', 'lzyxsljz', 'lzyxslqk', 'lzyxsljc', 'lzyxsljy',
             'lzyy', 'lzyyjz', 'lzyyzz', 'lzyyqk', 'lzyyjc', 'lzyyjy', 'lzdd', 'lzddjz', 'lzddzz', 'lzddqk', 'lzddjc', 'lzddjy', 'lzyj', 'lzyjjz', 'lzyjzz', 'lzyjqk', 'lzyjjc', 'lzyjjy'
         ));
     }

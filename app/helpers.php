@@ -51,6 +51,9 @@ if (!function_exists('dateCheck')) {
             case 'thirtyDay':
                 return Carbon::today()->modify('-30 days');
                 break;
+            default:
+                return null;
+                break;
         }
     }
 }
