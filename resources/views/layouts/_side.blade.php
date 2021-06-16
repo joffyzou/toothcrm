@@ -9,7 +9,7 @@
 {{--                </dl>--}}
 {{--            </li>--}}
 
-            <li class="layui-nav-item {{ Request::is('operate') ? 'layui-this' : '' }}"><a href="{{ route('operate') }}">运营数据</a></li>
+            <li class="layui-nav-item {{ Request::is('operate') ? 'layui-this' : '' }}"><a href="{{ route('operate.index') }}">运营数据</a></li>
             <li class="layui-nav-item {{ Request::is('customer') ? 'layui-this' : '' }}"><a href="{{ route('customer') }}">客服数据</a></li>
             @role('root|admin|manager')
             <li class="layui-nav-item {{ Request::is('system/users') || Request::is('system/users/*') ? 'layui-this' : '' }}"><a href="{{ route('system.users.index') }}">用户管理</a></li>
